@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radiobiology Quiz - 60 Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text: #fff;
+      --accent: #1db954;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text: #333;
+      --accent: #1db954;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Top Fixed Container */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    /* Question Container */
+    .question-container {
+      margin: 60px 10px 60px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+
+    .timer {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      background: var(--background);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option.selected {
+      border: 2px solid var(--accent);
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+    }
+
+    .option.correct {
+      border: 2px solid #1db954;
+      background: rgba(29, 185, 84, 0.1);
+    }
+
+    .option.incorrect {
+      border: 2px solid #ff4d4d;
+      background: rgba(255, 77, 77, 0.1);
+    }
+
+    .option p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin: 0;
+    }
+
+    body.light .option p {
+      color: #666;
+    }
+
+    .option-letter {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 5px;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin: 10px 10px;
+    }
+
+    .prev-btn, .next-btn {
+      background: var(--background);
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: var(--text);
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .prev-btn:hover, .next-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .prev-btn {
+      border-radius: 20px 0 0 20px;
+    }
+
+    .next-btn {
+      border-radius: 0 20px 20px 0;
+    }
+
+    .prev-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .center-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .center-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Pop-up for Question Selection */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 340px;
+      width: 90%;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .popup-grid button {
+      background: var(--background);
+      border: none;
+      padding: 10px 5px;
+      border-radius: 10px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .popup-grid button:hover {
+      transform: scale(1.1);
+    }
+
+    .popup-grid button.answered {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .popup-grid button.current {
+      border: 2px solid var(--accent);
+    }
+
+    /* Results Pop-up */
+    .results-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .results-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .score-circle::before {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .score-text {
+      position: relative;
+      z-index: 1;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .results-popup h2 {
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .results-popup h3 {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 20px;
+    }
+
+    body.light .results-popup h3 {
+      color: #666;
+    }
+
+    .results-popup button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin: 5px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Details Page */
+    .details-page {
+      display: none;
+      margin: 90px 10px 90px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      max-height: 520px;
+      overflow-y: auto;
+    }
+
+    .details-page h3 {
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+
+    .details-page h3:first-child {
+      margin-top: 0;
+    }
+
+    .details-page p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    body.light .details-page p {
+      color: #666;
+    }
+
+    .details-page .correct {
+      color: #1db954;
+      font-weight: bold;
+    }
+
+    .details-page .incorrect {
+      color: #ff4d4d;
+      font-weight: bold;
+    }
+
+    .details-page .explanation {
+      background: var(--background);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .details-page button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--background);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--shadow-in);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* Section indicator */
+    .section-indicator {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: var(--shadow-in);
+      border-radius: 3px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Container -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn" id="back-btn">←</button>
+      <div class="header">Radiobiology Quiz</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        
+      </div>
+    </div>
+
+    <!-- Question Container -->
+    <div class="question-container">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="section-indicator" id="section-indicator">Section 1</div>
+      <div class="timer">Time: 90m:00s</div>
+      <div class="question-text">Question 1</div>
+      <div class="options">
+        <div class="option" data-index="0"><p><span class="option-letter">A)</span> Option 1</p></div>
+        <div class="option" data-index="1"><p><span class="option-letter">B)</span> Option 2</p></div>
+        <div class="option" data-index="2"><p><span class="option-letter">C)</span> Option 3</p></div>
+        <div class="option" data-index="3"><p><span class="option-letter">D)</span> Option 4</p></div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="prev-btn neumorphic">Prev</button>
+      <button class="center-btn">📋</button>
+      <button class="next-btn neumorphic">Next</button>
+    </div>
+
+    <!-- Question Selection Pop-up -->
+    <div class="popup" id="question-popup">
+      <h3 style="text-align: center; margin-bottom: 15px; color: var(--text);">Select Question</h3>
+      <div class="popup-grid"></div>
+      <button class="neumorphic-btn close-btn" style="position: absolute; top: 10px; right: 10px;">X</button>
+    </div>
+
+    <!-- Results Pop-up -->
+    <div class="results-popup" id="results-popup">
+      <button class="close-btn">X</button>
+      <div class="score-circle">
+        <span class="score-text" id="score-text">0/60</span>
+      </div>
+      <h2>Quiz Complete!</h2>
+      <h3 id="performance-text">Keep studying!</h3>
+      <button class="continue-btn">Continue</button>
+      <button class="details-btn">Show Details</button>
+    </div>
+
+    <!-- Details Page -->
+    <div class="details-page" id="details-page">
+      <button class="neumorphic-btn back-btn" style="margin-bottom: 20px;">← Back</button>
+      <div class="details-content"></div>
+    </div>
+  </div>
+
+    <!-- Footer Nav Bar -->
+    
+
+  <script>
+    // Complete Quiz Data - 60 Radiobiology Questions
+    const quizData = [
+      // SECTION 1: INTRODUCTION TO RADIOBIOLOGY (Questions 1-5)
+      {
+        question: "What percentage of cell weight is typically water?",
+        options: ["30-45%", "50-65%", "70-85%", "90-95%"],
+        correct: 2,
+        reason: "Water represents 70-85% of the weight of cells, making it a major constituent of all living matter. This is why water radiolysis plays such a major role in radiobiology.",
+        section: "Introduction to Radiobiology"
+      },
+      {
+        question: "Which of the following is NOT a natural source of radiation?",
+        options: ["Cosmic radiation", "Terrestrial radiation from rocks", "Medical X-rays", "Inhalation from air"],
+        correct: 2,
+        reason: "Medical X-rays are man-made sources of radiation. Natural sources include cosmic radiation, terrestrial radiation from plants/rocks/water, inhalation from air, ingestion from food, and radiation from our own bodies.",
+        section: "Introduction to Radiobiology"
+      },
+      {
+        question: "What is the smallest unit of protoplasm capable of independent existence?",
+        options: ["Tissue", "Cell", "Organ", "Organelle"],
+        correct: 1,
+        reason: "The cell is the smallest unit of protoplasm capable of independent existence and is the basic microscopic unit of all living organisms.",
+        section: "Introduction to Radiobiology"
+      },
+      {
+        question: "Radiobiology is beneficial in medicine for treating all EXCEPT:",
+        options: ["Cancers", "Thyrotoxicosis", "Bacterial infections", "Tumors"],
+        correct: 2,
+        reason: "Radiation is beneficial in radiation therapy (radiotherapy) for the treatment of cancers and thyrotoxicosis. Bacterial infections are not treated with radiobiology applications.",
+        section: "Introduction to Radiobiology"
+      },
+      {
+        question: "What is the correct hierarchical organization from smallest to largest?",
+        options: ["Cell → Organ → Tissue → Organism", "Cell → Tissue → Organ → Organ System", "Tissue → Cell → Organ → Organism", "Organ → Tissue → Cell → Organ System"],
+        correct: 1,
+        reason: "Group of cells = tissue; group of tissues = organ; group of organs = organ system or organism.",
+        section: "Introduction to Radiobiology"
+      },
+      
+      // SECTION 2: RADIOLYSIS AND WATER CHEMISTRY (Questions 6-15)
+      {
+        question: "How much energy is approximately required to break the O-H bond in water?",
+        options: ["1-2 eV", "5 eV", "10 eV", "100 eV"],
+        correct: 1,
+        reason: "It takes about 5 eV to break the O-H bond in water molecules during radiolysis (H₂O → HO• + H•).",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "What is the time by which all reactive species have diffused sufficiently and chemical track development is over?",
+        options: ["10⁻⁴ seconds", "10⁻⁶ seconds", "10⁻⁸ seconds", "1 second"],
+        correct: 1,
+        reason: "By about 10⁻⁶ seconds, all reactive species have diffused sufficiently far that further reactions are unlikely, and the chemical development of the track is over.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "Which of the following is a REDUCING species produced by water radiolysis?",
+        options: ["H₂O₂", "OH•", "e⁻aq (solvated electron)", "O₂"],
+        correct: 2,
+        reason: "Reducing species include H₂, H•, and e⁻aq (solvated electron). H₂O₂, OH•, and O₂ are oxidizing species.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "The water radical cation (H₂O•⁺) is best described as:",
+        options: ["A strong base", "A strong acid", "Neutral", "A stable molecule"],
+        correct: 1,
+        reason: "The water radical cation (H₂O•⁺) is a very strong acid and can lose a proton at about 10⁻⁴ seconds to neighboring water molecules to form hydroxyl radical.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "Which reaction produces the hydroxyl radical from the water radical cation?",
+        options: ["H₂O → HO• + H•", "H₂O•⁺ + H₂O → •OH + H₃O⁺", "H• + H• → H₂", "e⁻aq + H• + H₂O → H₂ + OH⁻"],
+        correct: 1,
+        reason: "The water radical cation loses a proton to neighboring water molecules, forming the hydroxyl radical (•OH) and hydronium ion (H₃O⁺).",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "What is the range of energy transfer that causes multiple ionizations or excitations in water molecules?",
+        options: ["1-5 eV", "5-10 eV", "7-100 eV", "100-1000 eV"],
+        correct: 2,
+        reason: "The initial event is the transfer of about 7-100 eV, an amount of energy sufficient to cause (multiple) ionizations or excitations in water molecules.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "Which species is described as NON-STABLE?",
+        options: ["H₂O₂", "H₂", "e⁻aq (solvated electron)", "O₂"],
+        correct: 2,
+        reason: "Some species are non-stable (solvated electron, e⁻aq) while others are stable molecules (H₂O₂, O₂, H₂).",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "What does a radical contain that makes it highly reactive?",
+        options: ["Paired electrons", "Unpaired electron", "Extra neutron", "Positive charge only"],
+        correct: 1,
+        reason: "Radicals refer to an atom or molecule that contains an unpaired electron, making them highly reactive. Radicals can be neutral or charged.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "Which of the following is NOT a product of water radiolysis?",
+        options: ["Superoxide (HO₂)", "Peroxide (H₂O₂)", "Carbon dioxide (CO₂)", "Hydrogen gas (H₂)"],
+        correct: 2,
+        reason: "CO₂ is not produced by water radiolysis. The products include H₂O₂, O₂, OH•, O₂•⁻, O₂⁻, H₂, H•, and e⁻aq. Superoxide and peroxide are formed when radicals recombine.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      {
+        question: "Radiolysis occurs when molecules are destabilized by:",
+        options: ["Chemical reactions only", "Ionizing radiation", "Heat", "Pressure changes"],
+        correct: 1,
+        reason: "Radiolysis is a series of phenomena by which molecules are destabilized by ionizing radiation such as X-rays, gamma rays, photons, electrons, or heavy ions.",
+        section: "Radiolysis and Water Chemistry"
+      },
+      
+      // SECTION 3: CELL BIOLOGY AND GENETICS (Questions 16-25)
+      {
+        question: "Where is DNA found in eukaryotic cells?",
+        options: ["Cytoplasm only", "Nucleus only", "Both nucleus and cytoplasm", "Cell membrane"],
+        correct: 1,
+        reason: "DNA is the hereditary material found in the nucleus of eukaryotic cells (animal and plant cells). In prokaryotic cells (bacteria), it is found in the cytoplasm.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "What is the main difference between DNA and RNA base pairing?",
+        options: ["DNA uses A=U, RNA uses A=T", "DNA uses A=T, RNA uses A=U", "Both use A=T", "Both use A=U"],
+        correct: 1,
+        reason: "In DNA, adenine pairs with thymine (A=T). In RNA, thymine is replaced by uracil, so adenine pairs with uracil (A=U).",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "Which statement about DNA structure is CORRECT?",
+        options: ["DNA is single-stranded", "DNA forms a triple helix", "DNA is double-stranded forming a double helix", "DNA has no specific structure"],
+        correct: 2,
+        reason: "DNA is double-stranded, with each strand held together by base pairing (A with T, C with G), and spirally coiled to form a double helix structure.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "What are histones?",
+        options: ["Enzymes that repair DNA", "Proteins around which DNA double helix is wrapped", "Types of RNA", "Cell membrane components"],
+        correct: 1,
+        reason: "The double helixes are wrapped around proteins called histones and packaged into chromosomes.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "According to cell theory, which statement is FALSE?",
+        options: ["All living organisms are made of cells", "Cells can arise from non-living matter", "New cells arise from other living cells", "All cells carry out life activities"],
+        correct: 1,
+        reason: "Cell theory states that new cells arise only from other living cells by the process of cell division (biogenesis), not from non-living matter (spontaneous generation).",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "What is the largest organelle in the cell?",
+        options: ["Mitochondria", "Nucleus", "Ribosome", "Endoplasmic reticulum"],
+        correct: 1,
+        reason: "The nucleus is the largest organelle in the cell and contains the genetic information (DNA) on special strands called chromosomes.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "Which base is found in RNA but NOT in DNA?",
+        options: ["Adenine", "Guanine", "Uracil", "Cytosine"],
+        correct: 2,
+        reason: "RNA contains adenine (A), guanine (G), cytosine (C), and uracil (U). DNA contains thymine (T) instead of uracil.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "Chromosomes are best described as:",
+        options: ["Single-stranded DNA molecules", "DNA wrapped around histone proteins", "RNA-protein complexes", "Cell membrane structures"],
+        correct: 1,
+        reason: "Chromosomes are formed when the DNA double helix is wrapped around proteins called histones and packaged together.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "Which is NOT a component of the basic cell structure?",
+        options: ["Plasma membrane", "Cytoplasm", "Nucleus", "Cell wall (in all cells)"],
+        correct: 3,
+        reason: "The three main components are plasma membrane/cell membrane, cytoplasm, and nucleus. Cell walls are found in plant cells, fungi, and bacteria, but not in animal cells, so they are not a universal component.",
+        section: "Cell Biology and Genetics"
+      },
+      {
+        question: "Genetics studied at the DNA level is called:",
+        options: ["Classical genetics", "Molecular genetics", "Population genetics", "Cellular genetics"],
+        correct: 1,
+        reason: "Genetics is studied at three levels: whole organisms (classical/transmission genetics), the DNA itself (molecular genetics), or whole populations (population and evolutionary genetics).",
+        section: "Cell Biology and Genetics"
+      },
+      
+      // SECTION 4: DNA DAMAGE AND RADIATION EFFECTS (Questions 26-35)
+      {
+        question: "What is the approximate number of double-strand breaks (DSBs) produced by 1 Gy of X-rays in a typical mammalian cell?",
+        options: ["1-5", "10-20", "50-100", "500-1000"],
+        correct: 2,
+        reason: "An X-ray dose of 1 Gy produces about 1000 single-strand breaks and about 50-100 double-strand breaks in a typical mammalian cell.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Which type of DNA damage is considered the MOST detrimental?",
+        options: ["Single-strand breaks", "Base changes", "Double-strand breaks", "Sugar destruction"],
+        correct: 2,
+        reason: "Double-strand breaks are believed to be the most detrimental lesions produced in chromosomes by ionizing radiation because they are difficult to repair and can cause mutations and cell death.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Single-strand breaks are primarily caused by:",
+        options: ["Hydrogen radicals (H•)", "Hydroxyl radicals (OH•)", "Solvated electrons (e⁻aq)", "Hydrogen peroxide (H₂O₂)"],
+        correct: 1,
+        reason: "A large proportion of single-strand breaks are caused by hydroxyl radicals (OH•).",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "What is the mean lethal dose for loss of proliferative capacity in proliferating cells?",
+        options: ["0.5 Gy", "2 Gy", "10 Gy", "100 Gy"],
+        correct: 1,
+        reason: "2 Gy is the mean lethal dose for loss of proliferative capacity for proliferating cells such as stem cells in the hematopoietic system or intestinal epithelium.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Which bases are MORE sensitive to radiation damage?",
+        options: ["Purines (A, G)", "Pyrimidines (T, C)", "Both equally sensitive", "Neither is sensitive"],
+        correct: 1,
+        reason: "Pyrimidines (thymine T, cytosine C) are more sensitive than purines (adenine A, guanine G) to radiation damage.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Direct action of radiation occurs when:",
+        options: ["Free radicals attack DNA", "Radiation directly hits and breaks DNA", "Water molecules shield DNA", "Cells repair themselves"],
+        correct: 1,
+        reason: "Direct action occurs when alpha particles, beta particles, or X-rays create ions which physically break one or both of the sugar-phosphate backbones or break the base pairs of the DNA.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "What dose of radiation destroys cell function in non-proliferating systems like nerves and muscle cells?",
+        options: ["2 Gy", "10 Gy", "50 Gy", "100 Gy"],
+        correct: 3,
+        reason: "100 Gy destroys cell function in non-proliferating systems of nerves and muscle cells, compared to only 2 Gy for proliferating cells.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Double-strand breaks can result in all EXCEPT:",
+        options: ["Cell death", "Mutations", "Enhanced DNA repair efficiency", "Chromosome translocations"],
+        correct: 2,
+        reason: "Double-strand breaks are difficult to repair, leading to mutations, cell death, and joining of non-homologous chromosomes (translocations). They do not enhance repair efficiency.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Which is TRUE about single-strand breaks (SSB)?",
+        options: ["They are difficult to repair", "They use the opposite strand as a template for repair", "They always cause cell death", "They are more lethal than double-strand breaks"],
+        correct: 1,
+        reason: "Single-strand breaks are readily repaired using the opposite strand as a template. However, base pair substitution and frame shift mutations can still occur during repair.",
+        section: "DNA Damage and Radiation Effects"
+      },
+      {
+        question: "Indirect action of radiation is predominant in:",
+        options: ["Alpha radiation", "Beta radiation", "Gamma radiation and X-rays", "Neutron radiation"],
+        correct: 2,
+        reason: "Indirect action is predominant in gamma radiation or X-rays, which possess low Linear Energy Transfer (LET) property. Direct effect is predominant in alpha and beta radiation (high LET).",
+        section: "DNA Damage and Radiation Effects"
+      },
+      
+      // SECTION 5: CELL SURVIVAL CURVES (Questions 36-42)
+      {
+        question: "What does a cell survival curve measure?",
+        options: ["Immediate cell death only", "Reproductive cell death (clonogenic survival)", "Cell membrane integrity", "DNA synthesis rate"],
+        correct: 1,
+        reason: "Cell survival curves measure reproductive cell death — the fraction of irradiated cells that maintain their reproductive integrity and can form colonies.",
+        section: "Cell Survival Curves"
+      },
+      {
+        question: "What is the shape of the cell survival curve for high LET radiation on a log-linear plot?",
+        options: ["Shoulder followed by straight line", "Almost straight line (exponential)", "U-shaped curve", "Inverted U-shape"],
+        correct: 1,
+        reason: "For densely ionizing radiation (high LET), the cell survival curve is almost an exponential function of dose, shown by an almost straight line on the log-linear plot.",
+        section: "Cell Survival Curves"
+      },
+      {
+        question: "Which factor does NOT make cells less radiosensitive?",
+        options: ["Removal of oxygen (hypoxia)", "High dose rates", "Addition of radical scavengers", "Late S phase synchronization"],
+        correct: 1,
+        reason: "Factors making cells less radiosensitive include removal of oxygen (hypoxia), addition of chemical radical scavengers, low dose rates (not high), multifractionated irradiation, and cells synchronized in late S phase.",
+        section: "Cell Survival Curves"
+      },
+      {
+        question: "What does 'clonogenic' mean?",
+        options: ["Capable of cell division once", "Capable of sustained proliferation into a large colony", "Resistant to all radiation", "Unable to reproduce"],
+        correct: 1,
+        reason: "A surviving cell that has retained its reproductive integrity and is able to proliferate indefinitely into a large number of progeny is said to be clonogenic. Proof is the capacity of a single cell to grow into a large colony visible to the naked eye.",
+        section: "Cell Survival Curves"
+      },
+      {
+        question: "For low LET radiation, the survival curve shows:",
+        options: ["Immediate exponential decrease", "Initial slope, shoulder region, then nearly straight", "No change with dose", "Immediate plateau"],
+        correct: 1,
+        reason: "For sparsely ionizing radiation (low LET), the curves show an initial slope followed by a shoulder region and then become nearly straight at higher doses.",
+        section: "Cell Survival Curves"
+      },
+      {
+        question: "What is plotted on the Y-axis of a cell survival curve?",
+        options: ["Radiation dose", "Surviving fraction on a logarithmic scale", "Number of cells on linear scale", "Time after irradiation"],
+        correct: 1,
+        reason: "Cell survival is graphically represented by plotting the surviving fraction on a logarithmic scale on the ordinate (Y-axis) against dose on a linear scale on the abscissa (X-axis).",
+        section: "Cell Survival Curves"
+      },
+      {
+        question: "Which cell cycle phase is MOST radioresistant?",
+        options: ["M phase", "G2 phase", "G1 phase", "Late S phase"],
+        correct: 3,
+        reason: "The radiosensitive phase of cell cycle from most to least is: M > G2 > G1 > early S > late S. Therefore, late S phase is the most radioresistant.",
+        section: "Cell Survival Curves"
+      },
+      
+      // SECTION 6: BIOLOGICAL EFFECTS THEORIES (Questions 43-48)
+      {
+        question: "According to the direct/target action theory:",
+        options: ["Radiation damages cells only through water radiolysis", "Cell damage results when radiation directly hits critical targets like DNA", "All radiation passes through without damage", "Cells are protected by water molecules"],
+        correct: 1,
+        reason: "The direct or target action theory suggests that cell damage results when ionizing radiation directly hits critical areas or targets within the cell, such as DNA.",
+        section: "Biological Effects Theories"
+      },
+      {
+        question: "Stochastic effects are characterized by:",
+        options: ["Severity increasing with dose", "Having a threshold dose", "Probability increasing with dose, severity independent of dose", "Being completely avoidable"],
+        correct: 2,
+        reason: "A stochastic effect is one in which the probability of occurrence increases with increasing absorbed dose rather than its severity. The severity is independent of the radiation dose.",
+        section: "Biological Effects Theories"
+      },
+      {
+        question: "Which is a deterministic (non-stochastic) effect?",
+        options: ["Radiation-induced cancer", "Genetic mutations in offspring", "Skin burns from high radiation dose", "Hereditary disorders"],
+        correct: 2,
+        reason: "Deterministic effects have a threshold and severity increases with dose (e.g., skin burns, organ failure). Stochastic effects (cancer, genetic mutations) have no threshold and probability increases with dose.",
+        section: "Biological Effects Theories"
+      },
+      {
+        question: "Genetic effects of radiation:",
+        options: ["Are seen in the irradiated person during their lifetime", "Are passed on to future generations", "Can be easily repaired", "Have a threshold dose"],
+        correct: 1,
+        reason: "Genetic effects are not seen in the person irradiated but are passed on to future generations. Genetic damage cannot be repaired and is a type of stochastic effect.",
+        section: "Biological Effects Theories"
+      },
+      {
+        question: "Delayed effects of radiation include all EXCEPT:",
+        options: ["Cancers", "Cataracts", "Radiation sickness", "Hypothyroidism"],
+        correct: 2,
+        reason: "Radiation sickness is an acute effect (immediate result of high-level radiation exposure). Delayed effects occur after a long period and include cancers, cataracts, hypothyroidism, and genetic disorders.",
+        section: "Biological Effects Theories"
+      },
+      {
+        question: "The main mechanism of deterministic effects is:",
+        options: ["Cell modification", "Cell killing", "DNA amplification", "Protein synthesis"],
+        correct: 1,
+        reason: "The main mechanism of deterministic effects is cell killing. They have a threshold dose, occur only at high doses, and can be completely avoided.",
+        section: "Biological Effects Theories"
+      },
+      
+      // SECTION 7: RADIO SENSITIVITY AND MODIFIERS (Questions 49-55)
+      {
+        question: "According to Bergonié and Tribondeau, tissues are MORE radiosensitive if they:",
+        options: ["Are highly differentiated", "Divide slowly", "Have low proliferative capacity", "Are undifferentiated with high proliferative capacity"],
+        correct: 3,
+        reason: "The law states tissues are more radiosensitive if: (I) cells are undifferentiated, (II) they have greater proliferative capacity, and (III) they divide more rapidly.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      {
+        question: "What is the Oxygen Enhancement Ratio (OER)?",
+        options: ["Ratio of hypoxic to aerated cell count", "Ratio of doses under hypoxic vs. aerated conditions for same biological effect", "Ratio of oxygen in tumor vs. normal tissue", "Rate of oxygen consumption by cells"],
+        correct: 1,
+        reason: "The OER is the ratio of doses administered under hypoxic to aerated conditions needed to achieve the same biological effect. For X-rays and gamma rays, it is typically 2.5-3.5.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      {
+        question: "Radiosensitizers are clinically useful only if they:",
+        options: ["Affect tumor and normal tissues equally", "Show differential effect between tumors and normal tissues", "Are toxic to all cells", "Work without radiation"],
+        correct: 1,
+        reason: "Clinical benefit is expected only if there is a differential effect between tumors and normal tissues. If an intervention equally increases effect and side effect, it is not useful.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      {
+        question: "Which is a hypoxic-cell sensitizer?",
+        options: ["Increases radiosensitivity of well-oxygenated cells", "Increases radiosensitivity of oxygen-deficient cells only", "Protects all cells from radiation", "Works only in S phase"],
+        correct: 1,
+        reason: "Hypoxic-cell sensitizers increase the radiosensitivity of cells deficient in molecular oxygen but have no effect on normally aerated cells. Hypoxic cells occur in tumors but not normal tissues.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      {
+        question: "What does DRF (Dose Reduction Factor) measure?",
+        options: ["Increase in radiation dose needed with protector", "Ratio of dose with drug to dose without drug for same biological effect", "Decrease in cell survival", "Increase in oxygen enhancement"],
+        correct: 1,
+        reason: "DRF is the ratio of the radiation dose in the presence of drug to produce a given biological effect to the dose in absence of drug to obtain the same biological effect.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      {
+        question: "Amifostine is an example of:",
+        options: ["A radiosensitizer", "A radioprotector", "A chemotherapeutic drug", "A hypoxic cell sensitizer"],
+        correct: 1,
+        reason: "Amifostine is a sulfhydryl compound (contains free SH groups) that acts as a radioprotector by interrupting the chain of events that utilizes free radicals to indirectly damage target molecules.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      {
+        question: "Linear Energy Transfer (LET) is defined as:",
+        options: ["L = dl/dE", "L = dE/dl", "L = E × l", "L = E/l²"],
+        correct: 1,
+        reason: "The linear energy transfer (L) of charged particles in medium is the quotient of dE/dl, where dE is the average energy locally imparted to the medium by a charged particle traversing a distance of dl.",
+        section: "Radio Sensitivity and Modifiers"
+      },
+      
+      // SECTION 8: LIPID DAMAGE AND ADVANCED CONCEPTS (Questions 56-60)
+      {
+        question: "What dose to the cell membrane can induce apoptosis even in cells without a nucleus?",
+        options: ["0.5-1 Gy", "1-2 Gy", "5-10 Gy", "50-100 Gy"],
+        correct: 2,
+        reason: "Studies revealed the induction of apoptosis at 5-10 Gy via increased ceramide levels, even in cells without a nucleus, showing a pathway for radiation damage independent of nucleic acid damage.",
+        section: "Lipid Damage and Advanced Concepts"
+      },
+      {
+        question: "Lipid peroxidation by radiation primarily affects:",
+        options: ["Saturated fatty acids", "Polyunsaturated fatty acids (PUFAs)", "Cholesterol only", "Proteins in the membrane"],
+        correct: 1,
+        reason: "Radiation induces lipid peroxidation, particularly the peroxidation of polyunsaturated fatty acids (PUFAs), leading to increased membrane permeability and disruption of cellular processes.",
+        section: "Lipid Damage and Advanced Concepts"
+      },
+      {
+        question: "Which statement about indirect DNA damage is TRUE?",
+        options: ["It is caused by radiation hitting DNA directly", "It is caused by free radicals from water radiolysis attacking DNA", "It only occurs with high LET radiation", "It is less common than direct damage"],
+        correct: 1,
+        reason: "Indirect action occurs when X-ray photons are absorbed by water in the cell, forming free radicals that combine to form toxins (like H₂O₂) which cause cellular dysfunction. Most radiation damage occurs through this indirect mechanism.",
+        section: "Lipid Damage and Advanced Concepts"
+      },
+      {
+        question: "What is the therapeutic ratio in radiation therapy?",
+        options: ["Dose to tumor/Dose to normal tissue", "TCP/NTCP (Tumor Control Probability/Normal Tissue Complication Probability)", "Survival fraction of tumor cells/Survival fraction of normal cells", "OER of tumor/OER of normal tissue"],
+        correct: 1,
+        reason: "To be clinically effective, radiosensitizers should improve the therapeutic ratio TCP/NTCP, increasing tumor control without equally increasing side effects.",
+        section: "Lipid Damage and Advanced Concepts"
+      },
+      {
+        question: "Which characteristic is NOT required for an ideal radiosensitizer?",
+        options: ["Lack of toxicity", "Potent radiosensitizing effect", "Cell cycle specificity", "Convenient administration"],
+        correct: 2,
+        reason: "Characteristics of ideal radiosensitizers include: lack of toxicity, potent radiosensitizing effect, NON-cell cycle specificity (should work in all phases), amenable to dose-intense schedules, and convenient outpatient administration.",
+        section: "Lipid Damage and Advanced Concepts"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answers = Array(quizData.length).fill(null);
+    let timeLeft = 20 * 60; // 90 minutes in seconds
+    let timerInterval;
+
+    // DOM Elements
+    const questionContainer = document.querySelector('.question-container');
+    const timerElement = document.querySelector('.timer');
+    const questionText = document.querySelector('.question-text');
+    const optionsContainer = document.querySelector('.options');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const centerBtn = document.querySelector('.center-btn');
+    const questionPopup = document.getElementById('question-popup');
+    const popupGrid = document.querySelector('.popup-grid');
+    const resultsPopup = document.getElementById('results-popup');
+    const detailsPage = document.getElementById('details-page');
+    const detailsContent = document.querySelector('.details-content');
+    const themeToggle = document.getElementById('theme-toggle');
+    const profileUpload = document.getElementById('profile-upload');
+    const body = document.body;
+    const sectionIndicator = document.getElementById('section-indicator');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Timer
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `Time: ${minutes}m:${seconds.toString().padStart(2, '0')}s`;
+      if (timeLeft > 0) {
+        timeLeft--;
+      } else {
+        clearInterval(timerInterval);
+        submitQuiz();
+      }
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    // Update Progress Bar
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / quizData.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    // Render Question
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      sectionIndicator.textContent = `${q.section} (${Math.floor(currentQuestion/5)*5+1}-${Math.min(Math.floor(currentQuestion/5)*5+5, 60)})`;
+      questionText.textContent = `Question ${currentQuestion + 1}: ${q.question}`;
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const div = document.createElement('div');
+        div.classList.add('option');
+        if (answers[currentQuestion] === index) div.classList.add('selected');
+        
+        const letter = String.fromCharCode(65 + index);
+        div.innerHTML = `<p><span class="option-letter">${letter})</span> ${option}</p>`;
+        
+        div.addEventListener('click', () => {
+          document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+          div.classList.add('selected');
+          answers[currentQuestion] = index;
+          updatePopup();
+        });
+        optionsContainer.appendChild(div);
+      });
+      
+      prevBtn.disabled = currentQuestion === 0;
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Submit' : 'Next';
+      updateProgress();
+    }
+
+    // Render Question Selection Pop-up
+    function renderPopup() {
+      popupGrid.innerHTML = '';
+      quizData.forEach((_, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = index + 1;
+        if (answers[index] !== null) btn.classList.add('answered');
+        if (index === currentQuestion) btn.classList.add('current');
+        btn.addEventListener('click', () => {
+          currentQuestion = index;
+          renderQuestion();
+          questionPopup.style.display = 'none';
+        });
+        popupGrid.appendChild(btn);
+      });
+    }
+
+    function updatePopup() {
+      renderPopup();
+    }
+
+    // Submit Quiz
+    function submitQuiz() {
+      clearInterval(timerInterval);
+      const score = answers.reduce((sum, answer, i) => answer === quizData[i].correct ? sum + 1 : sum, 0);
+      
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      resultsPopup.style.display = 'block';
+      
+      document.getElementById('score-text').textContent = `${score}/${quizData.length}`;
+      
+      const percentage = (score / quizData.length) * 100;
+      let performanceText = '';
+      if (percentage >= 90) performanceText = 'Excellent! Master level!';
+      else if (percentage >= 80) performanceText = 'Great job! Very good understanding.';
+      else if (percentage >= 70) performanceText = 'Good work! Keep studying.';
+      else if (percentage >= 60) performanceText = 'Passing grade. Review weak areas.';
+      else performanceText = 'Keep studying! Review the material.';
+      
+      document.getElementById('performance-text').textContent = performanceText;
+    }
+
+    // Render Details Page
+    function renderDetails() {
+      detailsContent.innerHTML = '';
+      let currentSection = '';
+      
+      quizData.forEach((q, i) => {
+        if (q.section !== currentSection) {
+          currentSection = q.section;
+          const sectionHeader = document.createElement('h2');
+          sectionHeader.textContent = currentSection;
+          sectionHeader.style.color = 'var(--accent)';
+          sectionHeader.style.fontSize = '18px';
+          sectionHeader.style.marginTop = '30px';
+          sectionHeader.style.marginBottom = '15px';
+          detailsContent.appendChild(sectionHeader);
+        }
+        
+        const div = document.createElement('div');
+        div.style.marginBottom = '25px';
+        div.style.padding = '15px';
+        div.style.background = 'var(--background)';
+        div.style.borderRadius = '10px';
+        div.style.boxShadow = 'inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out)';
+        
+        const isCorrect = answers[i] === q.correct;
+        const userAnswer = answers[i] !== null ? q.options[answers[i]] : 'Not answered';
+        const correctLetter = String.fromCharCode(65 + q.correct);
+        const userLetter = answers[i] !== null ? String.fromCharCode(65 + answers[i]) : '-';
+        
+        div.innerHTML = `
+          <h3>Q${i + 1}: ${q.question}</h3>
+          <p>Your Answer: <span class="${isCorrect ? 'correct' : 'incorrect'}">${userLetter}) ${userAnswer} ${isCorrect ? '✓' : '✗'}</span></p>
+          <p>Correct Answer: <span class="correct">${correctLetter}) ${q.options[q.correct]} ✓</span></p>
+          <div class="explanation">
+            <strong>Explanation:</strong> ${q.reason}
+          </div>
+        `;
+        detailsContent.appendChild(div);
+      });
+    }
+
+    // Event Listeners
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        submitQuiz();
+      }
+    });
+
+    centerBtn.addEventListener('click', () => {
+      renderPopup();
+      questionPopup.style.display = 'block';
+    });
+
+    questionPopup.querySelector('.close-btn').addEventListener('click', () => {
+      questionPopup.style.display = 'none';
+    });
+
+    resultsPopup.querySelector('.close-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.continue-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.details-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      detailsPage.style.display = 'block';
+      renderDetails();
+    });
+
+    detailsPage.querySelector('.back-btn').addEventListener('click', () => {
+      detailsPage.style.display = 'none';
+      resultsPopup.style.display = 'block';
+    });
+
+    // Theme Toggle
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload
+    profileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          console.log('Profile image uploaded:', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Footer Navigation
+    const navItems = document.querySelectorAll('.nav-bar .nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Back button
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to exit the quiz? Your progress will be lost.')) {
+        location.reload();
+      }
+    });
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>
