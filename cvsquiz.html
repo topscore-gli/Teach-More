@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardiovascular System Quiz - 80 Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text: #fff;
+      --accent: #1db954;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text: #333;
+      --accent: #e74c3c;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Top Fixed Container */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    /* Question Container */
+    .question-container {
+      margin: 60px 10px 60px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+
+    .timer {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      background: var(--background);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option.selected {
+      border: 2px solid var(--accent);
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+    }
+
+    .option.correct {
+      border: 2px solid #27ae60;
+      background: rgba(39, 174, 96, 0.1);
+    }
+
+    .option.incorrect {
+      border: 2px solid #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+    }
+
+    .option p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin: 0;
+    }
+
+    body.light .option p {
+      color: #666;
+    }
+
+    .option-letter {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 5px;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin: 10px 10px;
+    }
+
+    .prev-btn, .next-btn {
+      background: var(--background);
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: var(--text);
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .prev-btn:hover, .next-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .prev-btn {
+      border-radius: 20px 0 0 20px;
+    }
+
+    .next-btn {
+      border-radius: 0 20px 20px 0;
+    }
+
+    .prev-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .center-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .center-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Pop-up for Question Selection */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 340px;
+      width: 90%;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .popup-grid button {
+      background: var(--background);
+      border: none;
+      padding: 8px 4px;
+      border-radius: 8px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 11px;
+      transition: all 0.2s ease;
+    }
+
+    .popup-grid button:hover {
+      transform: scale(1.1);
+    }
+
+    .popup-grid button.answered {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .popup-grid button.current {
+      border: 2px solid var(--accent);
+    }
+
+    /* Results Pop-up */
+    .results-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .results-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .score-circle::before {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .score-text {
+      position: relative;
+      z-index: 1;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .results-popup h2 {
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .results-popup h3 {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 20px;
+    }
+
+    body.light .results-popup h3 {
+      color: #666;
+    }
+
+    .results-popup button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin: 5px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Details Page */
+    .details-page {
+      display: none;
+      margin: 90px 10px 90px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      max-height: 520px;
+      overflow-y: auto;
+    }
+
+    .details-page h3 {
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+
+    .details-page h3:first-child {
+      margin-top: 0;
+    }
+
+    .details-page p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    body.light .details-page p {
+      color: #666;
+    }
+
+    .details-page .correct {
+      color: #27ae60;
+      font-weight: bold;
+    }
+
+    .details-page .incorrect {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .details-page .explanation {
+      background: var(--background);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .details-page button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--background);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--shadow-in);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* Section indicator */
+    .section-indicator {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: var(--shadow-in);
+      border-radius: 3px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Container -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn" id="back-btn">←</button>
+      <div class="header">Cardiovascular Quiz</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+      
+      </div>
+    </div>
+
+    <!-- Question Container -->
+    <div class="question-container">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="section-indicator" id="section-indicator">Section 1</div>
+      <div class="timer">Time: 30m:00s</div>
+      <div class="question-text">Question 1</div>
+      <div class="options">
+        <div class="option" data-index="0"><p><span class="option-letter">A)</span> Option 1</p></div>
+        <div class="option" data-index="1"><p><span class="option-letter">B)</span> Option 2</p></div>
+        <div class="option" data-index="2"><p><span class="option-letter">C)</span> Option 3</p></div>
+        <div class="option" data-index="3"><p><span class="option-letter">D)</span> Option 4</p></div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="prev-btn neumorphic">Prev</button>
+      <button class="center-btn">📋</button>
+      <button class="next-btn neumorphic">Next</button>
+    </div>
+
+    <!-- Question Selection Pop-up -->
+    <div class="popup" id="question-popup">
+      <h3 style="text-align: center; margin-bottom: 15px; color: var(--text);">Select Question</h3>
+      <div class="popup-grid"></div>
+      <button class="neumorphic-btn close-btn" style="position: absolute; top: 10px; right: 10px;">X</button>
+    </div>
+
+    <!-- Results Pop-up -->
+    <div class="results-popup" id="results-popup">
+      <button class="close-btn">X</button>
+      <div class="score-circle">
+        <span class="score-text" id="score-text">0/80</span>
+      </div>
+      <h2>Quiz Complete!</h2>
+      <h3 id="performance-text">Keep studying!</h3>
+      <button class="continue-btn">Continue</button>
+      <button class="details-btn">Show Details</button>
+    </div>
+
+    <!-- Details Page -->
+    <div class="details-page" id="details-page">
+      <button class="neumorphic-btn back-btn" style="margin-bottom: 20px;">← Back</button>
+      <div class="details-content"></div>
+    </div>
+  </div>
+
+    <!-- Footer Nav Bar -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">❤️</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+
+  <script>
+    // Complete Quiz Data - 80 Cardiovascular System Questions
+    const quizData = [
+      // SECTION 1: INTRODUCTION TO THE CARDIOVASCULAR SYSTEM (Questions 1-5)
+      {
+        question: "Which of the following is NOT a component of the cardiovascular system?",
+        options: ["The heart", "Blood vessels", "Lymphatic vessels", "The spleen"],
+        correct: 3,
+        reason: "The cardiovascular system comprises the heart, blood, blood vessels, and lymphatic vessels. The spleen is part of the lymphatic/immune system but is not classified as a core component of the cardiovascular system itself.",
+        section: "Introduction to the Cardiovascular System"
+      },
+      {
+        question: "What is the primary function of the cardiovascular system regarding tissue supply?",
+        options: ["Transport hormones only", "Supply oxygen and nutrients while removing metabolic waste", "Regulate body temperature only", "Protect against all diseases"],
+        correct: 1,
+        reason: "While the cardiovascular system has multiple functions (transportation, protection, temperature regulation, hormone transport), its primary tissue-level function is delivering oxygen and nutrients to tissues and removing waste products of metabolism.",
+        section: "Introduction to the Cardiovascular System"
+      },
+      {
+        question: "Which of the following is a function of the cardiovascular system?",
+        options: ["Production of red blood cells", "Transport of hormones and other chemicals", "Digestion of fats", "Filtration of urine"],
+        correct: 1,
+        reason: "The cardiovascular system transports hormones and other chemicals throughout the body. Red blood cell production (erythropoiesis) occurs in bone marrow, fat digestion occurs in the digestive system, and urine filtration occurs in the kidneys.",
+        section: "Introduction to the Cardiovascular System"
+      },
+      {
+        question: "The cardiovascular system helps regulate body temperature through:",
+        options: ["Constriction and dilation of blood vessels", "Increasing heart rate only", "Producing sweat glands", "Storing fat"],
+        correct: 0,
+        reason: "Blood vessels can constrict (vasoconstriction) to conserve heat or dilate (vasodilation) to release heat, thereby helping regulate body temperature. This is one of the protective and regulatory functions of the system.",
+        section: "Introduction to the Cardiovascular System"
+      },
+      {
+        question: "How does the cardiovascular system protect the body?",
+        options: ["By producing antibodies directly", "Against foreign molecules and diseases, and through clotting mechanisms", "By filtering all bacteria in the blood", "By increasing blood pressure constantly"],
+        correct: 1,
+        reason: "Protection includes defense against foreign molecules and diseases (via immune components in blood) and clotting mechanisms to prevent excessive blood loss. While blood contains immune cells, antibodies are produced by lymphocytes, and the cardiovascular system doesn't filter all bacteria or maintain constantly high pressure.",
+        section: "Introduction to the Cardiovascular System"
+      },
+      
+      // SECTION 2: ANATOMY OF THE HEART (Questions 6-20)
+      {
+        question: "Where is the heart located?",
+        options: ["Left side of the abdominal cavity", "Middle mediastinum of the thoracic cavity", "Right side of the chest only", "Posterior to the spine"],
+        correct: 1,
+        reason: "The heart is located in the middle mediastinum of the thoracic cavity, not the abdominal cavity. It sits slightly left of center but spans both sides, with its base facing posteriorly.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "What is the approximate size of the human heart?",
+        options: ["Size of a football", "Size of a fist", "Size of a tennis ball", "Size of a golf ball"],
+        correct: 1,
+        reason: "The heart is approximately the size of a fist. This makes sense given its function as a powerful muscular pump that needs substantial force to circulate blood throughout the entire body.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "The inferior surface of the heart sits on:",
+        options: ["The lungs", "The sternum", "The central crux of the diaphragm", "The liver"],
+        correct: 2,
+        reason: "The inferior surface of the heart rests on the central crux of the diaphragm, the major muscle of respiration. This positioning allows for mechanical interaction between heartbeats and breathing movements.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "Which structure lies immediately anterior to the esophagus and posterior to the descending aorta?",
+        options: ["The apex of the heart", "The base of the heart", "The right ventricle", "The pericardium"],
+        correct: 1,
+        reason: "The base of the heart faces posteriorly and lies immediately anterior to the esophagus and posterior to the descending aorta. This anatomical relationship is important during surgical procedures and imaging studies.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "Which layer of the heart is described as the outer protective layer?",
+        options: ["Myocardium", "Endocardium", "Pericardium", "Epicardium"],
+        correct: 2,
+        reason: "The pericardium is the outer layer of the heart that protects the heart and provides potential space for chamber filling and emptying. While epicardium is part of the pericardium (visceral layer), pericardium is the correct term for the complete outer layer.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "How many layers does the pericardium have?",
+        options: ["One layer", "Two layers", "Three layers", "Four layers"],
+        correct: 1,
+        reason: "The pericardium has two layers: the visceral layer (inner, attached to heart) and the parietal layer (outer, forming the sac). These layers are continuous with each other as they reflect off major vessels behind and above the heart.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "The pericardium blends with all of the following EXCEPT:",
+        options: ["Adventitia of the aorta", "Pulmonary trunk", "Left atrium", "Central tendon of the diaphragm"],
+        correct: 2,
+        reason: "The pericardium blends with the adventitia of the aorta, pulmonary trunk, superior vena cava, and central tendon of the diaphragm. It does not blend with the left atrium itself; rather, it surrounds the heart as an external sac.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "Which layer of the heart wall is composed of muscle fibers enabling contraction?",
+        options: ["Pericardium", "Endocardium", "Myocardium", "Tunica media"],
+        correct: 2,
+        reason: "The myocardium is the middle layer of the heart wall composed of cardiac muscle fibers that enable heart contraction. This is the thickest layer and the actual pumping mechanism of the heart.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "Why is the myocardium of the left ventricle the thickest?",
+        options: ["Because it receives deoxygenated blood", "Because it generates power to pump oxygenated blood to the entire body", "Because it pumps blood only to the lungs", "Because it has less work to do than the right ventricle"],
+        correct: 1,
+        reason: "The left ventricle must generate much higher pressure (systemic pressure) to pump oxygenated blood through the aorta to the entire body, compared to the right ventricle which only pumps to the nearby lungs (pulmonary pressure, about 1/5 of systemic pressure).",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "The endocardium contains which specialized fibers?",
+        options: ["Collagen fibers only", "Purkinje fibers", "Elastic fibers only", "Smooth muscle fibers"],
+        correct: 1,
+        reason: "The endocardium contains Purkinje fibers, which are specialized conductive tissue fibers that convey electrical impulses causing the heart to contract. These are part of the cardiac conduction system.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "What type of cells make up the endocardium?",
+        options: ["Muscle cells", "Nerve cells", "Epithelial cells", "Bone cells"],
+        correct: 2,
+        reason: "The endocardium is a thin membrane made of epithelial cells that lines the inner heart, covers the valves, and contains the Purkinje fibers. This smooth lining prevents blood clot formation and provides an ideal surface for blood flow.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "How many chambers does the heart have?",
+        options: ["Two", "Three", "Four", "Five"],
+        correct: 2,
+        reason: "The heart has four chambers: right atrium, left atrium, right ventricle, and left ventricle. This four-chambered structure allows complete separation of oxygenated and deoxygenated blood.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "What separates the right and left atria?",
+        options: ["Interventricular septum", "Interatrial septum", "Bundle of His", "AV node"],
+        correct: 1,
+        reason: "The interatrial septum is the wall that separates the right and left atria. The interventricular septum separates the ventricles. These septa prevent mixing of oxygenated and deoxygenated blood.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "What separates the right and left ventricles?",
+        options: ["Interatrial septum", "Interventricular septum", "Pericardial septum", "Mediastinal septum"],
+        correct: 1,
+        reason: "The interventricular septum separates the right and left ventricles. It is a thick muscular wall that prevents mixing of blood between the two ventricles and forms part of the electrical insulation between atria and ventricles.",
+        section: "Anatomy of the Heart"
+      },
+      {
+        question: "Which statement about the visceral and parietal pericardial layers is CORRECT?",
+        options: ["They are completely separate structures", "They are continuous with each other at the great vessels", "They never touch each other", "They are separated by the myocardium"],
+        correct: 1,
+        reason: "Both visceral and parietal layers are continuous with each other as they reflect off the major vessels behind and above the heart. This continuity creates the pericardial space between them.",
+        section: "Anatomy of the Heart"
+      },
+      
+      // SECTION 3: ANATOMY OF BLOOD VESSELS (Questions 21-28)
+      {
+        question: "Blood vessels are composed of how many layers?",
+        options: ["One layer", "Two layers", "Three layers", "Four layers"],
+        correct: 2,
+        reason: "Blood vessels are composed of three layers (tunics): tunica adventitia (outer), tunica media (middle), and tunica intima (inner). This three-layer structure provides strength, flexibility, and smooth lining for blood flow.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "What is the outer layer of blood vessels called?",
+        options: ["Tunica intima", "Tunica media", "Tunica adventitia", "Tunica externa"],
+        correct: 2,
+        reason: "The tunica adventitia (also called tunica externa) is the outer layer composed of fibrous connective tissue. It provides structural support and anchors vessels to surrounding tissues.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "The tunica media is composed of:",
+        options: ["Endothelial cells", "Fibrous connective tissue", "Smooth muscle", "Cardiac muscle"],
+        correct: 2,
+        reason: "The tunica media is made up of smooth muscle. This allows blood vessels to constrict (vasoconstriction) and dilate (vasodilation), thereby regulating blood flow and blood pressure.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "Which layer of blood vessels is made up of endothelial cells?",
+        options: ["Tunica adventitia", "Tunica media", "Tunica intima", "Tunica serosa"],
+        correct: 2,
+        reason: "The tunica intima is the inner layer made up of endothelial cells. This provides a smooth, friction-reducing lining that facilitates blood flow and prevents clot formation.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "What happens to vessel thickness as arteries divide into smaller branches?",
+        options: ["It increases", "It stays the same", "It decreases", "It becomes random"],
+        correct: 2,
+        reason: "The thickness of vessels decreases as they divide into smaller diameter vessels. This progressive thinning is necessary to reach all tissues while maintaining efficient exchange capabilities.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "Capillaries have how many layers?",
+        options: ["Three layers like all vessels", "Two layers", "One layer", "No layers"],
+        correct: 2,
+        reason: "Capillaries have only one layer (tunica intima). This extremely thin wall is essential for the exchange of nutrients, hormones, and waste products of metabolism between blood and surrounding tissues.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "Where does the exchange of nutrients, hormones, and waste products primarily occur?",
+        options: ["In arteries", "In veins", "In capillaries", "In the heart"],
+        correct: 2,
+        reason: "Exchange of nutrients, hormones, and waste products of metabolism takes place in the capillaries. Their single-layer structure and extensive branching ensure nearly all cells are close to an exchange site.",
+        section: "Anatomy of Blood Vessels"
+      },
+      {
+        question: "Why do capillaries need only one layer?",
+        options: ["To reduce blood pressure", "To facilitate exchange of substances with surrounding cells", "To increase blood velocity", "To store blood"],
+        correct: 1,
+        reason: "Capillaries need only the tunica intima (one layer) to minimize the barrier between blood and tissues, facilitating efficient exchange of oxygen, nutrients, hormones, and waste products.",
+        section: "Anatomy of Blood Vessels"
+      },
+      
+      // SECTION 4: BLOOD (Questions 29-35)
+      {
+        question: "What type of tissue is blood classified as?",
+        options: ["Solid connective tissue", "Liquid connective tissue", "Epithelial tissue", "Nervous tissue"],
+        correct: 1,
+        reason: "Blood is the only liquid connective tissue in the body. Like other connective tissues, it develops from mesenchyme and contains cells within an extracellular matrix (plasma), though its liquid nature makes it unique.",
+        section: "Blood"
+      },
+      {
+        question: "Which of the following is NOT a formed element of blood?",
+        options: ["Red blood cells", "White blood cells", "Plasma", "Platelets"],
+        correct: 2,
+        reason: "Plasma is the liquid fraction of blood, not a formed element. The formed elements are red blood cells, white blood cells, and platelets (cell fragments), all suspended in plasma.",
+        section: "Blood"
+      },
+      {
+        question: "Platelets are best described as:",
+        options: ["Complete cells with nuclei", "Cell fragments", "Liquid components", "Protein molecules"],
+        correct: 1,
+        reason: "Platelets (thrombocytes) are cell fragments derived from megakaryocytes in the bone marrow. They lack nuclei and are essential for blood clotting.",
+        section: "Blood"
+      },
+      {
+        question: "Which function of blood includes transport of oxygen, carbon dioxide, nutrients, and hormones?",
+        options: ["Regulation", "Protection", "Transportation", "Coagulation only"],
+        correct: 2,
+        reason: "Transportation is the function that includes carrying oxygen, carbon dioxide, nutrients, hormones, and waste products throughout the body. This is the primary distributive function of blood.",
+        section: "Blood"
+      },
+      {
+        question: "Blood regulates all of the following EXCEPT:",
+        options: ["pH", "Temperature", "Osmotic pressure", "Bone density"],
+        correct: 3,
+        reason: "Blood regulates pH (through buffers), temperature (through distribution of heat), and osmotic pressure (through plasma proteins and electrolytes). Bone density is regulated by hormones and mechanical factors, not directly by blood's regulatory functions.",
+        section: "Blood"
+      },
+      {
+        question: "Protection by blood includes:",
+        options: ["Only clotting mechanisms", "Defense against foreign molecules and clotting to prevent blood loss", "Only white blood cell activity", "Production of antibodies only"],
+        correct: 1,
+        reason: "Blood's protective functions include both defense against foreign molecules and diseases (via immune cells and proteins) and clotting mechanisms to prevent excessive blood loss. Both aspects are essential protective roles.",
+        section: "Blood"
+      },
+      {
+        question: "The liquid fraction of blood is called:",
+        options: ["Serum", "Plasma", "Lymph", "Interstitial fluid"],
+        correct: 1,
+        reason: "Plasma is the liquid fraction of blood in which formed elements are suspended. Serum is plasma without clotting factors (what remains after blood clots). Lymph is fluid in lymphatic vessels, and interstitial fluid is between cells.",
+        section: "Blood"
+      },
+      
+      // SECTION 5: BLOOD VESSEL PATHWAYS (Questions 36-42)
+      {
+        question: "Blood vessels serve as:",
+        options: ["Storage sites for blood only", "Conduits through which blood flows from heart to body parts", "Production sites for blood cells", "Filters for waste products only"],
+        correct: 1,
+        reason: "Blood vessels are conduits (channels) through which blood flows from the heart to all parts of the body. This tubular network ensures distribution and collection of blood throughout the organism.",
+        section: "Blood Vessel Pathways"
+      },
+      {
+        question: "What is the correct order of arterial division from largest to smallest?",
+        options: ["Aorta → Capillaries → Arterioles → Arteries", "Aorta → Arteries → Arterioles → Capillaries", "Arteries → Aorta → Arterioles → Capillaries", "Capillaries → Arterioles → Arteries → Aorta"],
+        correct: 1,
+        reason: "Arteries divide repeatedly from the aorta into smaller caliber vessels: aorta gives rise to arteries, which branch into arterioles, which finally connect to capillaries where exchange occurs.",
+        section: "Blood Vessel Pathways"
+      },
+      {
+        question: "What is the correct venous pathway from smallest to largest?",
+        options: ["Inferior Vena Cava → Veins → Venules → Capillaries", "Capillaries → Venules → Veins → Inferior Vena Cava", "Capillaries → Veins → Venules → Inferior Vena Cava", "Venules → Capillaries → Veins → Inferior Vena Cava"],
+        correct: 1,
+        reason: "Veins collect blood starting from capillaries, which drain into venules, which join to form veins, which eventually empty into the inferior (and superior) vena cava returning blood to the heart.",
+        section: "Blood Vessel Pathways"
+      },
+      {
+        question: "The branching of blood vessels ensures that:",
+        options: ["All blood goes to the brain first", "Nearly all cells lie within short distance of capillaries", "Blood pressure remains constant throughout the body", "Arteries and veins are the same size"],
+        correct: 1,
+        reason: "The extraordinary degree of branching ensures nearly all cells in the body lie within a short distance from at least one capillary, enabling efficient exchange of nutrients and waste products between cells and blood.",
+        section: "Blood Vessel Pathways"
+      },
+      {
+        question: "Blood flow through organs is described as passive because:",
+        options: ["The heart stops pumping during organ perfusion", "It occurs only because arterial pressure exceeds venous pressure", "Organs pump their own blood", "Gravity alone moves the blood"],
+        correct: 1,
+        reason: "Blood flow through organs is passive because it occurs only due to the pressure gradient where arterial pressure is kept higher than venous pressure via the heart's pumping action. Organs don't actively draw blood; it flows due to this pressure difference.",
+        section: "Blood Vessel Pathways"
+      },
+      {
+        question: "What maintains the pressure gradient for blood flow?",
+        options: ["The skeletal muscle pump alone", "The pumping action of the heart", "Respiratory movements only", "Gravity"],
+        correct: 1,
+        reason: "The pumping action of the heart maintains arterial pressure higher than venous pressure, creating the driving force for blood flow. While skeletal muscle pumps and respiratory movements assist venous return, the heart maintains the primary pressure gradient.",
+        section: "Blood Vessel Pathways"
+      },
+      {
+        question: "Arterioles are described as having:",
+        options: ["Thicker walls than arteries", "Thinner walls than arteries from which they branch", "The same wall thickness as the aorta", "No walls at all"],
+        correct: 1,
+        reason: "As arteries divide into smaller branches (arterioles), the wall thickness decreases progressively. This thinning continues until capillaries, which have only one layer.",
+        section: "Blood Vessel Pathways"
+      },
+      
+      // SECTION 6: CARDIAC CONDUCTION SYSTEM (Questions 43-58)
+      {
+        question: "What regulates the orderly contractions of the atria and ventricles?",
+        options: ["Hormonal signals only", "Transmission of electrical impulses through modified cardiac muscle cells", "Nervous system signals only", "Mechanical stretching of heart walls"],
+        correct: 1,
+        reason: "Orderly contractions are regulated by transmission of electrical impulses passing through modified cardiac muscle cells (the conduction system) interposed within the contractile myocardium.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "The intrinsic conducting system is composed of:",
+        options: ["Nerve cells from the brain", "Specialized subpopulation of cells that generate or conduct electrical activity", "Hormone-secreting cells only", "Blood vessels in the heart"],
+        correct: 1,
+        reason: "The intrinsic conduction system consists of specialized cardiac cells that either spontaneously generate electrical activity (pacemakers) or preferentially conduct this activity throughout the heart.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "Which structure serves as the natural pacemaker of the heart?",
+        options: ["AV node", "Bundle of His", "SA node", "Purkinje fibers"],
+        correct: 2,
+        reason: "The sinoatrial (SA) node, located in the right atrium, serves as the natural pacemaker for the heart. It spontaneously generates the electrical impulses that initiate each heartbeat at a normal rate of 60-100 beats/minute.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "Where is the SA node located?",
+        options: ["Left ventricle", "Right atrium", "Interventricular septum", "Left atrium"],
+        correct: 1,
+        reason: "The SA node is located in the right atrium, specifically in the upper posterior wall near the opening of the superior vena cava. This position allows it to initiate atrial depolarization efficiently.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "What is the normal pacemaker rate of the SA node?",
+        options: ["25-40 beats/minute", "40-55 beats/minute", "60-100 beats/minute", "100-150 beats/minute"],
+        correct: 2,
+        reason: "The SA node has a normal intrinsic pacemaker rate of 60-100 beats/minute. This is faster than any other pacemaker in the heart, which is why it normally controls heart rate.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "After the SA node fires, where does the signal go next?",
+        options: ["Directly to the ventricles", "To the AV node", "To the Bundle of His", "To the Purkinje fibers"],
+        correct: 1,
+        reason: "The rhythm from the SA node leads to atrial depolarization, and the signal is then transmitted to the AV node. This pathway ensures atria contract before ventricles.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "What is the conduction velocity of the AV node?",
+        options: ["<0.01 m/sec", "0.02-0.05 m/sec", "1.0-1.2 m/sec", "2.0-4.0 m/sec"],
+        correct: 1,
+        reason: "The AV node has a very slow conduction velocity (0.02-0.05 m/sec). This delay is crucial—it allows time for atrial contraction to complete and fill ventricles before ventricular contraction begins.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "What is the intrinsic pacemaker rate of the AV node?",
+        options: ["60-100 beats/minute", "40-55 beats/minute", "25-40 beats/minute", "None"],
+        correct: 1,
+        reason: "If the SA node fails, the AV node can act as a backup pacemaker with an intrinsic rate of 40-55 beats/minute. This is slower than the SA node but faster than ventricular pacemakers.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "From the AV node, the signal moves to:",
+        options: ["The atria", "The Bundle of His", "Directly to Purkinje fibers", "Back to the SA node"],
+        correct: 1,
+        reason: "From the AV node, the electrical signal moves to the Bundle of His (atrioventricular bundle), which then branches into right and left bundle branches conducting the impulse toward the ventricles.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "The Bundle of His divides into:",
+        options: ["Anterior and posterior branches", "Right and left branches", "Superior and inferior branches", "Medial and lateral branches"],
+        correct: 1,
+        reason: "The Bundle of His has both right and left bundle branches that conduct impulses to the respective ventricles, ensuring coordinated ventricular contraction.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "What is the conduction velocity in the Purkinje network?",
+        options: ["<0.01 m/sec", "0.3-1.0 m/sec", "1.0-1.2 m/sec", "2.0-4.0 m/sec"],
+        correct: 3,
+        reason: "The Purkinje network has the fastest conduction velocity (2.0-4.0 m/sec) in the heart. This rapid transmission ensures almost simultaneous contraction of both ventricles.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "Which structures have the fastest conduction velocity in the heart?",
+        options: ["SA node and AV node", "Atrial myocardium", "Bundle branches and Purkinje network", "Ventricular myocardium"],
+        correct: 2,
+        reason: "Both bundle branches and Purkinje network conduct at 2.0-4.0 m/sec, the fastest velocities in the conduction system. This rapid conduction is necessary for coordinated ventricular contraction.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "What is the resting action potential of cardiac myocytes?",
+        options: ["+90 mV", "Approximately -90 mV", "0 mV", "-60 to -70 mV"],
+        correct: 1,
+        reason: "The resting action potential of cardiac myocytes is approximately -90 mV (negative inside relative to outside). This is similar to skeletal muscle resting potential.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "Depolarization changes the membrane potential to approximately:",
+        options: ["-90 mV", "+90 mV", "-60 to -70 mV", "0 mV"],
+        correct: 2,
+        reason: "During depolarization, the membrane potential changes from resting (-90 mV) to a more positive value of approximately -60 to -70 mV. This initial depolarization triggers opening of voltage-gated channels.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "Which ion channels open during depolarization to cause contraction?",
+        options: ["Potassium (K+) channels only", "Sodium (Na+) and Calcium (Ca2+) channels", "Chloride (Cl-) channels only", "Magnesium (Mg2+) channels"],
+        correct: 1,
+        reason: "Depolarization leads to opening of sodium (Na+) and calcium (Ca2+) gated channels. Influx of these positive ions causes further depolarization and triggers contraction of the heart chambers.",
+        section: "Cardiac Conduction System"
+      },
+      {
+        question: "Which ion movement causes relaxation of the heart chambers?",
+        options: ["Influx of sodium", "Influx of calcium", "Efflux (outward diffusion) of potassium (K+)", "Influx of chloride"],
+        correct: 2,
+        reason: "Opening of potassium (K+) channels allows K+ to diffuse out of the cell. This loss of positive charges causes repolarization (return to negative potential), leading to relaxation of the chamber walls.",
+        section: "Cardiac Conduction System"
+      },
+      
+      // SECTION 7: PATHWAYS OF BLOOD FLOW (Questions 59-65)
+      {
+        question: "Deoxygenated blood enters the heart through:",
+        options: ["Pulmonary veins", "Superior and inferior vena cava", "Aorta", "Pulmonary arteries"],
+        correct: 1,
+        reason: "Blood low in oxygen flows into the heart through the superior vena cava (from upper body) and inferior vena cava (from lower body). These are the great veins returning systemic blood to the heart.",
+        section: "Pathways of Blood Flow"
+      },
+      {
+        question: "The superior vena cava carries blood from all of the following EXCEPT:",
+        options: ["Head and neck", "Chest and arms", "Legs and abdomen", "Upper body regions"],
+        correct: 2,
+        reason: "The superior vena cava carries blood from the head, neck, chest, and arms. The legs and abdomen are drained by the inferior vena cava.",
+        section: "Pathways of Blood Flow"
+      },
+      {
+        question: "Blood flows from the right atrium to the right ventricle through:",
+        options: ["The mitral valve", "The right atrioventricular valve (tricuspid)", "The aortic valve", "The pulmonary valve"],
+        correct: 1,
+        reason: "Blood flows from the right atrium through the right atrioventricular valve (tricuspid valve) into the right ventricle. This valve prevents backflow during ventricular contraction.",
+        section: "Pathways of Blood Flow"
+      },
+      {
+        question: "From the right ventricle, deoxygenated blood goes to:",
+        options: ["The aorta", "The pulmonary circuit via pulmonary arteries", "The left atrium", "The coronary arteries"],
+        correct: 1,
+        reason: "From the right ventricle, deoxygenated blood enters the pulmonary circuit, flowing into the right and left pulmonary arteries and their branches to reach the lungs for oxygenation.",
+        section: "Pathways of Blood Flow"
+      },
+      {
+        question: "Oxygenated blood returns from the lungs through:",
+        options: ["Pulmonary arteries", "Pulmonary veins", "Superior vena cava", "Coronary sinus"],
+        correct: 1,
+        reason: "Oxygenated blood flows from the lungs through the right and left pulmonary veins into the left atrium. This is one of the few instances where veins carry oxygenated blood.",
+        section: "Pathways of Blood Flow"
+      },
+      {
+        question: "Blood flows from the left atrium to the left ventricle through:",
+        options: ["The tricuspid valve", "The mitral (bicuspid) valve", "The pulmonary valve", "The aortic valve"],
+        correct: 1,
+        reason: "Blood flows from the left atrium into the left ventricle through the mitral valve (also called bicuspid valve because it has two cusps). This valve prevents backflow into the atrium during ventricular contraction.",
+        section: "Pathways of Blood Flow"
+      },
+      {
+        question: "From the left ventricle, oxygenated blood is circulated to the whole body through:",
+        options: ["Pulmonary artery", "Superior vena cava", "Aorta", "Pulmonary vein"],
+        correct: 2,
+        reason: "From the left ventricle, blood is pumped into the aorta, the largest artery, which then branches to distribute oxygenated blood to the entire body through the systemic circulation.",
+        section: "Pathways of Blood Flow"
+      },
+      
+      // SECTION 8: CARDIOVASCULAR DISEASES (Questions 66-72)
+      {
+        question: "Cardiovascular disease is defined as:",
+        options: ["Only heart attacks", "Impairment in normal function of heart, blood vessels, or blood", "Only high blood pressure", "Only congenital defects"],
+        correct: 1,
+        reason: "Cardiovascular disease occurs when there is impairment in the normal function of the heart, blood vessels, or the blood itself. This broad definition encompasses many different conditions.",
+        section: "Cardiovascular Diseases"
+      },
+      {
+        question: "Which of the following is NOT a cardiovascular disease involving blood vessels?",
+        options: ["Coronary artery disease", "Cerebrovascular disease", "Cardiomyopathy", "Peripheral arterial disease"],
+        correct: 2,
+        reason: "Cardiomyopathy is a disease of the heart muscle itself, not the blood vessels. Coronary artery disease, cerebrovascular disease, and peripheral arterial disease all involve blood vessels.",
+        section: "Cardiovascular Diseases"
+      },
+      {
+        question: "Coronary artery disease is also known as:",
+        options: ["Only ischemic heart disease", "Coronary heart disease or ischemic heart disease", "Only rheumatic heart disease", "Only hypertensive heart disease"],
+        correct: 1,
+        reason: "Coronary artery disease is also known as coronary heart disease or ischemic heart disease. These terms reflect reduced blood flow (ischemia) to the heart muscle due to coronary artery narrowing.",
+        section: "Cardiovascular Diseases"
+      },
+      {
+        question: "Stroke is an example of:",
+        options: ["Coronary artery disease", "Cerebrovascular disease", "Peripheral arterial disease", "Cardiomyopathy"],
+        correct: 1,
+        reason: "Stroke is a cerebrovascular disease—a disease of blood vessels supplying the brain. It occurs when blood supply to part of the brain is interrupted or reduced.",
+        section: "Cardiovascular Diseases"
+      },
+      {
+        question: "Rheumatic heart disease is caused by:",
+        options: ["High cholesterol", "Untreated Streptococcus pyogenes infection (rheumatic fever)", "High blood pressure only", "Viral infection only"],
+        correct: 1,
+        reason: "Rheumatic heart disease results from heart muscle and valve damage due to rheumatic fever, which is caused by Streptococcus pyogenes (group A streptococcus) infection, typically starting as untreated streptococcal pharyngitis (sore throat).",
+        section: "Cardiovascular Diseases"
+      },
+      {
+        question: "Congenital heart disease refers to:",
+        options: ["Heart disease acquired in adulthood", "Heart structural malformations existing at birth", "Disease caused by lifestyle factors only", "Infection of the heart after birth"],
+        correct: 1,
+        reason: "Congenital heart disease refers to structural malformations of the heart that exist at birth. These result from abnormal development during fetal life and may involve septal defects, valve abnormalities, or complex structural anomalies.",
+        section: "Cardiovascular Diseases"
+      },
+      {
+        question: "Heart failure is best defined as:",
+        options: ["Complete stopping of the heart", "Inability of the heart to supply sufficient blood to meet tissue metabolic requirements", "Only rapid heart rate", "Only slow heart rate"],
+        correct: 1,
+        reason: "Heart failure is a clinical syndrome caused by the inability of the heart to supply sufficient blood to tissues to meet their metabolic requirements. It does not mean the heart has stopped, but rather that its pumping efficiency is compromised.",
+        section: "Cardiovascular Diseases"
+      },
+      
+      // SECTION 9: PATHOPHYSIOLOGY (Questions 73-80)
+      {
+        question: "Atherosclerosis has been implicated in all of the following EXCEPT:",
+        options: ["Coronary artery disease", "Stroke", "Peripheral artery disease", "Rheumatic heart disease"],
+        correct: 3,
+        reason: "Atherosclerosis is implicated in coronary artery disease, stroke, and peripheral artery disease. Rheumatic heart disease has a completely different cause—autoimmune damage following streptococcal infection.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "Atherosclerosis begins in which layer of the artery?",
+        options: ["Tunica media", "Tunica adventitia", "The intima (inner lining)", "The external elastic membrane"],
+        correct: 2,
+        reason: "Atherosclerosis begins in the intima, the inner lining of the arteries. This is where LDL particles enter and accumulate, initiating the inflammatory process that leads to plaque formation.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "What happens when LDL particles accumulate in the arterial intima?",
+        options: ["They immediately form clots", "They are modified by enzymes and oxidized into proinflammatory particles", "They are immediately removed by white blood cells", "They strengthen the arterial wall"],
+        correct: 1,
+        reason: "When LDL particles accumulate in the intima, they are modified by enzymes and oxidized. These oxidized LDL particles are proinflammatory and promote activation of the innate inflammatory system within the intima.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "Foam cells in atherosclerosis are formed from:",
+        options: ["Red blood cells", "Monocytes that transform into macrophages and take up lipids", "Platelets only", "Smooth muscle cells only"],
+        correct: 1,
+        reason: "Monocytes enter the arterial wall, transform into macrophages, take up lipids as multiple small inclusions, and become foam cells. These foam cells are characteristic of early atherosclerotic lesions.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "What forms over the lipid-rich necrotic cores in advanced atherosclerosis?",
+        options: ["Bone tissue", "A fibrous cap (atheroma)", "Cartilage", "New blood vessels only"],
+        correct: 1,
+        reason: "Fibrous tissue is added to form a fibrous cap (atheroma) over the lipid-rich necrotic cores, just under the endothelium. This fibrous plaque is the dominant lesion in clinical atherosclerosis.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "Dilated cardiomyopathy is characterized by:",
+        options: ["Thickened, hypertrophied ventricles", "Dilated and poorly functioning left or both ventricles", "Normal-sized ventricles with thickened walls", "Only right ventricular enlargement"],
+        correct: 1,
+        reason: "Dilated cardiomyopathy is characterized by dilated (enlarged) and poorly functioning left or both ventricles. This leads to both systolic and diastolic dysfunction with increased end-diastolic and end-systolic volumes.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "To qualify as dilated cardiomyopathy, the extent of myocardial dysfunction:",
+        options: ["Must be caused exclusively by hypertension", "Cannot be explained exclusively by abnormal loading or ischemic heart disease", "Must be caused by coronary artery disease", "Must be temporary only"],
+        correct: 1,
+        reason: "To qualify as dilated cardiomyopathy, the myocardial dysfunction cannot be explained exclusively by abnormal loading conditions (hypertension or valve disease) or ischemic heart disease. It is a primary myocardial disease.",
+        section: "Pathophysiology"
+      },
+      {
+        question: "Which of the following is NOT a method for diagnosing cardiovascular disease mentioned in the text?",
+        options: ["History taking by health professional", "Electrocardiogram (ECG)", "Brain imaging (CT scan)", "Cardiac catheterization"],
+        correct: 2,
+        reason: "The diagnostic methods mentioned include history taking, electrocardiogram (ECG), echocardiography, nuclear imaging, and cardiac catheterization. Brain imaging (CT scan) is not listed as a primary cardiac diagnostic method in the text, though it may be used for cerebrovascular disease.",
+        section: "Pathophysiology"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answers = Array(quizData.length).fill(null);
+    let timeLeft = 30 * 60; // 120 minutes for 80 questions
+    let timerInterval;
+
+    // DOM Elements
+    const questionContainer = document.querySelector('.question-container');
+    const timerElement = document.querySelector('.timer');
+    const questionText = document.querySelector('.question-text');
+    const optionsContainer = document.querySelector('.options');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const centerBtn = document.querySelector('.center-btn');
+    const questionPopup = document.getElementById('question-popup');
+    const popupGrid = document.querySelector('.popup-grid');
+    const resultsPopup = document.getElementById('results-popup');
+    const detailsPage = document.getElementById('details-page');
+    const detailsContent = document.querySelector('.details-content');
+    const themeToggle = document.getElementById('theme-toggle');
+    const profileUpload = document.getElementById('profile-upload');
+    const body = document.body;
+    const sectionIndicator = document.getElementById('section-indicator');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Timer
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `Time: ${minutes}m:${seconds.toString().padStart(2, '0')}s`;
+      if (timeLeft > 0) {
+        timeLeft--;
+      } else {
+        clearInterval(timerInterval);
+        submitQuiz();
+      }
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    // Update Progress Bar
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / quizData.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    // Render Question
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      sectionIndicator.textContent = `${q.section} (Q${currentQuestion + 1})`;
+      questionText.textContent = `Question ${currentQuestion + 1}: ${q.question}`;
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const div = document.createElement('div');
+        div.classList.add('option');
+        if (answers[currentQuestion] === index) div.classList.add('selected');
+        
+        const letter = String.fromCharCode(65 + index);
+        div.innerHTML = `<p><span class="option-letter">${letter})</span> ${option}</p>`;
+        
+        div.addEventListener('click', () => {
+          document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+          div.classList.add('selected');
+          answers[currentQuestion] = index;
+          updatePopup();
+        });
+        optionsContainer.appendChild(div);
+      });
+      
+      prevBtn.disabled = currentQuestion === 0;
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Submit' : 'Next';
+      updateProgress();
+    }
+
+    // Render Question Selection Pop-up
+    function renderPopup() {
+      popupGrid.innerHTML = '';
+      quizData.forEach((_, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = index + 1;
+        if (answers[index] !== null) btn.classList.add('answered');
+        if (index === currentQuestion) btn.classList.add('current');
+        btn.addEventListener('click', () => {
+          currentQuestion = index;
+          renderQuestion();
+          questionPopup.style.display = 'none';
+        });
+        popupGrid.appendChild(btn);
+      });
+    }
+
+    function updatePopup() {
+      renderPopup();
+    }
+
+    // Submit Quiz
+    function submitQuiz() {
+      clearInterval(timerInterval);
+      const score = answers.reduce((sum, answer, i) => answer === quizData[i].correct ? sum + 1 : sum, 0);
+      
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      resultsPopup.style.display = 'block';
+      
+      document.getElementById('score-text').textContent = `${score}/${quizData.length}`;
+      
+      const percentage = (score / quizData.length) * 100;
+      let performanceText = '';
+      if (percentage >= 90) performanceText = 'Outstanding! Medical school ready!';
+      else if (percentage >= 80) performanceText = 'Excellent! Great understanding of CV system.';
+      else if (percentage >= 70) performanceText = 'Good work! Solid foundation.';
+      else if (percentage >= 60) performanceText = 'Passing. Review cardiac conduction & pathways.';
+      else performanceText = 'Keep studying! Focus on anatomy & physiology.';
+      
+      document.getElementById('performance-text').textContent = performanceText;
+    }
+
+    // Render Details Page
+    function renderDetails() {
+      detailsContent.innerHTML = '';
+      let currentSection = '';
+      
+      quizData.forEach((q, i) => {
+        if (q.section !== currentSection) {
+          currentSection = q.section;
+          const sectionHeader = document.createElement('h2');
+          sectionHeader.textContent = currentSection;
+          sectionHeader.style.color = 'var(--accent)';
+          sectionHeader.style.fontSize = '18px';
+          sectionHeader.style.marginTop = '30px';
+          sectionHeader.style.marginBottom = '15px';
+          detailsContent.appendChild(sectionHeader);
+        }
+        
+        const div = document.createElement('div');
+        div.style.marginBottom = '25px';
+        div.style.padding = '15px';
+        div.style.background = 'var(--background)';
+        div.style.borderRadius = '10px';
+        div.style.boxShadow = 'inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out)';
+        
+        const isCorrect = answers[i] === q.correct;
+        const userAnswer = answers[i] !== null ? q.options[answers[i]] : 'Not answered';
+        const correctLetter = String.fromCharCode(65 + q.correct);
+        const userLetter = answers[i] !== null ? String.fromCharCode(65 + answers[i]) : '-';
+        
+        div.innerHTML = `
+          <h3>Q${i + 1}: ${q.question}</h3>
+          <p>Your Answer: <span class="${isCorrect ? 'correct' : 'incorrect'}">${userLetter}) ${userAnswer} ${isCorrect ? '✓' : '✗'}</span></p>
+          <p>Correct Answer: <span class="correct">${correctLetter}) ${q.options[q.correct]} ✓</span></p>
+          <div class="explanation">
+            <strong>Explanation:</strong> ${q.reason}
+          </div>
+        `;
+        detailsContent.appendChild(div);
+      });
+    }
+
+    // Event Listeners
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        submitQuiz();
+      }
+    });
+
+    centerBtn.addEventListener('click', () => {
+      renderPopup();
+      questionPopup.style.display = 'block';
+    });
+
+    questionPopup.querySelector('.close-btn').addEventListener('click', () => {
+      questionPopup.style.display = 'none';
+    });
+
+    resultsPopup.querySelector('.close-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.continue-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.details-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      detailsPage.style.display = 'block';
+      renderDetails();
+    });
+
+    detailsPage.querySelector('.back-btn').addEventListener('click', () => {
+      detailsPage.style.display = 'none';
+      resultsPopup.style.display = 'block';
+    });
+
+    // Theme Toggle
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload
+    profileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          console.log('Profile image uploaded:', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Footer Navigation
+    const navItems = document.querySelectorAll('.nav-bar .nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Back button
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to exit the quiz? Your progress will be lost.')) {
+        location.reload();
+      }
+    });
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>
