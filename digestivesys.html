@@ -1745,7 +1745,163 @@
               <td>Haustra</td>
               <td>Diverticulitis, cancer, IBD</td>
             </tr>
-            <tr>
+                        <tr>
               <td><strong>Liver</strong></td>
               <td>Metabolism/bile production</td>
-              <td>H
+              <td>Hepatomegaly, calcifications</td>
+              <td>Cirrhosis, metastases</td>
+            </tr>
+            <tr>
+              <td><strong>Gallbladder</strong></td>
+              <td>Bile concentration/storage</td>
+              <td>Porcelain gallbladder</td>
+              <td>Cholelithiasis, cholecystitis</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>Exocrine/endocrine secretion</td>
+              <td>Calcifications (chronic)</td>
+              <td>Pancreatitis, adenocarcinoma</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>📊 Quick Reference: Contraindications</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Contrast Agent</th>
+              <th>Contraindication</th>
+              <th>Alternative</th>
+            </tr>
+            <tr>
+              <td><strong>Barium Sulfate</strong></td>
+              <td>Suspected perforation, aspiration risk</td>
+              <td>Water-soluble iodinated contrast</td>
+            </tr>
+            <tr>
+              <td><strong>Iodinated Contrast</strong></td>
+              <td>Severe allergy, renal failure, thyroid disease</td>
+              <td>Barium (if no perforation), MRI</td>
+            </tr>
+            <tr>
+              <td><strong>Glucagon/Anticholinergics</strong></td>
+              <td>Glaucoma, severe cardiac disease</td>
+              <td>Standard technique without hypotonia</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>📊 Quick Reference: Physiological Values</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th>Clinical Relevance</th>
+            </tr>
+            <tr>
+              <td><strong>Gastric pH</strong></td>
+              <td>1.5-3.5</td>
+              <td>Acid suppression for UGI bleeding</td>
+            </tr>
+            <tr>
+              <td><strong>Small bowel transit</strong></td>
+              <td>3-5 hours</td>
+              <td>Timing for SBFT films</td>
+            </tr>
+            <tr>
+              <td><strong>Colonic transit</strong></td>
+              <td>12-48 hours</td>
+              <td>Constipation evaluation</td>
+            </tr>
+            <tr>
+              <td><strong>Bile production</strong></td>
+              <td>500-1000 mL/day</td>
+              <td>Biliary obstruction effects</td>
+            </tr>
+            <tr>
+              <td><strong>Saliva production</strong></td>
+              <td>1-1.5 L/day</td>
+              <td>Xerostomia impact on swallowing</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Study Checklist</h3>
+          <ul>
+            <li>Understand esophageal constrictions (6-4-10 rule)</li>
+            <li>Know UGI positioning and anatomy demonstrated</li>
+            <li>Master small bowel divisions and their functions</li>
+            <li>Understand colon segments (intra vs retroperitoneal)</li>
+            <li>Know GI wall layers (MSMS) and epithelial types</li>
+            <li>Recognize classic radiographic signs (bird's beak, apple-core, etc.)</li>
+            <li>Understand contrast contraindications (barium vs iodinated)</li>
+            <li>Know patient preparation for each exam type</li>
+            <li>Master accessory organ functions and imaging</li>
+            <li>Understand epithelial changes in common pathologies</li>
+          </ul>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Key Mnemonics:</strong><br>
+          • <strong>Constrictions:</strong> "Cricoid, Aortic, Diaphragm" (C6, T4-T5, T10)<br>
+          • <strong>GI Layers:</strong> "MSMS" - Mucosa, Submucosa, Muscularis, Serosa<br>
+          • <strong>Stomach Regions:</strong> "Fundus Body Antrum Pylorus" (FBAP)<br>
+          • <strong>Barrett's Risk:</strong> "GERD leads to Glandular metaplasia"<br>
+          • <strong>Crohn's vs UC:</strong> "Crohn's = Cobblestoning, Continuous = Colitis (UC)"
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master the Digestive System in Radiography!
+        </p>
+
+        <button class="explore-btn" onclick="window.location.href='radiography-quiz.html'">Start Radiology Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
+
