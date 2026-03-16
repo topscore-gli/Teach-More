@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEUROPHYSIOLOGY - Motor System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #9b59b6;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #9b59b6;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note h4 {
+      font-size: 16px;
+      margin: 20px 0 10px;
+      color: var(--text-primary);
+      font-weight: bold;
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(155, 89, 182, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .definition-term {
+      color: var(--accent);
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .section-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      background: rgba(155, 89, 182, 0.1);
+      border-radius: 6px;
+    }
+
+    .memory-tip {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid #1db954;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #fff;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .quick-ref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .quick-ref-card {
+      background: rgba(0,0,0,0.1);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .quick-ref-card strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">NEUROPHYSIOLOGY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Motor System! 🧠</h1>
+        <p class="subtitle">– Complete Neurophysiology Guide</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Table of Contents</h2>
+        <div class="section-nav">
+          <a href="#sec1">Motor Centers</a>
+          <a href="#sec2">Motor Units</a>
+          <a href="#sec3">Networks</a>
+          <a href="#sec4">Reflexes</a>
+          <a href="#sec5">Spindle/GTO</a>
+          <a href="#sec6">Ventral Horn</a>
+          <a href="#sec7">EEG/Sleep</a>
+          <a href="#sec8">Cerebellum</a>
+          <a href="#sec9">Basal Ganglia</a>
+          <a href="#sec10">Hypothalamus</a>
+          <a href="#sec11">Limbic System</a>
+          <a href="#sec12">Motor Tracts</a>
+        </div>
+
+        <h2 id="sec1">1️⃣ Motor Centers Overview 🎯</h2>
+        
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Motor System:</span> Neural structures controlling voluntary and involuntary movements via descending pathways from cortex to muscles</li>
+            <li><span class="definition-term">Upper Motor Neuron (UMN):</span> Neurons from motor cortex/brainstem descending to synapse on LMNs or interneurons</li>
+            <li><span class="definition-term">Lower Motor Neuron (LMN):</span> Neurons in spinal cord (ventral horn) or brainstem whose axons directly innervate skeletal muscle</li>
+            <li><span class="definition-term">Spastic Paralysis:</span> Increased tone, hyperreflexia, stiffness due to UMN lesion (loss of inhibition)</li>
+            <li><span class="definition-term">Flaccid Paralysis:</span> Decreased tone, atrophy, areflexia due to LMN damage</li>
+          </ul>
+        </div>
+
+        <h3>Hierarchy of Motor Control</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Level</th>
+              <th>Structure</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Highest</strong></td>
+              <td>Motor Cortex, Basal Ganglia, Cerebellum</td>
+              <td>Planning, initiation, coordination</td>
+            </tr>
+            <tr>
+              <td><strong>Middle</strong></td>
+              <td>Brain Stem, Reticular Formation</td>
+              <td>Posture, reflexes, arousal</td>
+            </tr>
+            <tr>
+              <td><strong>Lowest</strong></td>
+              <td>Spinal Cord</td>
+              <td>Final execution, reflexes</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>UMN vs LMN Comparison</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Upper Motor Neuron</th>
+              <th>Lower Motor Neuron</th>
+            </tr>
+            <tr>
+              <td><strong>Location</strong></td>
+              <td>Cortex → Brainstem/Spinal cord</td>
+              <td>Spinal cord → Muscle</td>
+            </tr>
+            <tr>
+              <td><strong>Function</strong></td>
+              <td>Control & modulation</td>
+              <td>Final execution</td>
+            </tr>
+            <tr>
+              <td><strong>Lesion Effect</strong></td>
+              <td>Spastic paralysis, hyperreflexia</td>
+              <td>Flaccid paralysis, atrophy, areflexia</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>💡 Memory Tip:</strong> "Upper = Upbeat (spastic, hyperactive)" vs "Lower = Low/Down (flaccid, absent)"
+        </div>
+
+        <h2 id="sec2">2️⃣ Motor Neurons & Units 💪</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Motor Unit:</span> One motor neuron + ALL muscle fibers it innervates (functional unit of motor control)</li>
+            <li><span class="definition-term">α-motor Neuron:</span> Large LMNs innervating extrafusal fibers for muscle contraction</li>
+            <li><span class="definition-term">γ-motor Neuron:</span> Small LMNs innervating intrafusal fibers to regulate spindle sensitivity</li>
+            <li><span class="definition-term">Recruitment:</span> Progressive activation of motor units to increase force</li>
+            <li><span class="definition-term">Asynchronous Discharge:</span> Motor units firing at different times for smooth movement</li>
+          </ul>
+        </div>
+
+        <h3>Neuron Types</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Neuron</th>
+              <th>Function</th>
+              <th>Target</th>
+            </tr>
+            <tr>
+              <td><strong>α-motor</strong></td>
+              <td>Main muscle contraction</td>
+              <td>Extrafusal fibers</td>
+            </tr>
+            <tr>
+              <td><strong>γ-motor</strong></td>
+              <td>Adjust spindle sensitivity</td>
+              <td>Intrafusal fibers</td>
+            </tr>
+            <tr>
+              <td><strong>Interneurons</strong></td>
+              <td>Integration & modulation</td>
+              <td>Other neurons</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Motor Unit Size Principle:</strong><br>
+          • Small units (few fibers) = Fine control (eye muscles)<br>
+          • Large units (many fibers) = Power (thigh muscles)
+        </div>
+
+        <h2 id="sec3">3️⃣ Neuronal Networks 🕸️</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Divergence:</span> One neuron branches to synapse with many targets (signal amplification)</li>
+            <li><span class="definition-term">Convergence:</span> Multiple neurons synapse on one neuron (integration)</li>
+            <li><span class="definition-term">Temporal Facilitation:</span> Summation of rapid successive stimuli from same source</li>
+            <li><span class="definition-term">Spatial Facilitation:</span> Summation of simultaneous stimuli from different sources</li>
+            <li><span class="definition-term">Renshaw Inhibition:</span> Negative feedback where motor axon collaterals excite inhibitory interneurons that inhibit the same motor neuron</li>
+          </ul>
+        </div>
+
+        <h3>Types of Neuronal Connections</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Definition</th>
+              <th>Importance</th>
+            </tr>
+            <tr>
+              <td><strong>Divergence</strong></td>
+              <td>One axon → many neurons</td>
+              <td>Signal amplification, safety factor</td>
+            </tr>
+            <tr>
+              <td><strong>Convergence</strong></td>
+              <td>Many neurons → one neuron</td>
+              <td>Integration of inputs</td>
+            </tr>
+            <tr>
+              <td><strong>Occlusion</strong></td>
+              <td>Combined response < sum of individual</td>
+              <td>Prevents over-activation</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Inhibitory Circuits</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Circuit</th>
+              <th>Mechanism</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Antagonist Inhibition</strong></td>
+              <td>Inhibits opposing muscle</td>
+              <td>Biceps relaxes when triceps contracts</td>
+            </tr>
+            <tr>
+              <td><strong>Renshaw Inhibition</strong></td>
+              <td>Recurrent inhibition of motor neuron</td>
+              <td>Limits excessive motor output</td>
+            </tr>
+            <tr>
+              <td><strong>Surround Inhibition</strong></td>
+              <td>Inhibits neighboring neurons</td>
+              <td>Sharpens signal focus</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec4">4️⃣ Reflexes ⚡</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Reflex:</span> Involuntary, stereotyped response to sensory stimulus</li>
+            <li><span class="definition-term">Monosynaptic Reflex:</span> Direct connection between sensory and motor neuron (one synapse)</li>
+            <li><span class="definition-term">Polysynaptic Reflex:</span> Multiple synapses and interneurons involved</li>
+            <li><span class="definition-term">Stretch Reflex (Myotatic):</span> Muscle contraction in response to stretch</li>
+            <li><span class="definition-term">Inverse Stretch Reflex:</span> Muscle relaxation when tension is excessive (GTO-mediated)</li>
+            <li><span class="definition-term">Local Sign:</span> Specific motor response pattern based on stimulus location</li>
+          </ul>
+        </div>
+
+        <h3>Classification by Synapse Number</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Synapses</th>
+              <th>Speed</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td><strong>Monosynaptic</strong></td>
+              <td>1</td>
+              <td>Fastest</td>
+              <td>Stretch reflexes (knee jerk)</td>
+            </tr>
+            <tr>
+              <td><strong>Bisynaptic</strong></td>
+              <td>2</td>
+              <td>Fast</td>
+              <td>Golgi tendon organ reflex</td>
+            </tr>
+            <tr>
+              <td><strong>Polysynaptic</strong></td>
+              <td>2+</td>
+              <td>Slower</td>
+              <td>Withdrawal, cough, micturition</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Clinical Stretch Reflexes</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Reflex</th>
+              <th>Stimulus</th>
+              <th>Response</th>
+              <th>Segment</th>
+            </tr>
+            <tr>
+              <td><strong>Knee Jerk</strong></td>
+              <td>Tap patellar tendon</td>
+              <td>Knee extension</td>
+              <td>L3-L4</td>
+            </tr>
+            <tr>
+              <td><strong>Ankle Jerk</strong></td>
+              <td>Tap Achilles tendon</td>
+              <td>Plantarflexion</td>
+              <td>S1-S2</td>
+            </tr>
+            <tr>
+              <td><strong>Biceps Jerk</strong></td>
+              <td>Tap biceps tendon</td>
+              <td>Elbow flexion</td>
+              <td>C5-C6</td>
+            </tr>
+            <tr>
+              <td><strong>Triceps Jerk</strong></td>
+              <td>Tap triceps tendon</td>
+              <td>Elbow extension</td>
+              <td>C7-C8</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Reflex Arc Components Comparison</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Component</th>
+              <th>Stretch Reflex</th>
+              <th>GTO Reflex</th>
+              <th>Withdrawal</th>
+            </tr>
+            <tr>
+              <td><strong>Stimulus</strong></td>
+              <td>Muscle stretch</td>
+              <td>Muscle tension</td>
+              <td>Pain/noxious</td>
+            </tr>
+            <tr>
+              <td><strong>Receptor</strong></td>
+              <td>Muscle spindle</td>
+              <td>Golgi Tendon Organ</td>
+              <td>Free nerve endings</td>
+            </tr>
+            <tr>
+              <td><strong>Afferent</strong></td>
+              <td>Ia, II fibers</td>
+              <td>Ib fibers</td>
+              <td>Aδ, C fibers</td>
+            </tr>
+            <tr>
+              <td><strong>Response</strong></td>
+              <td>Contraction</td>
+              <td>Relaxation (inverse)</td>
+              <td>Flexion/withdrawal</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec5">5️⃣ Muscle Spindle & GTO 📏</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Muscle Spindle:</span> Sensory receptor detecting muscle length and rate of length change</li>
+            <li><span class="definition-term">Intrafusal Fibers:</span> Specialized fibers inside spindle (nuclear bag and nuclear chain)</li>
+            <li><span class="definition-term">Nuclear Bag Fibers:</span> Large fibers with clustered nuclei, sensitive to dynamic (rapid) stretch</li>
+            <li><span class="definition-term">Nuclear Chain Fibers:</strong> Smaller fibers with nuclei in row, sensitive to static (sustained) stretch</li>
+            <li><span class="definition-term">Annulospiral Endings:</span> Primary sensory endings (Group Ia) wrapping central region</li>
+            <li><span class="definition-term">Flower-Spray Endings:</span> Secondary endings (Group II) on nuclear chain fibers</li>
+            <li><span class="definition-term">Gamma Loop:</span> Reflex circuit maintaining spindle sensitivity during contraction</li>
+            <li><span class="definition-term">Golgi Tendon Organ (GTO):</span> Tension receptor at muscle-tendon junction (protective)</li>
+          </ul>
+        </div>
+
+        <h3>Spindle Structure</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Component</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>Intrafusal fibers</strong></td>
+              <td>2-10 per spindle, parallel to extrafusal</td>
+            </tr>
+            <tr>
+              <td><strong>Nuclear Bag</strong></td>
+              <td>Dilated central portion, many nuclei</td>
+            </tr>
+            <tr>
+              <td><strong>Nuclear Chain</strong></td>
+              <td>Thinner, shorter, linear nuclei</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Spindle Innervation</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Fiber Type</th>
+              <th>Ending</th>
+              <th>Location</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Ia (Primary)</strong></td>
+              <td>Annulospiral</td>
+              <td>Bag & Chain</td>
+              <td>Length & velocity (dynamic)</td>
+            </tr>
+            <tr>
+              <td><strong>II (Secondary)</strong></td>
+              <td>Flower-spray</td>
+              <td>Chain only</td>
+              <td>Length only (static)</td>
+            </tr>
+            <tr>
+              <td><strong>γ-dynamic</strong></td>
+              <td>Motor</td>
+              <td>Nuclear bag</td>
+              <td>Adjusts dynamic sensitivity</td>
+            </tr>
+            <tr>
+              <td><strong>γ-static</strong></td>
+              <td>Motor</td>
+              <td>Nuclear chain</td>
+              <td>Adjusts static sensitivity</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Muscle Spindle vs GTO</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Muscle Spindle</th>
+              <th>GTO</th>
+            </tr>
+            <tr>
+              <td><strong>Location</strong></td>
+              <td>Parallel with extrafusal</td>
+              <td>In series with muscle/tendon</td>
+            </tr>
+            <tr>
+              <td><strong>Stimulus</strong></td>
+              <td>Muscle stretch/length</td>
+              <td>Muscle tension/load</td>
+            </tr>
+            <tr>
+              <td><strong>Afferent</strong></td>
+              <td>Group Ia, II</td>
+              <td>Group Ib</td>
+            </tr>
+            <tr>
+              <td><strong>Reflex Type</strong></td>
+              <td>Monosynaptic</td>
+              <td>Bisynaptic</td>
+            </tr>
+            <tr>
+              <td><strong>Response</strong></td>
+              <td>Contraction</td>
+              <td>Relaxation (protective)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Key Timing Values:</strong><br>
+          • Knee jerk reaction time: 19-24 ms<br>
+          • Central delay: 0.6-0.9 ms
+        </div>
+
+        <h2 id="sec6">6️⃣ Ventral Horn & Reticular Formation 🎯</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Ventral Horn:</span> Anterior spinal cord region containing LMN cell bodies</li>
+            <li><span class="definition-term">Final Common Pathway:</span> The LMN - ultimate output path from CNS to muscle</li>
+            <li><span class="definition-term">Somatotopic Organization:</span> Systematic arrangement of neurons by body region innervated</li>
+            <li><span class="definition-term">Reticular Formation:</span> Diffuse brainstem neuron network regulating consciousness, CV control, motor functions</li>
+            <li><span class="definition-term">RAS (Reticular Activating System):</span> System regulating arousal and wakefulness</li>
+            <li><span class="definition-term">Desynchronization:</span> Replacement of synchronized EEG with low-voltage fast activity (arousal)</li>
+          </ul>
+        </div>
+
+        <h3>Ventral Horn Organization</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Location</th>
+              <th>Muscle Type</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Medial</strong></td>
+              <td>Trunk muscles</td>
+              <td>Postural muscles</td>
+            </tr>
+            <tr>
+              <td><strong>Lateral</strong></td>
+              <td>Extremities (distal)</td>
+              <td>Hand, foot muscles</td>
+            </tr>
+            <tr>
+              <td><strong>Dorsal</strong></td>
+              <td>Flexor muscles</td>
+              <td>Biceps, hamstrings</td>
+            </tr>
+            <tr>
+              <td><strong>Ventral</strong></td>
+              <td>Extensor muscles</td>
+              <td>Triceps, quadriceps</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🎯 Key Concept:</strong> Ventral horn cells = "Final Common Pathway" (last output from CNS to muscle)
+        </div>
+
+        <h3>Reticular Formation Functions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Center</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Cardiovascular</strong></td>
+              <td>Blood pressure control</td>
+            </tr>
+            <tr>
+              <td><strong>Respiratory</strong></td>
+              <td>Breathing regulation</td>
+            </tr>
+            <tr>
+              <td><strong>Cardiac</strong></td>
+              <td>Heart rate control</td>
+            </tr>
+            <tr>
+              <td><strong>RAS</strong></td>
+              <td>Consciousness/wakefulness</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec7">7️⃣ EEG & Sleep 😴</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">EEG:</span> Recording of brain electrical activity via scalp electrodes</li>
+            <li><span class="definition-term">Alpha Waves:</span> 8-13 Hz, relaxed wakefulness, eyes closed</li>
+            <li><span class="definition-term">Beta Waves:</span> 13-30 Hz, alert wakefulness, active thinking</li>
+            <li><span class="definition-term">Theta Waves:</span> 4-7 Hz, drowsiness and light sleep</li>
+            <li><span class="definition-term">Delta Waves:</span> 0.5-4 Hz, deep sleep</li>
+            <li><span class="definition-term">Sleep Spindles:</span> Brief 10-14 Hz bursts in Stage 2 sleep</li>
+            <li><span class="definition-term">K-Complexes:</span> High-amplitude biphasic waves in Stage 2</li>
+            <li><span class="definition-term">PGO Spikes:</span> Ponto-Geniculo-Occipital spikes characteristic of REM</li>
+            <li><span class="definition-term">REM Sleep:</span> Rapid eye movement sleep with muscle atonia and dreaming</li>
+          </ul>
+        </div>
+
+        <h3>EEG Wave Types</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Wave</th>
+              <th>Frequency</th>
+              <th>State</th>
+              <th>Location</th>
+            </tr>
+            <tr>
+              <td><strong>Alpha (α)</strong></td>
+              <td>8-13 Hz</td>
+              <td>Rest, eyes closed</td>
+              <td>Frontal, Occipital</td>
+            </tr>
+            <tr>
+              <td><strong>Beta (β)</strong></td>
+              <td>13-30 Hz</td>
+              <td>Alert, active thinking</td>
+              <td>Frontal</td>
+            </tr>
+            <tr>
+              <td><strong>Theta (θ)</strong></td>
+              <td>4-7 Hz</td>
+              <td>Drowsiness, sleep</td>
+              <td>Hippocampus</td>
+            </tr>
+            <tr>
+              <td><strong>Delta (δ)</strong></td>
+              <td>0.5-4 Hz</td>
+              <td>Deep sleep</td>
+              <td>Diffuse</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Sleep Stages (Non-REM)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Stage</th>
+              <th>EEG Pattern</th>
+              <th>Characteristics</th>
+            </tr>
+            <tr>
+              <td><strong>Stage 1</strong></td>
+              <td>Theta waves (4-6 Hz)</td>
+              <td>Drowsy, light sleep</td>
+            </tr>
+            <tr>
+              <td><strong>Stage 2</strong></td>
+              <td>Sleep spindles + K-complexes</td>
+              <td>HR and temperature fall</td>
+            </tr>
+            <tr>
+              <td><strong>Stage 3</strong></td>
+              <td>Delta waves begin</td>
+              <td>Slow-wave sleep begins</td>
+            </tr>
+            <tr>
+              <td><strong>Stage 4</strong></td>
+              <td>Delta waves (1-2 Hz)</td>
+              <td>Deep sleep, maximum slowing</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>REM vs Non-REM Sleep</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>REM Sleep</th>
+              <th>Non-REM Sleep</th>
+            </tr>
+            <tr>
+              <td><strong>EEG</strong></td>
+              <td>Desynchronized (awake-like)</td>
+              <td>Synchronized slow waves</td>
+            </tr>
+            <tr>
+              <td><strong>Eye Movement</strong></td>
+              <td>Rapid</td>
+              <td>None</td>
+            </tr>
+            <tr>
+              <td><strong>Muscle Tone</strong></td>
+              <td>Hypotonia (paralysis)</td>
+              <td>Variable, higher</td>
+            </tr>
+            <tr>
+              <td><strong>Dreams</strong></td>
+              <td>Vivid, frequent</td>
+              <td>Rare, less vivid</td>
+            </tr>
+            <tr>
+              <td><strong>Function</strong></td>
+              <td>Memory consolidation</td>
+              <td>Physical restoration</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Mnemonic:</strong> "BATS D" (frequency high to low): Beta, Alpha, Theta, Sleep spindles, Delta
+        </div>
+
+        <h2 id="sec8">8️⃣ Cerebellum 🧠</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Cerebellum:</span> "Little brain" posterior to brainstem, coordinates precision and timing</li>
+            <li><span class="definition-term">Archicerebellum:</span> Oldest part (flocculonodular), vestibular connections, balance</li>
+            <li><span class="definition-term">Spinocerebellum:</span> Intermediate portion, proprioceptive input, ongoing movement coordination</li>
+            <li><span class="definition-term">Neocerebellum:</span> Newest/largest (lateral hemispheres), movement planning</li>
+            <li><span class="definition-term">Purkinje Cells:</span> Sole output neurons of cerebellar cortex (inhibitory)</li>
+            <li><span class="definition-term">Ataxia:</span> Loss of coordination, unsteady gait</li>
+            <li><span class="definition-term">Dysmetria:</span> Inability to judge distance (overshooting/undershooting)</li>
+            <li><span class="definition-term">Adiadochokinesia:</span> Inability to perform rapid alternating movements</li>
+            <li><span class="definition-term">Intention Tremor:</span> Tremor increasing during voluntary movement toward target</li>
+          </ul>
+        </div>
+
+        <h3>Functional Divisions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Division</th>
+              <th>Other Names</th>
+              <th>Input</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Archicerebellum</strong></td>
+              <td>Vestibulocerebellum</td>
+              <td>Vestibular system</td>
+              <td>Balance, equilibrium</td>
+            </tr>
+            <tr>
+              <td><strong>Spinocerebellum</strong></td>
+              <td>Paleocerebellum</td>
+              <td>Proprioception, cortex</td>
+              <td>Coordinate ongoing movements</td>
+            </tr>
+            <tr>
+              <td><strong>Neocerebellum</strong></td>
+              <td>Cerebrocerebellum</td>
+              <td>Motor cortex, pons</td>
+              <td>Planning, programming</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Cerebellar Lesion Signs (DANISH)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Sign</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>D</strong>ysmetria</td>
+              <td>Past-pointing, overshooting</td>
+            </tr>
+            <tr>
+              <td><strong>A</strong>taxia</td>
+              <td>Uncoordinated movements</td>
+            </tr>
+            <tr>
+              <td><strong>N</strong>ystagmus</td>
+              <td>Eye tremor on lateral gaze</td>
+            </tr>
+            <tr>
+              <td><strong>I</strong>ntention Tremor</td>
+              <td>Tremor during movement</td>
+            </tr>
+            <tr>
+              <td><strong>S</strong>peech (Scanning)</td>
+              <td>Slurred, explosive speech</td>
+            </tr>
+            <tr>
+              <td><strong>H</strong>ypotonia</td>
+              <td>Decreased muscle tone</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Deep Cerebellar Nuclei</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Nucleus</th>
+              <th>Input From</th>
+              <th>Projects To</th>
+            </tr>
+            <tr>
+              <td><strong>Fastigial</strong></td>
+              <td>Medial Purkinje cells</td>
+              <td>Vestibular nuclei, RF</td>
+            </tr>
+            <tr>
+              <td><strong>Globose</strong></td>
+              <td>Intermediate Purkinje</td>
+              <td>Red nucleus, thalamus</td>
+            </tr>
+            <tr>
+              <td><strong>Emboliform</strong></td>
+              <td>Intermediate Purkinje</td>
+              <td>Red nucleus, thalamus</td>
+            </tr>
+            <tr>
+              <td><strong>Dentate</strong></td>
+              <td>Lateral Purkinje cells</td>
+              <td>Thalamus → motor cortex</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec9">9️⃣ Basal Ganglia ⚙️</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Basal Ganglia:</span> Subcortical nuclei at forebrain base (caudate, putamen, globus pallidus, substantia nigra, STN)</li>
+            <li><span class="definition-term">Corpus Striatum:</span> Caudate + putamen (main input zone)</li>
+            <li><span class="definition-term">Direct Pathway:</strong> Cortex → striatum → GPi/SNr → thalamus → cortex (facilitates movement)</li>
+            <li><span class="definition-term">Indirect Pathway:</strong> Cortex → striatum → GPe → STN → GPi/SNr → thalamus → cortex (inhibits movement)</li>
+            <li><span class="definition-term">Nigrostriatal Pathway:</strong> Dopaminergic projection from SNc to striatum</li>
+            <li><span class="definition-term">Parkinson's Disease:</strong> Degeneration of nigrostriatal dopaminergic neurons → TRAP symptoms</li>
+            <li><span class="definition-term">Huntington's Disease (Chorea):</strong> Striatal degeneration → dance-like movements</li>
+            <li><span class="definition-term">Hemiballismus:</strong> Violent flinging movements from contralateral STN lesion</li>
+          </ul>
+        </div>
+
+        <h3>Basal Ganglia Components</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Subdivisions</th>
+              <th>Key Connections</th>
+            </tr>
+            <tr>
+              <td><strong>Caudate nucleus</strong></td>
+              <td>Head, body, tail</td>
+              <td>Receives cortical input</td>
+            </tr>
+            <tr>
+              <td><strong>Putamen</strong></td>
+              <td>-</td>
+              <td>With caudate = corpus striatum</td>
+            </tr>
+            <tr>
+              <td><strong>Globus pallidus</strong></td>
+              <td>External (GPe), Internal (GPi)</td>
+              <td>Main output to thalamus</td>
+            </tr>
+            <tr>
+              <td><strong>Substantia nigra</strong></td>
+              <td>Pars compacta (SNc), Pars reticularis (SNr)</td>
+              <td>Dopaminergic nigrostriatal</td>
+            </tr>
+            <tr>
+              <td><strong>Subthalamus</strong></td>
+              <td>-</td>
+              <td>Excitatory with GP</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Parkinson's Disease (TRAP)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Symptom</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>T</strong>remor at rest</td>
+              <td>Pill-rolling tremor, decreases with movement</td>
+            </tr>
+            <tr>
+              <td><strong>R</strong>igidity</td>
+              <td>Cogwheel/lead-pipe resistance</td>
+            </tr>
+            <tr>
+              <td><strong>A</strong>kinesia/Bradykinesia</td>
+              <td>Poverty of movement, slow initiation</td>
+            </tr>
+            <tr>
+              <td><strong>P</strong>ostural Instability</td>
+              <td>Late feature, balance problems</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Basal Ganglia Lesions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Disorder</th>
+              <th>Lesion Site</th>
+              <th>Key Symptoms</th>
+            </tr>
+            <tr>
+              <td><strong>Parkinson's</strong></td>
+              <td>Nigrostriatal dopaminergic neurons</td>
+              <td>TRAP symptoms</td>
+            </tr>
+            <tr>
+              <td><strong>Huntington's (Chorea)</strong></td>
+              <td>Corpus striatum degeneration</td>
+              <td>Dance-like movements</td>
+            </tr>
+            <tr>
+              <td><strong>Ballismus</strong></td>
+              <td>Subthalamus</td>
+              <td>Violent flinging movements</td>
+            </tr>
+            <tr>
+              <td><strong>Athetosis</strong></td>
+              <td>Corpus striatum</td>
+              <td>Slow, writhing movements</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Mnemonic:</strong> "Dope Moves You" - Dopamine (from SNc) is essential for movement
+        </div>
+
+        <h2 id="sec10">🔟 Hypothalamus 🌡️</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Hypothalamus:</span> Small diencephalic region regulating homeostasis, autonomic functions, endocrine</li>
+            <li><span class="definition-term">Feeding Center:</span> Lateral hypothalamic area stimulating hunger</li>
+            <li><span class="definition-term">Satiety Center:</span> Ventromedial nucleus inhibiting feeding</li>
+            <li><span class="definition-term">ADH (Vasopressin):</span> Synthesized in hypothalamus, released from posterior pituitary for water retention</li>
+            <li><span class="definition-term">Oxytocin:</span> Uterine contraction and milk ejection hormone</li>
+            <li><span class="definition-term">Circadian Rhythm:</span> ~24-hour biological cycle regulated by suprachiasmatic nucleus</li>
+            <li><span class="definition-term">Poikilothermia:</span> Inability to maintain constant body temperature</li>
+          </ul>
+        </div>
+
+        <h3>Hypothalamic Regions & Functions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Region</th>
+              <th>Nuclei</th>
+              <th>Main Functions</th>
+            </tr>
+            <tr>
+              <td><strong>Anterior</strong></td>
+              <td>Paraventricular, Supraoptic, Preoptic</td>
+              <td>Heat loss, ADH/oxytocin, parasympathetic</td>
+            </tr>
+            <tr>
+              <td><strong>Posterior</strong></td>
+              <td>Posterior, Dorsomedial, Ventromedial</td>
+              <td>Heat conservation, sympathetic, feeding</td>
+            </tr>
+            <tr>
+              <td><strong>Lateral</strong></td>
+              <td>Diffuse nuclei</td>
+              <td>Hunger, thirst, emotions, reward</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Hypothalamic Functions Summary</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Function</th>
+              <th>Center</th>
+              <th>Stimulation Effect</th>
+              <th>Destruction Effect</th>
+            </tr>
+            <tr>
+              <td><strong>Feeding</strong></td>
+              <td>Lateral hypothalamus</td>
+              <td>Hunger, eating</td>
+              <td>Lethal starvation</td>
+            </tr>
+            <tr>
+              <td><strong>Satiety</strong></td>
+              <td>Ventromedial nucleus</td>
+              <td>Fullness</td>
+              <td>Voracious eating, obesity</td>
+            </tr>
+            <tr>
+              <td><strong>Thirst</strong></td>
+              <td>Lateral hypothalamus</td>
+              <td>Drinking</td>
+              <td>Adipsia (no drinking)</td>
+            </tr>
+            <tr>
+              <td><strong>Water conservation</strong></td>
+              <td>Supraoptic (ADH)</td>
+              <td>Water reabsorption</td>
+              <td>Diabetes insipidus</td>
+            </tr>
+            <tr>
+              <td><strong>Temperature</strong></td>
+              <td>Anterior (cool) & Posterior (heat)</td>
+              <td>Sweating/shivering</td>
+              <td>Poikilothermia</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Mnemonic:</strong> "HOT BED" - Hunger, Osmoregulation, Temperature, Blood pressure, Endocrine, Drives (sex, thirst)
+        </div>
+
+        <h2 id="sec11">1️⃣1️⃣ Limbic System ❤️</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Limbic System:</span> Brain structures on both sides of thalamus involved in emotion, motivation, memory</li>
+            <li><span class="definition-term">Hippocampus:</span> Seahorse-shaped medial temporal structure crucial for memory formation</li>
+            <li><span class="definition-term">Amygdala:</span> Almond-shaped nucleus for emotional processing (fear, aggression)</li>
+            <li><span class="definition-term">Fornix:</span> C-shaped tract connecting hippocampus to mammillary bodies</li>
+            <li><span class="definition-term">Papez Circuit:</span> Neural circuit proposed as anatomical substrate of emotion</li>
+            <li><span class="definition-term">Kluver-Bucy Syndrome:</span> Bilateral amygdala damage → placidity, hyperorality, hypersexuality</li>
+            <li><span class="definition-term">Anterograde Amnesia:</span> Inability to form new memories (bilateral hippocampal lesion)</li>
+          </ul>
+        </div>
+
+        <h3>Papez Circuit (Emotional Processing)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Connection</th>
+              <th>Pathway</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Hippocampus → Mammillary bodies</strong></td>
+              <td>Fornix</td>
+              <td>Memory-emotion integration</td>
+            </tr>
+            <tr>
+              <td><strong>Mammillary → Anterior thalamus</strong></td>
+              <td>Mammillothalamic tract</td>
+              <td>Relay to cortex</td>
+            </tr>
+            <tr>
+              <td><strong>Anterior thalamus → Cingulate</strong></td>
+              <td>Thalamocortical fibers</td>
+              <td>Cortical processing</td>
+            </tr>
+            <tr>
+              <td><strong>Cingulate → Hippocampus</strong></td>
+              <td>Cingulum</td>
+              <td>Completes circuit</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Kluver-Bucy Syndrome Features</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>Hyperorality</strong></td>
+              <td>Excessive oral examination of objects</td>
+            </tr>
+            <tr>
+              <td><strong>Loss of fear</strong></td>
+              <td>No fear response to threats</td>
+            </tr>
+            <tr>
+              <td><strong>Decreased aggression</strong></td>
+              <td>Placid behavior</td>
+            </tr>
+            <tr>
+              <td><strong>Dietary changes</strong></td>
+              <td>May eat non-food items</td>
+            </tr>
+            <tr>
+              <td><strong>Psychic blindness</strong></td>
+              <td>Cannot distinguish edible from non-edible</td>
+            </tr>
+            <tr>
+              <td><strong>Hypersexuality</strong></td>
+              <td>Attempt to copulate with inappropriate partners</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec12">1️⃣2️⃣ Motor Tracts 🛤️</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Pyramidal Tract:</span> Main voluntary motor pathway from cortex through medullary pyramids</li>
+            <li><span class="definition-term">Extrapyramidal Tract:</span> Motor pathways excluding direct corticospinal (basal ganglia, brainstem nuclei)</li>
+            <li><span class="definition-term">Corticospinal Tract:</span> Pathway from motor cortex to spinal cord (lateral and anterior)</li>
+            <li><span class="definition-term">Pyramidal Decussation:</span> Crossing of 80% of corticospinal fibers in caudal medulla</li>
+            <li><span class="definition-term">Internal Capsule:</span> White matter structure containing concentrated fiber tracts</li>
+            <li><span class="definition-term">Reticulospinal Tract:</span> From reticular formation to spinal cord (posture, automatic movements)</li>
+            <li><span class="definition-term">Vestibulospinal Tract:</span> From vestibular nuclei (postural responses to gravity)</li>
+          </ul>
+        </div>
+
+        <h3>Pyramidal vs Extrapyramidal</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Pyramidal</th>
+              <th>Extrapyramidal</th>
+            </tr>
+            <tr>
+              <td><strong>Anatomy</strong></td>
+              <td>Direct cortex to spinal cord</td>
+              <td>Indirect, multiple synapses</td>
+            </tr>
+            <tr>
+              <td><strong>Passes through</strong></td>
+              <td>Medullary pyramids</td>
+              <td>Does NOT pass through pyramids</td>
+            </tr>
+            <tr>
+              <td><strong>Function</strong></td>
+              <td>Fine, skilled voluntary movement</td>
+              <td>Posture, tone, basic movements</td>
+            </tr>
+            <tr>
+              <td><strong>Control</strong></td>
+              <td>Distal limb muscles</td>
+              <td>Proximal, axial muscles</td>
+            </tr>
+            <tr>
+              <td><strong>Lesion</strong></td>
+              <td>Spastic paralysis, loss of fine control</td>
+              <td>Various movement disorders</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Corticospinal Tract Details</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>Origin</strong></td>
+              <td>Motor cortex</td>
+            </tr>
+            <tr>
+              <td><strong>Decussation</strong></td>
+              <td>80% at medulla (pyramidal decussation)</td>
+            </tr>
+            <tr>
+              <td><strong>Lateral tract</strong></td>
+              <td>80%, crosses, distal muscles</td>
+            </tr>
+            <tr>
+              <td><strong>Anterior tract</strong></td>
+              <td>20%, ipsilateral, axial muscles</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Extrapyramidal Tracts</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Tract</th>
+              <th>Origin</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Medial reticulospinal</strong></td>
+              <td>Pontine reticular formation</td>
+              <td>Posture, startle reflex</td>
+            </tr>
+            <tr>
+              <td><strong>Lateral reticulospinal</strong></td>
+              <td>Medullary reticular formation</td>
+              <td>Inhibitory, reflex modulation</td>
+            </tr>
+            <tr>
+              <td><strong>Vestibulospinal</strong></td>
+              <td>Vestibular nuclei</td>
+              <td>Posture, anti-gravity, balance</td>
+            </tr>
+            <tr>
+              <td><strong>Rubrospinal</strong></td>
+              <td>Red nucleus</td>
+              <td>Flexor muscle control</td>
+            </tr>
+            <tr>
+              <td><strong>Tectospinal</strong></td>
+              <td>Superior colliculus</td>
+              <td>Head turning, visual reflexes</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Mnemonics:</strong><br>
+          • "Pyramids are for Precision" (Pyramidal = fine, skilled)<br>
+          • "Extra is for Everything else" (Extrapyramidal = posture, tone)
+        </div>
+
+        <h2>🎯 Master Summary Table</h2>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Location</th>
+              <th>Main Function</th>
+              <th>Classic Lesion</th>
+            </tr>
+            <tr>
+              <td><strong>Motor Cortex</strong></td>
+              <td>Precentral gyrus</td>
+              <td>Voluntary planning</td>
+              <td>Weakness, loss of fine control</td>
+            </tr>
+            <tr>
+              <td><strong>Basal Ganglia</strong></td>
+              <td>Deep cerebral nuclei</td>
+              <td>Movement initiation</td>
+              <td>Parkinson's (TRAP)</td>
+            </tr>
+            <tr>
+              <td><strong>Cerebellum</strong></td>
+              <td>Posterior fossa</td>
+              <td>Coordination, precision</td>
+              <td>Ataxia, dysmetria, intention tremor</td>
+            </tr>
+            <tr>
+              <td><strong>LMN</strong></td>
+              <td>Ventral horn</td>
+              <td>Final execution</td>
+              <td>Flaccid paralysis, atrophy</td>
+            </tr>
+            <tr>
+              <td><strong>Hypothalamus</strong></td>
+              <td>Diencephalon</td>
+              <td>Homeostasis, drives</td>
+              <td>Obesity/starvation, temp dysreg</td>
+            </tr>
+            <tr>
+              <td><strong>Limbic System</strong></td>
+              <td>Medial temporal</td>
+              <td>Emotion, memory</td>
+              <td>Kluver-Bucy, amnesia</td>
+            </tr>
+            <tr>
+              <td><strong>RAS</strong></td>
+              <td>Brainstem RF</td>
+              <td>Arousal, consciousness</td>
+              <td>Coma</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>📊 Quick Reference: Reflexes</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Reflex</th>
+              <th>Type</th>
+              <th>Receptor</th>
+              <th>Afferent</th>
+              <th>Response</th>
+            </tr>
+            <tr>
+              <td><strong>Stretch</strong></td>
+              <td>Monosynaptic</td>
+              <td>Muscle spindle</td>
+              <td>Ia</td>
+              <td>Contraction</td>
+            </tr>
+            <tr>
+              <td><strong>Inverse Stretch</strong></td>
+              <td>Bisynaptic</td>
+              <td>GTO</td>
+              <td>Ib</td>
+              <td>Relaxation</td>
+            </tr>
+            <tr>
+              <td><strong>Flexor Withdrawal</strong></td>
+              <td>Polysynaptic</td>
+              <td>Pain receptors</td>
+              <td>Aδ, C</td>
+              <td>Flexion</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>📊 Quick Reference: Sleep Stages</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Stage</th>
+              <th>EEG</th>
+              <th>Key Features</th>
+              <th>% of Night</th>
+            </tr>
+            <tr>
+              <td><strong>N1</strong></td>
+              <td>Theta</td>
+              <td>Drowsy, hypnic jerks</td>
+              <td>5%</td>
+            </tr>
+            <tr>
+              <td><strong>N2</strong></td>
+              <td>Spindles + K-complexes</td>
+              <td>Light sleep</td>
+              <td>45%</td>
+            </tr>
+            <tr>
+              <td><strong>N3</strong></td>
+              <td>Delta</td>
+              <td>Deep sleep, restorative</td>
+              <td>25%</td>
+            </tr>
+            <tr>
+              <td><strong>REM</strong></td>
+              <td>Desynchronized</td>
+              <td>Dreaming, paralysis</td>
+              <td>25%</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Study Checklist</h3>
+          <ul>
+            <li>Understand UMN vs LMN lesions</li>
+            <li>Know all stretch reflexes and their segments</li>
+            <li>Master muscle spindle structure and function</li>
+            <li>Understand cerebellar divisions and signs (DANISH)</li>
+            <li>Know basal ganglia pathways (nigrostriatal) and TRAP</li>
+            <li>Understand hypothalamic nuclei functions (HOT BED)</li>
+            <li>Know EEG wave types and sleep stages (BATS D)</li>
+            <li>Understand pyramidal vs extrapyramidal tracts</li>
+            <li>Know Papez circuit and Kluver-Bucy syndrome</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master the Motor System!
+        </p>
+
+        <button class="explore-btn" onclick="window.location.href='neurophysiology-quiz.html'">Start Neuro Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
