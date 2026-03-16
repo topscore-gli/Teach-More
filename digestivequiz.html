@@ -1331,7 +1331,7 @@
 
     let currentQuestion = 0;
     let answers = Array(quizData.length).fill(null);
-    let timeLeft = 120 * 60; // 120 minutes for 100 questions
+    let timeLeft = 40 * 60; // 120 minutes for 100 questions
     let timerInterval;
 
     // DOM Elements
@@ -1436,4 +1436,158 @@
       
       document.getElementById('score-text').textContent = `${score}/${quizData.length}`;
       
-      const
+            const percentage = (score / quizData.length) * 100;
+      let performanceText = '';
+      if (percentage >= 90) performanceText = 'Outstanding! Medical school ready!';
+      else if (percentage >= 80) performanceText = 'Excellent! Great understanding of GI system.';
+      else if (percentage >= 70) performanceText = 'Good work! Solid foundation.';
+      else if (percentage >= 60) performanceText = 'Passing. Review histology & radiography.';
+      else performanceText = 'Keep studying! Focus on anatomy & physiology.';
+      
+      document.getElementById('performance-text').textContent = performanceText;
+    }
+
+    // Render Details Page
+    function renderDetails() {
+      detailsContent.innerHTML = '';
+      let currentSection = '';
+      
+      quizData.forEach((q, i) => {
+        if (q.section !== currentSection) {
+          currentSection = q.section;
+          const sectionHeader = document.createElement('h2');
+          sectionHeader.textContent = currentSection;
+          sectionHeader.style.color = 'var(--accent)';
+          sectionHeader.style.fontSize = '18px';
+          sectionHeader.style.marginTop = '30px';
+          sectionHeader.style.marginBottom = '15px';
+          detailsContent.appendChild(sectionHeader);
+        }
+        
+        const div = document.createElement('div');
+        div.style.marginBottom = '25px';
+        div.style.padding = '15px';
+        div.style.background = 'var(--background)';
+        div.style.borderRadius = '10px';
+        div.style.boxShadow = 'inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out)';
+        
+        const isCorrect = answers[i] === q.correct;
+        const userAnswer = answers[i] !== null ? q.options[answers[i]] : 'Not answered';
+        const correctLetter = String.fromCharCode(65 + q.correct);
+        const userLetter = answers[i] !== null ? String.fromCharCode(65 + answers[i]) : '-';
+        
+        div.innerHTML = `
+          <h3>Q${i + 1}: ${q.question}</h3>
+          <p>Your Answer: <span class="${isCorrect ? 'correct' : 'incorrect'}">${userLetter}) ${userAnswer} ${isCorrect ? '✓' : '✗'}</span></p>
+          <p>Correct Answer: <span class="correct">${correctLetter}) ${q.options[q.correct]} ✓</span></p>
+          <div class="explanation">
+            <strong>Explanation:</strong> ${q.reason}
+          </div>
+        `;
+        detailsContent.appendChild(div);
+      });
+    }
+
+    // Event Listeners
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        submitQuiz();
+      }
+    });
+
+    centerBtn.addEventListener('click', () => {
+      renderPopup();
+      questionPopup.style.display = 'block';
+    });
+
+    questionPopup.querySelector('.close-btn').addEventListener('click', () => {
+      questionPopup.style.display = 'none';
+    });
+
+    resultsPopup.querySelector('.close-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.continue-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.details-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      detailsPage.style.display = 'block';
+      renderDetails();
+    });
+
+    detailsPage.querySelector('.back-btn').addEventListener('click', () => {
+      detailsPage.style.display = 'none';
+      resultsPopup.style.display = 'block';
+    });
+
+    // Theme Toggle
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload
+    profileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          console.log('Profile image uploaded:', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Footer Navigation
+    const navItems = document.querySelectorAll('.nav-bar .nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Back button
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to exit the quiz? Your progress will be lost.')) {
+        location.reload();
+      }
+    });
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>
+
