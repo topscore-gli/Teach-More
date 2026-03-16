@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RADIOGRAPHY - Digestive System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #9b59b6;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #9b59b6;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note h4 {
+      font-size: 16px;
+      margin: 20px 0 10px;
+      color: var(--text-primary);
+      font-weight: bold;
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(155, 89, 182, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .definition-term {
+      color: var(--accent);
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .section-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      background: rgba(155, 89, 182, 0.1);
+      border-radius: 6px;
+    }
+
+    .memory-tip {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid #1db954;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #fff;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .quick-ref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .quick-ref-card {
+      background: rgba(0,0,0,0.1);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .quick-ref-card strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">RADIOGRAPHY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          🚀
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Digestive System! 🩻</h1>
+        <p class="subtitle">– Complete Radiography Guide</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Table of Contents</h2>
+        <div class="section-nav">
+          <a href="#sec1">Oral Cavity</a>
+          <a href="#sec2">Pharynx/Esophagus</a>
+          <a href="#sec3">Stomach</a>
+          <a href="#sec4">Small Intestine</a>
+          <a href="#sec5">Large Intestine</a>
+          <a href="#sec6">Accessory Organs</a>
+          <a href="#sec7">GI Wall Histology</a>
+          <a href="#sec8">Pathology</a>
+          <a href="#sec9">Radiography Summary</a>
+          <a href="#sec10">Clinical Correlations</a>
+        </div>
+
+        <h2 id="sec1">1️⃣ Oral Cavity (Ingestion) 👄</h2>
+        
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Bolus:</span> Soft mass of chewed food mixed with saliva, ready for swallowing</li>
+            <li><span class="definition-term">Mastication:</span> Mechanical breakdown of food by teeth and jaw muscles</li>
+            <li><span class="definition-term">Deglutition:</span> The act of swallowing; moves food from mouth to stomach</li>
+            <li><span class="definition-term">Salivary Amylase (Ptyalin):</span> Enzyme beginning carbohydrate digestion (starch → maltose)</li>
+            <li><span class="definition-term">Lingual Lipase:</span> Enzyme activating minor fat digestion in the mouth</li>
+          </ul>
+        </div>
+
+        <h3>Anatomy Overview</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Description</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Teeth</strong></td>
+              <td>32 permanent (incisors, canines, premolars, molars)</td>
+              <td>Mechanical breakdown</td>
+            </tr>
+            <tr>
+              <td><strong>Tongue</strong></td>
+              <td>Muscular organ with papillae/taste buds</td>
+              <td>Manipulation, bolus formation</td>
+            </tr>
+            <tr>
+              <td><strong>Palate</strong></td>
+              <td>Hard (bone) and soft (muscle)</td>
+              <td>Separates oral/nasal cavities</td>
+            </tr>
+            <tr>
+              <td><strong>Parotid Gland</strong></td>
+              <td>Largest, serous secretion</td>
+              <td>Watery saliva (enzyme-rich)</td>
+            </tr>
+            <tr>
+              <td><strong>Submandibular</strong></td>
+              <td>Mixed serous/mucous</td>
+              <td>Moderate volume saliva</td>
+            </tr>
+            <tr>
+              <td><strong>Sublingual</strong></td>
+              <td>Smallest, mucous secretion</td>
+              <td>Thick, lubricating saliva</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Salivation Stats:</strong><br>
+          • Production: 1-1.5 L/day<br>
+          • Stimulated by: Sight, smell, taste, chewing<br>
+          • pH: 6.2-7.4 (neutral to slightly acidic)
+        </div>
+
+        <h3>Radiographic Relevance</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Examination</th>
+              <th>Indications</th>
+            </tr>
+            <tr>
+              <td><strong>Mouth/Teeth</strong></td>
+              <td>Panoramic X-rays, occlusal views</td>
+              <td>Mandible fractures, dental pathology</td>
+            </tr>
+            <tr>
+              <td><strong>Salivary Glands</strong></td>
+              <td>Sialography</td>
+              <td>Ductal system evaluation, stones</td>
+            </tr>
+            <tr>
+              <td><strong>Pharynx</strong></td>
+              <td>Barium swallow (pharyngography)</td>
+              <td>Dysphagia, aspiration risk</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec2">2️⃣ Pharynx & Esophagus (Propulsion) 🛤️</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Upper Esophageal Sphincter (UES):</span> Cricopharyngeus muscle at C6; prevents air entry</li>
+            <li><span class="definition-term">Lower Esophageal Sphincter (LES):</span> Physiological sphincter at T10-T11; prevents reflux</li>
+            <li><span class="definition-term">Peristalsis:</span> Wave-like muscular contractions propelling food downward</li>
+            <li><span class="definition-term">Primary Peristalsis:</span> Bolus-induced; initiated by swallowing</li>
+            <li><span class="definition-term">Secondary Peristalsis:</span> Esophageal distension-induced; clears residual material</li>
+            <li><span class="definition-term">Tertiary Contractions:</span> Non-propulsive contractions (pathological if excessive)</li>
+          </ul>
+        </div>
+
+        <h3>Esophageal Anatomy</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>Length</strong></td>
+              <td>25 cm (10 inches)</td>
+            </tr>
+            <tr>
+              <td><strong>Upper 1/3</strong></td>
+              <td>Striated muscle (voluntary control)</td>
+            </tr>
+            <tr>
+              <td><strong>Middle 1/3</strong></td>
+              <td>Mixed striated/smooth muscle</td>
+            </tr>
+            <tr>
+              <td><strong>Lower 1/3</strong></td>
+              <td>Smooth muscle (involuntary)</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Esophageal Constrictions (Narrowing Points)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Level</th>
+              <th>Location</th>
+              <th>Vertebral Level</th>
+              <th>Clinical Note</th>
+            </tr>
+            <tr>
+              <td><strong>1st (Narrowest)</strong></td>
+              <td>Cricoid cartilage</td>
+              <td>C6</td>
+              <td>Common site for foreign body impaction</td>
+            </tr>
+            <tr>
+              <td><strong>2nd</strong></td>
+              <td>Aortic arch/Left main bronchus</td>
+              <td>T4-T5</td>
+              <td>Impression visible on barium swallow</td>
+            </tr>
+            <tr>
+              <td><strong>3rd</strong></td>
+              <td>Diaphragmatic hiatus</td>
+              <td>T10</td>
+              <td>Hiatal hernia location</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>💡 Memory Tip:</strong> "6-4-10 Rule" - Constrictions at C6, T4-T5, T10. Think: "Cricoid, Aortic, Diaphragm"
+        </div>
+
+        <h3>Swallowing Phases (Deglutition)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Phase</th>
+              <th>Type</th>
+              <th>Duration</th>
+              <th>Key Events</th>
+            </tr>
+            <tr>
+              <td><strong>Oral</strong></td>
+              <td>Voluntary</td>
+              <td>Variable</td>
+              <td>Tongue propels bolus to oropharynx</td>
+            </tr>
+            <tr>
+              <td><strong>Pharyngeal</strong></td>
+              <td>Involuntary</td>
+              <td>~1 second</td>
+              <td>Soft palate elevation, laryngeal rise, epiglottis closure, UES relaxation</td>
+            </tr>
+            <tr>
+              <td><strong>Esophageal</strong></td>
+              <td>Involuntary</td>
+              <td>6-10 seconds</td>
+              <td>Primary peristalsis → LES relaxation → gastric entry</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Radiographic Examinations</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Exam</th>
+              <th>Technique</th>
+              <th>Pathology Detected</th>
+            </tr>
+            <tr>
+              <td><strong>Barium Swallow</strong></td>
+              <td>Single/double contrast</td>
+              <td>Strictures, masses, hiatal hernia</td>
+            </tr>
+            <tr>
+              <td><strong>Video Fluoroscopy</strong></td>
+              <td>Dynamic swallowing study</td>
+              <td>Aspiration, motility disorders</td>
+            </tr>
+            <tr>
+              <td><strong>Esophagram</strong></td>
+              <td>Multiple positions (upright, prone)</td>
+              <td>Varices, achalasia, reflux</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec3">3️⃣ Stomach (Storage & Chemical Digestion) 🫃</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Chyme:</span> Semi-liquid acidic mixture (pH 2) of partially digested food leaving stomach</li>
+            <li><span class="definition-term">Rugae:</span> Longitudinal mucosal folds that flatten with stomach distension</li>
+            <li><span class="definition-term">Pyloric Sphincter:</span> Muscular valve controlling chyme release into duodenum</li>
+            <li><span class="definition-term">Receptive Relaxation:</span> Vagal reflex allowing stomach to accommodate food without pressure increase</li>
+            <li><span class="definition-term">Intrinsic Factor:</span> Glycoprotein required for vitamin B12 absorption in ileum</li>
+            <li><span class="definition-term">Gastric Emptying:</span> Regulated release of chyme; liquids > carbs > proteins > fats</li>
+          </ul>
+        </div>
+
+        <h3>Stomach Regions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Region</th>
+              <th>Location/Feature</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Cardia</strong></td>
+              <td>Surrounds esophageal opening</td>
+              <td>Entry zone, mucus secretion</td>
+            </tr>
+            <tr>
+              <td><strong>Fundus</strong></td>
+              <td>Dome-shaped, superior; gas collection</td>
+              <td>Reservoir, gas bubble visualization</td>
+            </tr>
+            <tr>
+              <td><strong>Body</strong></td>
+              <td>Main central portion</td>
+              <td>Primary digestion, mixing</td>
+            </tr>
+            <tr>
+              <td><strong>Antrum</strong></td>
+              <td>Distal portion, grinding chamber</td>
+              <td>Mechanical breakdown, pumping</td>
+            </tr>
+            <tr>
+              <td><strong>Pylorus</strong></td>
+              <td>Distal opening with sphincter</td>
+              <td>Regulates gastric emptying</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Gastric Secretions (2-3 L/day)</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Secretion</th>
+              <th>Cell Source</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>HCl (pH 1.5-3.5)</strong></td>
+              <td>Parietal cells</td>
+              <td>Activates pepsinogen, kills bacteria, denatures proteins</td>
+            </tr>
+            <tr>
+              <td><strong>Pepsinogen → Pepsin</strong></td>
+              <td>Chief cells</td>
+              <td>Protein digestion (begins)</td>
+            </tr>
+            <tr>
+              <td><strong>Gastric Lipase</strong></td>
+              <td>Chief cells</td>
+              <td>Minor fat digestion (10-30% triglycerides)</td>
+            </tr>
+            <tr>
+              <td><strong>Intrinsic Factor</strong></td>
+              <td>Parietal cells</td>
+              <td>B12 absorption (ileum)</td>
+            </tr>
+            <tr>
+              <td><strong>Mucus/Bicarbonate</strong></td>
+              <td>Surface mucous cells</td>
+              <td>Mucosal protection against acid</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Gastric Motility:</strong><br>
+          • Mixing waves: 3/minute<br>
+          • Gastric emptying time: Liquids (minutes) → Fats (hours)<br>
+          • Regulators: Gastrin (↑ emptying), CCK/Secretin/GIP (↓ emptying)
+        </div>
+
+        <h3>UGI Series Positioning</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Position</th>
+              <th>Anatomy Visualized</th>
+              <th>Clinical Use</th>
+            </tr>
+            <tr>
+              <td><strong>Supine</strong></td>
+              <td>Body and antrum filled</td>
+              <td>General anatomy, ulcers</td>
+            </tr>
+            <tr>
+              <td><strong>Prone</strong></td>
+              <td>Fundus filled, air in antrum</td>
+              <td>Fundic lesions, double contrast</td>
+            </tr>
+            <tr>
+              <td><strong>Left Lateral Decubitus</strong></td>
+              <td>Air in fundus</td>
+              <td>Double contrast of fundus</td>
+            </tr>
+            <tr>
+              <td><strong>Upright</strong></td>
+              <td>Air-fluid levels</td>
+              <td>Hiatal hernia assessment</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec4">4️⃣ Small Intestine (Digestion & Absorption) 🌀</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Villi:</span> Finger-like projections (10-40/mm²) increasing surface area</li>
+            <li><span class="definition-term">Microvilli (Brush Border):</span> Apical membrane projections creating 20-fold surface area increase</li>
+            <li><span class="definition-term">Valvulae Conniventes (Plicae Circulares):</span> Permanent circular folds in jejunum</li>
+            <li><span class="definition-term">Enterohepatic Circulation:</span> Recycling of bile salts (95% reabsorbed in ileum)</li>
+            <li><span class="definition-term">Migrating Motor Complex (MMC):</span> Housekeeper waves between meals clearing debris</li>
+            <li><span class="definition-term">Gastroileal Reflex:</span> Gastric distension increases ileal emptying</li>
+          </ul>
+        </div>
+
+        <h3>Small Intestine Divisions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Segment</th>
+              <th>Length/Location</th>
+              <th>Key Features</th>
+              <th>Primary Function</th>
+            </tr>
+            <tr>
+              <td><strong>Duodenum</strong></td>
+              <td>C-shape around pancreas</td>
+              <td>Brunner's glands, ampulla of Vater</td>
+              <td>Chemical digestion center</td>
+            </tr>
+            <tr>
+              <td><strong>Jejunum</strong></td>
+              <td>Proximal 2/5 (post-L2)</td>
+              <td>Long villi, plicae circulares</td>
+              <td>Primary absorption</td>
+            </tr>
+            <tr>
+              <td><strong>Ileum</strong></td>
+              <td>Distal 3/5</td>
+              <td>Peyer's patches, shorter villi</td>
+              <td>B12/bile salt absorption</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Duodenal Anatomy</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Part</th>
+              <th>Description</th>
+              <th>Clinical Relevance</th>
+            </tr>
+            <tr>
+              <td><strong>Superior (Bulb)</strong></td>
+              <td>First part, mobile</td>
+              <td>Common ulcer site</td>
+            </tr>
+            <tr>
+              <td><strong>Descending</strong></td>
+              <td>Contains major duodenal papilla</td>
+              <td>Ampulla of Vater location</td>
+            </tr>
+            <tr>
+              <td><strong>Horizontal</strong></td>
+              <td>Crosses midline</td>
+              <td>Superior mesenteric artery syndrome</td>
+            </tr>
+            <tr>
+              <td><strong>Ascending</strong></td>
+              <td>Joins jejunum at flexure</td>
+              <td>Duodenojejunal flexure (L2)</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Digestive Enzymes & Secretions</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Source</th>
+              <th>Secretion</th>
+              <th>Action</th>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>Amylase</td>
+              <td>Carbohydrate completion (disaccharides)</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>Lipase</td>
+              <td>Triglyceride hydrolysis</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>Proteases (trypsin, etc.)</td>
+              <td>Protein → amino acids</td>
+            </tr>
+            <tr>
+              <td><strong>Brunner's Glands</strong></td>
+              <td>Bicarbonate mucus</td>
+              <td>Neutralizes acidic chyme (pH 7-8)</td>
+            </tr>
+            <tr>
+              <td><strong>Brush Border</strong></td>
+              <td>Enteric enzymes</td>
+              <td>Final carbohydrate/protein digestion</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Absorption Capacity:</strong><br>
+          • Surface area increase: 600-fold (plicae + villi + microvilli)<br>
+          • Water absorption: 7-9 L/day<br>
+          • Transit time: 3-5 hours
+        </div>
+
+        <h3>Radiographic Examinations</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Segment</th>
+              <th>Examination</th>
+              <th>Technique</th>
+              <th>Appearance</th>
+            </tr>
+            <tr>
+              <td><strong>Duodenum</strong></td>
+              <td>Hypotonic duodenography</td>
+              <td>Barium + anticholinergics; prone, RAO</td>
+              <td>Relaxed, detailed mucosa</td>
+            </tr>
+            <tr>
+              <td><strong>Jejunum</strong></td>
+              <td>SBFT (Small Bowel Follow-Through)</td>
+              <td>Sequential overhead films</td>
+              <td>Feathery appearance</td>
+            </tr>
+            <tr>
+              <td><strong>Ileum</strong></td>
+              <td>Enteroclysis</td>
+              <td>Tube placement; double contrast</td>
+              <td>Superior mucosal detail</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec5">5️⃣ Large Intestine (Water Absorption) 💧</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Haustra:</span> Sacculations formed by taeniae coli contraction (incomplete folds)</li>
+            <li><span class="definition-term">Taeniae Coli:</span> Three longitudinal muscle bands running length of colon</li>
+            <li><span class="definition-term">Epiploic Appendages:</span> Fat-filled pouches attached to colon surface</li>
+            <li><span class="definition-term">Ileocecal Valve:</span> Prevents colonic reflux; regulates ileal emptying</li>
+            <li><span class="definition-term">Gastrocolic Reflex:</span> Mass movement triggered by food entering stomach</li>
+            <li><span class="definition-term">Anorectal Angle:</span> 90° angle maintained by puborectalis muscle preventing incontinence</li>
+          </ul>
+        </div>
+
+        <h3>Colon Segments</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Segment</th>
+              <th>Location</th>
+              <th>Peritoneal Status</th>
+              <th>Key Feature</th>
+            </tr>
+            <tr>
+              <td><strong>Cecum</strong></td>
+              <td>Right lower quadrant</td>
+              <td>Intraperitoneal</td>
+              <td>Blind pouch, ileocecal valve</td>
+            </tr>
+            <tr>
+              <td><strong>Ascending</strong></td>
+              <td>Right paracolic gutter</td>
+              <td>Retroperitoneal</td>
+              <td>Short, fixed</td>
+            </tr>
+            <tr>
+              <td><strong>Hepatic Flexure</strong></td>
+              <td>Right upper quadrant</td>
+              <td>Intraperitoneal</td>
+              <td>Under liver</td>
+            </tr>
+            <tr>
+              <td><strong>Transverse</strong></td>
+              <td>Across upper abdomen</td>
+              <td>Intraperitoneal</td>
+              <td>Longest, mobile (mesocolon)</td>
+            </tr>
+            <tr>
+              <td><strong>Splenic Flexure</strong></td>
+              <td>Left upper quadrant</td>
+              <td>Intraperitoneal</td>
+              <td>Higher than hepatic flexure</td>
+            </tr>
+            <tr>
+              <td><strong>Descending</strong></td>
+              <td>Left paracolic gutter</td>
+              <td>Retroperitoneal</td>
+              <td>Fixed</td>
+            </tr>
+            <tr>
+              <td><strong>Sigmoid</strong></td>
+              <td>Pelvis</td>
+              <td>Intraperitoneal</td>
+              <td>S-shaped, mobile</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Colon Physiology</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Function</th>
+              <th>Mechanism</th>
+              <th>Volume Change</th>
+            </tr>
+            <tr>
+              <td><strong>Water Absorption</strong></td>
+              <td>Active transport</td>
+              <td>1.5L chyme → 150mL feces</td>
+            </tr>
+            <tr>
+              <td><strong>Electrolyte Absorption</strong></td>
+              <td>Na+, Cl- active transport</td>
+              <td>90% water absorbed</td>
+            </tr>
+            <tr>
+              <td><strong>Bacterial Action</strong></td>
+              <td>Fermentation</td>
+              <td>Vitamin K, B12 synthesis</td>
+            </tr>
+            <tr>
+              <td><strong>Mucus Secretion</strong></td>
+              <td>Goblet cells</td>
+              <td>Lubrication (no enzymes)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Colonic Motility:</strong><br>
+          • Haustral churning: Slow mixing<br>
+          • Mass movements: 3-4 times/day<br>
+          • Transit time: 12-48 hours
+        </div>
+
+        <h3>Rectum & Anal Canal</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Description</th>
+              <th>Innervation</th>
+            </tr>
+            <tr>
+              <td><strong>Rectum</strong></td>
+              <td>15 cm, three Houston's valves</td>
+              <td>Autonomic</td>
+            </tr>
+            <tr>
+              <td><strong>Internal Sphincter</strong></td>
+              <td>Smooth muscle</td>
+              <td>Involuntary (ANS)</td>
+            </tr>
+            <tr>
+              <td><strong>External Sphincter</strong></td>
+              <td>Striated muscle</td>
+              <td>Voluntary (pudendal nerve)</td>
+            </tr>
+            <tr>
+              <td><strong>Puborectalis</strong></td>
+              <td>Maintains anorectal angle</td>
+              <td>Voluntary</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Radiographic Examinations</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Segment</th>
+              <th>Examination</th>
+              <th>Key Findings</th>
+            </tr>
+            <tr>
+              <td><strong>Cecum/Appendix</strong></td>
+              <td>CT abdomen/pelvis</td>
+              <td>Appendicitis, appendicolith</td>
+            </tr>
+            <tr>
+              <td><strong>Colon</strong></td>
+              <td>Barium Enema (BE)</td>
+              <td>Polyps, masses, diverticula</td>
+            </tr>
+            <tr>
+              <td><strong>Rectum</strong></td>
+              <td>Defecography</td>
+              <td>Prolapse, incontinence, evacuation disorders</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec6">6️⃣ Accessory Organs 🫁</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Portal Triad:</span> Hepatic artery, portal vein, bile duct at liver lobule corners</li>
+            <li><span class="definition-term">Bile Canaliculi:</span> Small channels between hepatocytes collecting bile</li>
+            <li><span class="definition-term">Enterohepatic Circulation:</span> Recycling of bile salts from ileum to liver</li>
+            <li><span class="definition-term">Hartmann's Pouch:</strong> Infundibulum near gallbladder neck (stone impaction site)</li>
+            <li><span class="definition-term">Sphincter of Oddi:</strong> Controls bile/pancreatic juice release into duodenum</li>
+            <li><span class="definition-term">Islets of Langerhans:</strong> Endocrine pancreas (1% of pancreatic tissue)</li>
+          </ul>
+        </div>
+
+        <h3>Liver Structure & Function</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>Weight</strong></td>
+              <td>1.5 kg (largest gland)</td>
+            </tr>
+            <tr>
+              <td><strong>Functional Unit</strong></td>
+              <td>Lobule (hepatocyte plates radiating from central vein)</td>
+            </tr>
+            <tr>
+              <td><strong>Bile Production</strong></td>
+              <td>500-1000 mL/day continuous secretion</td>
+            </tr>
+            <tr>
+              <td><strong>Metabolic Functions</strong></td>
+              <td>Glycogen storage, protein synthesis, detoxification, urea synthesis</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Biliary System Pathway</h3>
+        <div class="formula-box">
+          <strong>Bile Flow:</strong><br>
+          Hepatocytes → Bile canaliculi → Hepatic ducts (R/L) → Common hepatic duct + Cystic duct (GB) → Common bile duct + Pancreatic duct → Ampulla of Vater → Duodenum
+        </div>
+
+        <h3>Gallbladder Function</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Function</th>
+              <th>Mechanism</th>
+              <th>Trigger</th>
+            </tr>
+            <tr>
+              <td><strong>Concentration</strong></td>
+              <td>10-fold water absorption</td>
+              <td>Between meals</td>
+            </tr>
+            <tr>
+              <td><strong>Storage</strong></td>
+              <td>30-50 mL capacity</td>
+              <td>Interdigestive period</td>
+            </tr>
+            <tr>
+              <td><strong>Release</strong></td>
+              <td>Contraction</td>
+              <td>CCK (fat in duodenum)</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Pancreas Dual Function</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Component</th>
+              <th>Cell Type</th>
+              <th>Secretion</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Exocrine (99%)</strong></td>
+              <td>Acinar cells</td>
+              <td>Digestive enzymes (inactive)</td>
+              <td>Amylase, lipase, proteases</td>
+            </tr>
+            <tr>
+              <td><strong>Exocrine</strong></td>
+              <td>Duct cells</td>
+              <td>Bicarbonate-rich fluid</td>
+              <td>Neutralizes chyme</td>
+            </tr>
+            <tr>
+              <td><strong>Endocrine (1%)</strong></td>
+              <td>Alpha cells</td>
+              <td>Glucagon</td>
+              <td>Raises blood glucose</td>
+            </tr>
+            <tr>
+              <td><strong>Endocrine</strong></td>
+              <td>Beta cells</td>
+              <td>Insulin</td>
+              <td>Lowers blood glucose</td>
+            </tr>
+            <tr>
+              <td><strong>Endocrine</strong></td>
+              <td>Delta cells</td>
+              <td>Somatostatin</td>
+              <td>Regulates both</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Accessory Organs Imaging</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Organ</th>
+              <th>Primary Modality</th>
+              <th>Radiographic Notes</th>
+            </tr>
+            <tr>
+              <td><strong>Liver</strong></td>
+              <td>CT/MRI</td>
+              <td>Plain film: hepatomegaly, calcifications, pneumobilia</td>
+            </tr>
+            <tr>
+              <td><strong>Gallbladder</strong></td>
+              <td>Ultrasound/HIDA</td>
+              <td>Porcelain gallbladder (calcified wall)</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>CT/MRI/ERCP</td>
+              <td>Chronic pancreatitis calcifications (pathognomonic)</td>
+            </tr>
+            <tr>
+              <td><strong>Biliary Tree</strong></td>
+              <td>ERCP/MRCP</td>
+              <td>PTC for obstruction evaluation</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec7">7️⃣ GI Wall Histology 🧱</h2>
+
+        <h3>📖 Key Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><span class="definition-term">Mucosa:</span> Innermost layer (epithelium, lamina propria, muscularis mucosae)</li>
+            <li><span class="definition-term">Submucosa:</span> Dense connective tissue with vessels and Meissner's plexus</li>
+            <li><span class="definition-term">Muscularis Externa:</span> Inner circular and outer longitudinal muscle layers (Auerbach's plexus)</li>
+            <li><span class="definition-term">Serosa/Adventitia:</strong> Outermost layer (peritoneum or connective tissue)</li>
+            <li><span class="definition-term">Brush Border:</strong> Microvilli on intestinal absorptive cells</li>
+            <li><span class="definition-term">Peyer's Patches:</strong> Lymphoid tissue in ileal submucosa</li>
+          </ul>
+        </div>
+
+        <h3>GI Wall Layers</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Layer</th>
+              <th>Structure</th>
+              <th>Epithelial Type</th>
+              <th>Key Features</th>
+            </tr>
+            <tr>
+              <td><strong>Mucosa</strong></td>
+              <td>Epithelium</td>
+              <td>Stratified squamous (esophagus/anus) or Simple columnar (stomach/intestines)</td>
+              <td>Secretion, absorption, protection</td>
+            </tr>
+            <tr>
+              <td><strong>Mucosa</strong></td>
+              <td>Lamina propria</td>
+              <td>Loose connective tissue</td>
+              <td>Blood vessels, lymphatics, glands</td>
+            </tr>
+            <tr>
+              <td><strong>Mucosa</strong></td>
+              <td>Muscularis mucosae</td>
+              <td>Smooth muscle</td>
+              <td>Local movement</td>
+            </tr>
+            <tr>
+              <td><strong>Submucosa</strong></td>
+              <td>Dense connective tissue</td>
+              <td>Areolar connective tissue</td>
+              <td>Vessels, Meissner's plexus</td>
+            </tr>
+            <tr>
+              <td><strong>Muscularis Externa</strong></td>
+              <td>Inner circular, outer longitudinal</td>
+              <td>Smooth muscle (skeletal in upper esophagus/external anal sphincter)</td>
+              <td>Peristalsis; Auerbach's plexus</td>
+            </tr>
+            <tr>
+              <td><strong>Serosa/Adventitia</strong></td>
+              <td>Visceral peritoneum or CT</td>
+              <td>Mesothelium (serosa)</td>
+              <td>Protection, lubrication</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Region-Specific Epithelial Specializations</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Region</th>
+              <th>Epithelial Type</th>
+              <th>Specializations</th>
+              <th>Function</th>
+            </tr>
+            <tr>
+              <td><strong>Esophagus</strong></td>
+              <td>Non-keratinized stratified squamous</td>
+              <td>Rapid turnover (7-14 days)</td>
+              <td>Protection against abrasion</td>
+            </tr>
+            <tr>
+              <td><strong>Stomach</strong></td>
+              <td>Simple columnar (mucous cells)</td>
+              <td>Gastric pits, parietal cells, chief cells</td>
+              <td>Mucus, acid, enzyme secretion</td>
+            </tr>
+            <tr>
+              <td><strong>Small Intestine</strong></td>
+              <td>Simple columnar with goblet cells</td>
+              <td>Villi, microvilli, crypts, Paneth cells</td>
+              <td>Absorption, secretion, antimicrobial</td>
+            </tr>
+            <tr>
+              <td><strong>Large Intestine</strong></td>
+              <td>Simple columnar with abundant goblet cells</td>
+              <td>Straight crypts, no villi</td>
+              <td>Water absorption, mucus secretion</td>
+            </tr>
+            <tr>
+              <td><strong>Anal Canal</strong></td>
+              <td>Upper: Columnar; Lower: Squamous</td>
+              <td>Anal columns (Morgagni)</td>
+              <td>Transition zone; protection</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Mnemonic:</strong> "Serosa is Superior" (outermost) → Mucosa is innermost. Layers: Mucosa, Submucosa, Muscularis, Serosa (MSMS)
+        </div>
+
+        <h2 id="sec8">8️⃣ Pathology: Short Notes 🦠</h2>
+
+        <h3>Esophageal Pathologies</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Pathophysiology</th>
+              <th>Radiographic Findings</th>
+              <th>Epithelial Changes</th>
+            </tr>
+            <tr>
+              <td><strong>Achalasia</strong></td>
+              <td>Myenteric plexus degeneration → LES fails to relax</td>
+              <td>Dilated esophagus, "bird's beak" tapering, air-fluid level</td>
+              <td>Squamous epithelium retained; secondary inflammation</td>
+            </tr>
+            <tr>
+              <td><strong>GERD/Barrett's</strong></td>
+              <td>Chronic reflux → metaplastic change</td>
+              <td>Hiatal hernia, mucosal irregularity</td>
+              <td>Columnar metaplasia replacing squamous (premalignant)</td>
+            </tr>
+            <tr>
+              <td><strong>Carcinoma</strong></td>
+              <td>Squamous (upper) or adenocarcinoma (lower/Barrett's)</td>
+              <td>Irregular stricture, mass, shouldered margins</td>
+              <td>Squamous: Keratin pearls; Adeno: Glandular formation</td>
+            </tr>
+            <tr>
+              <td><strong>Varices</strong></td>
+              <td>Portal hypertension → collateral dilation</td>
+              <td>Serpiginous filling defects (prone best)</td>
+              <td>Submucosal venous dilation; overlying epithelium intact</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Gastric Pathologies</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Pathophysiology</th>
+              <th>Radiographic Findings</th>
+              <th>Epithelial Changes</th>
+            </tr>
+            <tr>
+              <td><strong>Peptic Ulcer</strong></td>
+              <td>H. pylori/NSAIDs → acid-pepsin erosion</td>
+              <td>Niche (crater), Hampton's line, radiating folds</td>
+              <td>Mucosal break; chronic shows fibrosis</td>
+            </tr>
+            <tr>
+              <td><strong>Gastric Carcinoma</strong></td>
+              <td>Intestinal-type or diffuse-type</td>
+              <td>Linitis plastica, mass, ulcerated lesion</td>
+              <td>Intestinal: Glandular structures; Diffuse: Signet ring cells</td>
+            </tr>
+            <tr>
+              <td><strong>Lymphoma</strong></td>
+              <td>MALT or DLBCL</td>
+              <td>Bulky mass, nodular folds, preserved distensibility</td>
+              <td>Lymphoid infiltrate in lamina propria/submucosa</td>
+            </tr>
+            <tr>
+              <td><strong>Ménétrier's</strong></td>
+              <td>TGF-α overexpression → foveolar hyperplasia</td>
+              <td>Giant hypertrophied folds (proximal), hypoproteinemia</td>
+              <td>Foveolar hyperplasia; decreased parietal/chief cells</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Small Intestinal Pathologies</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Pathophysiology</th>
+              <th>Radiographic Findings</th>
+              <th>Epithelial Changes</th>
+            </tr>
+            <tr>
+              <td><strong>Crohn's Disease</strong></td>
+              <td>Transmural chronic inflammation</td>
+              <td>Skip lesions, cobblestoning, strictures, fistulas</td>
+              <td>Transmural inflammation, non-caseating granulomas, fissuring ulcers</td>
+            </tr>
+            <tr>
+              <td><strong>Celiac Disease</strong></td>
+              <td>Gluten sensitivity → villous atrophy</td>
+              <td>Dilated bowel, flocculation, reversal of fold pattern</td>
+              <td>Villous atrophy, crypt hyperplasia, intraepithelial lymphocytosis</td>
+            </tr>
+            <tr>
+              <td><strong>Adenocarcinoma</strong></td>
+              <td>Often at ampulla; sporadic or FAP</td>
+              <td>Annular constriction, polypoid mass, obstruction</td>
+              <td>Intestinal-type: Glandular structures, nuclear atypia</td>
+            </tr>
+            <tr>
+              <td><strong>Carcinoid</strong></td>
+              <td>Neuroendocrine tumor (serotonin)</td>
+              <td>Submucosal mass with desmoplastic reaction</td>
+              <td>Neuroendocrine cells: "Salt-and-pepper" chromatin, chromogranin+</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Colonic Pathologies</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Pathophysiology</th>
+              <th>Radiographic Findings</th>
+              <th>Epithelial Changes</th>
+            </tr>
+            <tr>
+              <td><strong>Adenocarcinoma</strong></td>
+              <td>Adenoma-carcinoma or serrated pathway</td>
+              <td>Annular "apple-core" lesion, polypoid mass</td>
+              <td>Glandular formation, nuclear pleomorphism, desmoplastic stroma</td>
+            </tr>
+            <tr>
+              <td><strong>Diverticulosis</strong></td>
+              <td>Mucosa/submucosa herniation through muscularis</td>
+              <td>Sac-like outpouchings (barium/air-filled)</td>
+              <td>Herniated mucosa/submucosa (not full thickness)</td>
+            </tr>
+            <tr>
+              <td><strong>Ulcerative Colitis</strong></td>
+              <td>Mucosal/submucosal inflammation (continuous)</td>
+              <td>Loss of haustra ("lead pipe"), granular mucosa, pseudopolyps</td>
+              <td>Crypt abscesses, goblet cell depletion, dysplasia risk</td>
+            </tr>
+            <tr>
+              <td><strong>Ischemic Colitis</strong></td>
+              <td>Hypoperfusion → mucosal injury</td>
+              <td>"Thumbprinting" (submucosal edema), segmental involvement</td>
+              <td>Mucosal necrosis, hemorrhage; chronic: fibrosis, stricture</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Hepatobiliary Pathologies</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Pathophysiology</th>
+              <th>Radiographic Findings</th>
+              <th>Epithelial Changes</th>
+            </tr>
+            <tr>
+              <td><strong>Cholelithiasis</strong></td>
+              <td>Cholesterol supersaturation or bilirubin precipitation</td>
+              <td>Radiopaque stones (10-15% on plain film); US: shadowing</td>
+              <td>Cholesterolosis or chronic cholecystitis changes</td>
+            </tr>
+            <tr>
+              <td><strong>Primary Sclerosing Cholangitis</strong></td>
+              <td>Autoimmune bile duct fibrosis (associated with UC)</td>
+              <td>Beaded appearance (strictures/dilatations) on ERCP/MRCP</td>
+              <td>Concentric "onion-skin" fibrosis; progresses to cirrhosis</td>
+            </tr>
+            <tr>
+              <td><strong>Cholangiocarcinoma</strong></td>
+              <td>Bile duct malignancy (risk: PSC, liver flukes)</td>
+              <td>Stricturing mass, biliary dilation, portal vein encasement</td>
+              <td>Adenocarcinoma: Desmoplastic stroma, perineural invasion</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Pancreatic Pathologies</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Pathophysiology</th>
+              <th>Radiographic Findings</th>
+              <th>Epithelial Changes</th>
+            </tr>
+            <tr>
+              <td><strong>Acute Pancreatitis</strong></td>
+              <td>Autodigestion by activated enzymes</td>
+              <td>Enlarged pancreas, peripancreatic fluid, necrosis (non-enhancing)</td>
+              <td>Edematous interstitium, fat necrosis, neutrophilic infiltrates</td>
+            </tr>
+            <tr>
+              <td><strong>Chronic Pancreatitis</strong></td>
+              <td>Progressive fibrosis</td>
+              <td>Calcifications (pathognomonic), "chain of lakes" ductal dilation</td>
+              <td>Parenchymal fibrosis, ductal distortion, intraductal calculi</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreatic Adenocarcinoma</strong></td>
+              <td>Ductal epithelial malignancy</td>
+              <td>Hypodense mass, ductal obstruction ("double duct" sign)</td>
+              <td>Dense desmoplasia, duct-like structures, perineural invasion</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2 id="sec9">9️⃣ Radiography Summary Table 📊</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Primary Exam</th>
+              <th>Contrast Medium</th>
+              <th>Key Positioning</th>
+              <th>Common Pathologies</th>
+            </tr>
+            <tr>
+              <td><strong>Esophagus</strong></td>
+              <td>Barium Swallow</td>
+              <td>Barium sulfate</td>
+              <td>Upright, RAO, LPO</td>
+              <td>Achalasia, strictures, varices, carcinoma</td>
+            </tr>
+            <tr>
+              <td><strong>Stomach</strong></td>
+              <td>Upper GI (UGI)</td>
+              <td>Barium, air (double)</td>
+              <td>Supine, prone, LLD, upright</td>
+              <td>Ulcers, cancer, hiatal hernia, obstruction</td>
+            </tr>
+            <tr>
+              <td><strong>Duodenum</strong></td>
+              <td>Hypotonic duodenography</td>
+              <td>Barium, anticholinergics</td>
+              <td>Prone, RAO</td>
+              <td>Duodenal ulcer, periampullary tumors</td>
+            </tr>
+            <tr>
+              <td><strong>Small Bowel</strong></td>
+              <td>SBFT / Enteroclysis</td>
+              <td>Barium (oral/tube)</td>
+              <td>Sequential overhead films</td>
+              <td>Crohn's disease, obstruction, malabsorption</td>
+            </tr>
+            <tr>
+              <td><strong>Colon</strong></td>
+              <td>Barium Enema (BE)</td>
+              <td>Barium, air (double)</td>
+              <td>Prone, supine, decubitus, spot films</td>
+              <td>Polyps, cancer, diverticulitis, IBD</td>
+            </tr>
+            <tr>
+              <td><strong>Biliary</strong></td>
+              <td>Cholangiography</td>
+              <td>Iodinated contrast (IV/ERCP)</td>
+              <td>Supine</td>
+              <td>Stones, strictures, tumors</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>ERCP</td>
+              <td>Iodinated contrast</td>
+              <td>Prone</td>
+              <td>Pancreatitis, ductal strictures, cancer</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Contrast Media Considerations</h3>
+        <div class="warning-box">
+          <strong>⚠️ Critical Safety:</strong><br>
+          • <strong>Barium sulfate:</strong> Insoluble; <strong>CONTRAINDICATED</strong> if perforation suspected<br>
+          • <strong>Iodinated contrast:</strong> Water-soluble; use for suspected leaks/perforations<br>
+          • Always verify patient history before contrast administration
+        </div>
+
+        <h3>Patient Preparation</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Exam</th>
+              <th>Preparation</th>
+            </tr>
+            <tr>
+              <td><strong>UGI/SBFT</strong></td>
+              <td>NPO 8 hours</td>
+            </tr>
+            <tr>
+              <td><strong>Barium Enema</strong></td>
+              <td>Bowel prep (laxatives, enemas) essential</td>
+            </tr>
+            <tr>
+              <td><strong>ERCP</strong></td>
+              <td>NPO, coagulation studies, antibiotic prophylaxis</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Radiation Protection</h3>
+        <div class="tips-box">
+          <strong>✅ ALARA Principles:</strong><br>
+          • Fluoroscopy: Use pulsed mode, last-image-hold, collimation<br>
+          • Pregnancy: Shield pelvis; consider ultrasound/MRI alternatives<br>
+          • Minimize fluoroscopy time; use intermittent exposure
+        </div>
+
+        <h2 id="sec10">🔟 Clinical Correlations 🔍</h2>
+
+        <h3>Symptom-Based Imaging Approach</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Symptom</th>
+              <th>Likely Region</th>
+              <th>Imaging Approach</th>
+            </tr>
+            <tr>
+              <td><strong>Dysphagia</strong></td>
+              <td>Esophagus</td>
+              <td>Barium swallow, then endoscopy</td>
+            </tr>
+            <tr>
+              <td><strong>Hematemesis</strong></td>
+              <td>Upper GI</td>
+              <td>UGI endoscopy first; angiography if active bleed</td>
+            </tr>
+            <tr>
+              <td><strong>Melena</strong></td>
+              <td>Upper GI/small bowel</td>
+              <td>UGI, capsule endoscopy, CT angiography</td>
+            </tr>
+            <tr>
+              <td><strong>Hematochezia</strong></td>
+              <td>Lower GI</td>
+              <td>Colonoscopy; tagged RBC scan, CT if obscure</td>
+            </tr>
+            <tr>
+              <td><strong>Abdominal Pain</strong></td>
+              <td>Variable</td>
+              <td>CT abdomen/pelvis (first-line), then targeted studies</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>🎯 Master Summary Table</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Structure</th>
+              <th>Primary Function</th>
+              <th>Key Radiographic Feature</th>
+              <th>Classic Pathology</th>
+            </tr>
+            <tr>
+              <td><strong>Esophagus</strong></td>
+              <td>Propulsion</td>
+              <td>Bird's beak (achalasia)</td>
+              <td>Achalasia, varices, carcinoma</td>
+            </tr>
+            <tr>
+              <td><strong>Stomach</strong></td>
+              <td>Storage/chemical digestion</td>
+              <td>Rugae, air-fluid levels</td>
+              <td>Peptic ulcer, gastric cancer</td>
+            </tr>
+            <tr>
+              <td><strong>Small Bowel</strong></td>
+              <td>Digestion/absorption</td>
+              <td>Feathery pattern (jejunum)</td>
+              <td>Crohn's, celiac disease</td>
+            </tr>
+            <tr>
+              <td><strong>Colon</strong></td>
+              <td>Water absorption</td>
+              <td>Haustra</td>
+              <td>Diverticulitis, cancer, IBD</td>
+            </tr>
+                        <tr>
+              <td><strong>Liver</strong></td>
+              <td>Metabolism/bile production</td>
+              <td>Hepatomegaly, calcifications</td>
+              <td>Cirrhosis, metastases</td>
+            </tr>
+            <tr>
+              <td><strong>Gallbladder</strong></td>
+              <td>Bile concentration/storage</td>
+              <td>Porcelain gallbladder</td>
+              <td>Cholelithiasis, cholecystitis</td>
+            </tr>
+            <tr>
+              <td><strong>Pancreas</strong></td>
+              <td>Exocrine/endocrine secretion</td>
+              <td>Calcifications (chronic)</td>
+              <td>Pancreatitis, adenocarcinoma</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>📊 Quick Reference: Contraindications</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Contrast Agent</th>
+              <th>Contraindication</th>
+              <th>Alternative</th>
+            </tr>
+            <tr>
+              <td><strong>Barium Sulfate</strong></td>
+              <td>Suspected perforation, aspiration risk</td>
+              <td>Water-soluble iodinated contrast</td>
+            </tr>
+            <tr>
+              <td><strong>Iodinated Contrast</strong></td>
+              <td>Severe allergy, renal failure, thyroid disease</td>
+              <td>Barium (if no perforation), MRI</td>
+            </tr>
+            <tr>
+              <td><strong>Glucagon/Anticholinergics</strong></td>
+              <td>Glaucoma, severe cardiac disease</td>
+              <td>Standard technique without hypotonia</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>📊 Quick Reference: Physiological Values</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th>Clinical Relevance</th>
+            </tr>
+            <tr>
+              <td><strong>Gastric pH</strong></td>
+              <td>1.5-3.5</td>
+              <td>Acid suppression for UGI bleeding</td>
+            </tr>
+            <tr>
+              <td><strong>Small bowel transit</strong></td>
+              <td>3-5 hours</td>
+              <td>Timing for SBFT films</td>
+            </tr>
+            <tr>
+              <td><strong>Colonic transit</strong></td>
+              <td>12-48 hours</td>
+              <td>Constipation evaluation</td>
+            </tr>
+            <tr>
+              <td><strong>Bile production</strong></td>
+              <td>500-1000 mL/day</td>
+              <td>Biliary obstruction effects</td>
+            </tr>
+            <tr>
+              <td><strong>Saliva production</strong></td>
+              <td>1-1.5 L/day</td>
+              <td>Xerostomia impact on swallowing</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Study Checklist</h3>
+          <ul>
+            <li>Understand esophageal constrictions (6-4-10 rule)</li>
+            <li>Know UGI positioning and anatomy demonstrated</li>
+            <li>Master small bowel divisions and their functions</li>
+            <li>Understand colon segments (intra vs retroperitoneal)</li>
+            <li>Know GI wall layers (MSMS) and epithelial types</li>
+            <li>Recognize classic radiographic signs (bird's beak, apple-core, etc.)</li>
+            <li>Understand contrast contraindications (barium vs iodinated)</li>
+            <li>Know patient preparation for each exam type</li>
+            <li>Master accessory organ functions and imaging</li>
+            <li>Understand epithelial changes in common pathologies</li>
+          </ul>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Key Mnemonics:</strong><br>
+          • <strong>Constrictions:</strong> "Cricoid, Aortic, Diaphragm" (C6, T4-T5, T10)<br>
+          • <strong>GI Layers:</strong> "MSMS" - Mucosa, Submucosa, Muscularis, Serosa<br>
+          • <strong>Stomach Regions:</strong> "Fundus Body Antrum Pylorus" (FBAP)<br>
+          • <strong>Barrett's Risk:</strong> "GERD leads to Glandular metaplasia"<br>
+          • <strong>Crohn's vs UC:</strong> "Crohn's = Cobblestoning, Continuous = Colitis (UC)"
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master the Digestive System in Radiography!
+        </p>
+
+        <button class="explore-btn" onclick="window.location.href='digestivequiz.html'">Start Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
