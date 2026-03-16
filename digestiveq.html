@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digestive System Quiz - 100 Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text: #fff;
+      --accent: #e67e22;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text: #333;
+      --accent: #e67e22;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Top Fixed Container */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    /* Question Container */
+    .question-container {
+      margin: 60px 10px 60px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+
+    .timer {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      background: var(--background);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option.selected {
+      border: 2px solid var(--accent);
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+    }
+
+    .option.correct {
+      border: 2px solid #27ae60;
+      background: rgba(39, 174, 96, 0.1);
+    }
+
+    .option.incorrect {
+      border: 2px solid #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+    }
+
+    .option p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin: 0;
+    }
+
+    body.light .option p {
+      color: #666;
+    }
+
+    .option-letter {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 5px;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin: 10px 10px;
+    }
+
+    .prev-btn, .next-btn {
+      background: var(--background);
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: var(--text);
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .prev-btn:hover, .next-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .prev-btn {
+      border-radius: 20px 0 0 20px;
+    }
+
+    .next-btn {
+      border-radius: 0 20px 20px 0;
+    }
+
+    .prev-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .center-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .center-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Pop-up for Question Selection */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 340px;
+      width: 90%;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .popup-grid button {
+      background: var(--background);
+      border: none;
+      padding: 8px 4px;
+      border-radius: 8px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 11px;
+      transition: all 0.2s ease;
+    }
+
+    .popup-grid button:hover {
+      transform: scale(1.1);
+    }
+
+    .popup-grid button.answered {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .popup-grid button.current {
+      border: 2px solid var(--accent);
+    }
+
+    /* Results Pop-up */
+    .results-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .results-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .score-circle::before {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .score-text {
+      position: relative;
+      z-index: 1;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .results-popup h2 {
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .results-popup h3 {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 20px;
+    }
+
+    body.light .results-popup h3 {
+      color: #666;
+    }
+
+    .results-popup button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin: 5px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Details Page */
+    .details-page {
+      display: none;
+      margin: 90px 10px 90px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      max-height: 520px;
+      overflow-y: auto;
+    }
+
+    .details-page h3 {
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+
+    .details-page h3:first-child {
+      margin-top: 0;
+    }
+
+    .details-page p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    body.light .details-page p {
+      color: #666;
+    }
+
+    .details-page .correct {
+      color: #27ae60;
+      font-weight: bold;
+    }
+
+    .details-page .incorrect {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .details-page .explanation {
+      background: var(--background);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .details-page button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--background);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--shadow-in);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* Section indicator */
+    .section-indicator {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: var(--shadow-in);
+      border-radius: 3px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Container -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn" id="back-btn">←</button>
+      <div class="header">Digestive System Quiz</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <div class="profile-upload">
+          <input type="file" accept="image/*" id="profile-upload">
+          <button class="neumorphic-btn">👤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Container -->
+    <div class="question-container">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="section-indicator" id="section-indicator">Section 1</div>
+      <div class="timer">Time: 120m:00s</div>
+      <div class="question-text">Question 1</div>
+      <div class="options">
+        <div class="option" data-index="0"><p><span class="option-letter">A)</span> Option 1</p></div>
+        <div class="option" data-index="1"><p><span class="option-letter">B)</span> Option 2</p></div>
+        <div class="option" data-index="2"><p><span class="option-letter">C)</span> Option 3</p></div>
+        <div class="option" data-index="3"><p><span class="option-letter">D)</span> Option 4</p></div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="prev-btn neumorphic">Prev</button>
+      <button class="center-btn">📋</button>
+      <button class="next-btn neumorphic">Next</button>
+    </div>
+
+    <!-- Question Selection Pop-up -->
+    <div class="popup" id="question-popup">
+      <h3 style="text-align: center; margin-bottom: 15px; color: var(--text);">Select Question</h3>
+      <div class="popup-grid"></div>
+      <button class="neumorphic-btn close-btn" style="position: absolute; top: 10px; right: 10px;">X</button>
+    </div>
+
+    <!-- Results Pop-up -->
+    <div class="results-popup" id="results-popup">
+      <button class="close-btn">X</button>
+      <div class="score-circle">
+        <span class="score-text" id="score-text">0/100</span>
+      </div>
+      <h2>Quiz Complete!</h2>
+      <h3 id="performance-text">Keep studying!</h3>
+      <button class="continue-btn">Continue</button>
+      <button class="details-btn">Show Details</button>
+    </div>
+
+    <!-- Details Page -->
+    <div class="details-page" id="details-page">
+      <button class="neumorphic-btn back-btn" style="margin-bottom: 20px;">← Back</button>
+      <div class="details-content"></div>
+    </div>
+  </div>
+
+    <!-- Footer Nav Bar -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+
+  <script>
+    // Complete Quiz Data - 100 Digestive System Questions
+    const quizData = [
+      // SECTION A: ORAL CAVITY, PHARYNX & ESOPHAGUS (Questions 1-20)
+      {
+        question: "Which salivary gland is the largest and produces purely serous secretion?",
+        options: ["Sublingual gland", "Submandibular gland", "Parotid gland", "Minor salivary glands"],
+        correct: 2,
+        reason: "The parotid gland is the largest salivary gland and produces only serous (watery) secretion, unlike the mixed secretions of submandibular or mucous-dominant sublingual glands.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the primary enzyme in saliva that begins carbohydrate digestion?",
+        options: ["Pepsin", "Salivary amylase (ptyalin)", "Lipase", "Trypsin"],
+        correct: 1,
+        reason: "Salivary amylase (ptyalin) hydrolyzes starch into maltose and dextrins, initiating carbohydrate digestion in the oral cavity.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "During swallowing, which structure covers the larynx to prevent aspiration?",
+        options: ["Uvula", "Epiglottis", "Vocal cords", "Cricoid cartilage"],
+        correct: 1,
+        reason: "The epiglottis is a leaf-shaped cartilage that folds down over the larynx during the pharyngeal phase of swallowing to prevent food entry into the airway.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "At which vertebral level is the upper esophageal sphincter (UES) located?",
+        options: ["C3-C4", "C6", "T4-T5", "T10"],
+        correct: 1,
+        reason: "The UES (cricopharyngeus muscle) is located at the level of C6, marking the transition from pharynx to esophagus.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What type of muscle comprises the upper third of the esophagus?",
+        options: ["Smooth muscle only", "Skeletal (striated) muscle", "Cardiac muscle", "Mixed smooth and skeletal"],
+        correct: 1,
+        reason: "The upper third contains skeletal muscle for voluntary control during swallowing; the middle third is mixed, and the lower third is smooth muscle.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Which is the narrowest part of the esophagus and a common site for foreign body impaction?",
+        options: ["Aortic arch impression", "Diaphragmatic hiatus", "Cricopharyngeus (C6 level)", "Gastroesophageal junction"],
+        correct: 2,
+        reason: "The cricopharyngeus at C6 is the physiologically narrowest point; 70% of foreign bodies lodge at this level.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the normal esophageal transit time for a bolus to reach the stomach?",
+        options: ["1-2 seconds", "6-10 seconds", "30-60 seconds", "2-3 minutes"],
+        correct: 1,
+        reason: "Primary peristalsis propels the bolus through the esophagus in 6-10 seconds under normal conditions.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Which nerve provides motor innervation to the esophagus?",
+        options: ["Vagus nerve (CN X)", "Glossopharyngeal nerve (CN IX)", "Hypoglossal nerve (CN XII)", "Accessory nerve (CN XI)"],
+        correct: 0,
+        reason: "The vagus nerve provides parasympathetic motor innervation and coordinates peristalsis via the myenteric plexus.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "In achalasia, which pathological change occurs in the esophageal wall?",
+        options: ["Malignant transformation of squamous cells", "Degeneration of myenteric plexus ganglia", "Hypertrophy of muscularis mucosae", "Metaplasia to columnar epithelium"],
+        correct: 1,
+        reason: "Achalasia results from loss of inhibitory ganglion cells in the myenteric plexus, causing failure of LES relaxation and absent peristalsis.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Barrett's esophagus is characterized by which epithelial change?",
+        options: ["Squamous cell hyperplasia", "Intestinal metaplasia with goblet cells", "Gastric foveolar metaplasia", "Neuroendocrine differentiation"],
+        correct: 1,
+        reason: "Chronic GERD causes replacement of squamous epithelium with intestinal-type columnar epithelium containing goblet cells—a premalignant condition.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the primary cell type of the esophageal epithelium?",
+        options: ["Simple columnar", "Non-keratinized stratified squamous", "Keratinized stratified squamous", "Pseudostratified ciliated"],
+        correct: 1,
+        reason: "The esophagus is lined by non-keratinized stratified squamous epithelium to withstand mechanical abrasion from food passage.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Which radiographic finding is classic for achalasia?",
+        options: ["'String sign' of the terminal ileum", "'Bird's beak' tapering of distal esophagus", "'Apple-core' lesion", "'Lead pipe' colon"],
+        correct: 1,
+        reason: "The dilated esophagus with smooth, tapered narrowing at the LES resembles a bird's beak on barium swallow.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the function of the lower esophageal sphincter (LES)?",
+        options: ["Propel food into the stomach", "Prevent gastric reflux", "Secrete mucus", "Initiate swallowing reflex"],
+        correct: 1,
+        reason: "The LES maintains tonic contraction (15-25 mmHg) to prevent gastroesophageal reflux; relaxation occurs with swallowing.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Which esophageal constrictor is caused by the aortic arch?",
+        options: ["First constriction", "Second constriction", "Third constriction", "Not a named constriction"],
+        correct: 1,
+        reason: "The second (T4-T5) constriction is caused by aortic arch and left main bronchus compression on the esophagus.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What type of esophageal cancer is most common in the lower third?",
+        options: ["Squamous cell carcinoma", "Small cell carcinoma", "Adenocarcinoma", "Lymphoma"],
+        correct: 2,
+        reason: "Adenocarcinoma predominates in the distal esophagus, often arising in Barrett's mucosa, while squamous cell carcinoma affects the upper/middle thirds.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the epithelial turnover time for esophageal squamous cells?",
+        options: ["1-2 days", "7-14 days", "3-4 weeks", "3-6 months"],
+        correct: 1,
+        reason: "Esophageal squamous epithelium has a rapid turnover of 7-14 days to repair mechanical damage from food passage.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Which structure prevents reflux during inspiration?",
+        options: ["Diaphragmatic crura", "Phrenoesophageal ligament", "Both A and B", "None of the above"],
+        correct: 2,
+        reason: "The diaphragmatic crura provide extrinsic compression, while the phrenoesophageal ligament anchors the LES; together they form the 'gastroesophageal barrier.'",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the most common cause of esophageal stricture worldwide?",
+        options: ["Reflux esophagitis", "Corrosive ingestion", "Radiation injury", "Malignancy"],
+        correct: 0,
+        reason: "Peptic strictures from chronic GERD are most common in Western countries; corrosive strictures predominate in developing nations.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "Which cells in the esophageal epithelium act as mechanoreceptors?",
+        options: ["Merkel cells", "Langerhans cells", "Melanocytes", "T lymphocytes"],
+        correct: 0,
+        reason: "Merkel cells in the basal layer function as slowly adapting mechanoreceptors for light touch/pressure.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      {
+        question: "What is the primary disadvantage of single-contrast esophagram compared to double-contrast?",
+        options: ["Higher radiation dose", "Poorer mucosal detail", "Longer examination time", "Greater patient discomfort"],
+        correct: 1,
+        reason: "Single-contrast (full-column barium) is better for strictures and motility but lacks the mucosal coating of double-contrast, which detects early lesions.",
+        section: "Oral Cavity, Pharynx & Esophagus"
+      },
+      
+      // SECTION B: STOMACH (Questions 21-40)
+      {
+        question: "Which cell type secretes hydrochloric acid in the stomach?",
+        options: ["Chief cells", "Parietal cells", "G cells", "D cells"],
+        correct: 1,
+        reason: "Parietal (oxyntic) cells contain H+/K+-ATPase pumps that secrete HCl; they also produce intrinsic factor.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the normal pH of gastric juice?",
+        options: ["1.0-1.5", "1.5-3.5", "4.0-5.0", "6.0-7.0"],
+        correct: 1,
+        reason: "Gastric pH ranges from 1.5-3.5 due to parietal cell HCl secretion, essential for enzyme activation and pathogen killing.",
+        section: "Stomach"
+      },
+      {
+        question: "Which gastric region contains the most parietal cells?",
+        options: ["Fundus", "Body", "Antrum", "Cardia"],
+        correct: 1,
+        reason: "The body (corpus) contains the oxyntic glands with the highest concentration of parietal and chief cells.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the function of chief (zymogenic) cells?",
+        options: ["Secrete HCl", "Secrete pepsinogen", "Secrete gastrin", "Secrete mucus"],
+        correct: 1,
+        reason: "Chief cells secrete pepsinogen, the inactive precursor of pepsin, which is activated by acidic pH.",
+        section: "Stomach"
+      },
+      {
+        question: "Which hormone stimulates gastric acid secretion?",
+        options: ["Secretin", "Cholecystokinin (CCK)", "Gastrin", "Gastric inhibitory peptide (GIP)"],
+        correct: 2,
+        reason: "Gastrin (from G cells in antrum) stimulates parietal cells directly and indirectly via histamine release from ECL cells.",
+        section: "Stomach"
+      },
+      {
+        question: "What type of epithelium lines the stomach?",
+        options: ["Stratified squamous", "Simple columnar with goblet cells", "Simple columnar (mucous surface cells)", "Pseudostratified"],
+        correct: 2,
+        reason: "The stomach is lined by simple columnar epithelium with surface mucous cells (foveolar cells) that secrete protective alkaline mucus—not goblet cells (which are intestinal).",
+        section: "Stomach"
+      },
+      {
+        question: "Which gastric layer contains the myenteric (Auerbach's) plexus?",
+        options: ["Mucosa", "Submucosa", "Muscularis externa", "Serosa"],
+        correct: 2,
+        reason: "The myenteric plexus lies between the circular and longitudinal muscle layers of the muscularis externa, coordinating motility.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the primary mechanism of gastric mucosal protection against acid?",
+        options: ["Rapid epithelial cell division", "Mucus-bicarbonate barrier", "Tight junctions only", "Absence of acid receptors"],
+        correct: 1,
+        reason: "A thick mucus layer (from surface foveolar cells) plus bicarbonate secretion (from surface and parietal cells) creates a pH gradient from lumen (pH 2) to epithelium (pH 7).",
+        section: "Stomach"
+      },
+      {
+        question: "Which condition is associated with the highest risk of gastric cancer?",
+        options: ["Duodenal ulcer", "Chronic atrophic gastritis with intestinal metaplasia", "Acute erosive gastritis", "Functional dyspepsia"],
+        correct: 1,
+        reason: "Intestinal metaplasia (replacement of gastric mucosa with intestinal-type epithelium) is the key premalignant lesion in Correa's cascade.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the radiographic 'double duct sign'?",
+        options: ["Dilated common bile duct and pancreatic duct", "Duplicated gastric antrum", "Parallel esophageal and tracheal air shadows", "Double-barreled appendix"],
+        correct: 0,
+        reason: "Simultaneous dilation of CBD and pancreatic duct suggests ampullary obstruction, often from pancreatic head carcinoma.",
+        section: "Stomach"
+      },
+      {
+        question: "Which gastric lymphoma type is associated with H. pylori infection?",
+        options: ["Diffuse large B-cell lymphoma", "Mantle cell lymphoma", "MALT (mucosa-associated lymphoid tissue) lymphoma", "Burkitt lymphoma"],
+        correct: 2,
+        reason: "H. pylori antigen-driven proliferation leads to MALT lymphoma; eradication can cause regression in early stages.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the epithelial characteristic of Ménétrier's disease?",
+        options: ["Villous atrophy", "Foveolar hyperplasia with giant folds", "Intestinal metaplasia", "Squamous metaplasia"],
+        correct: 1,
+        reason: "TGF-α overexpression causes massive foveolar (surface mucous cell) hyperplasia, creating giant hypertrophied folds and protein loss.",
+        section: "Stomach"
+      },
+      {
+        question: "Which cells secrete somatostatin in the stomach?",
+        options: ["G cells", "D cells", "Enterochromaffin-like (ECL) cells", "Parietal cells"],
+        correct: 1,
+        reason: "D cells (diffuse neuroendocrine cells) secrete somatostatin, inhibiting gastrin, acid, and pepsinogen secretion.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the gastric emptying time for a solid meal?",
+        options: ["30 minutes", "2-4 hours", "6-8 hours", "12-24 hours"],
+        correct: 1,
+        reason: "Liquids empty in minutes, but solids require 2-4 hours depending on caloric content, particle size, and composition (fats slow emptying most).",
+        section: "Stomach"
+      },
+      {
+        question: "Which radiographic position best demonstrates the gastric fundus with air contrast?",
+        options: ["Supine", "Prone", "Left lateral decubitus", "Upright"],
+        correct: 2,
+        reason: "Left lateral decubitus allows air to rise into the fundus while barium layers dependently, providing double-contrast of the fundic mucosa.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the characteristic histology of signet ring cell carcinoma?",
+        options: ["Glandular formation", "Intracellular mucin displacing nucleus", "Keratin pearls", "Neuroendocrine granules"],
+        correct: 1,
+        reason: "Signet ring cells contain abundant intracytoplasmic mucin that flattens and displaces the nucleus peripherally, creating the classic appearance.",
+        section: "Stomach"
+      },
+      {
+        question: "Which layer of the gastric wall is responsible for the 'limiting ridge' appearance?",
+        options: ["Mucosa", "Submucosa", "Muscularis mucosae", "Muscularis externa"],
+        correct: 2,
+        reason: "The muscularis mucosae creates the fine, regular folds seen on double-contrast studies; its thickening suggests invasive disease.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the primary blood supply to the stomach?",
+        options: ["Superior mesenteric artery", "Celiac trunk", "Inferior mesenteric artery", "Hepatic artery proper"],
+        correct: 1,
+        reason: "The celiac trunk gives rise to left gastric, splenic (short gastrics, left gastroepiploic), and common hepatic (right gastric, right gastroepiploic, gastroduodenal) arteries.",
+        section: "Stomach"
+      },
+      {
+        question: "Which gastric polyp type has malignant potential?",
+        options: ["Hyperplastic polyp", "Fundic gland polyp", "Adenomatous polyp", "Inflammatory fibroid polyp"],
+        correct: 2,
+        reason: "Adenomatous polyps (intestinal type) harbor dysplasia and carry malignant risk proportional to size; hyperplastic polyps are benign reactive lesions.",
+        section: "Stomach"
+      },
+      {
+        question: "What is the function of gastric intrinsic factor?",
+        options: ["Digest proteins", "Bind vitamin B12 for ileal absorption", "Stimulate acid secretion", "Kill bacteria"],
+        correct: 1,
+        reason: "Intrinsic factor (from parietal cells) binds B12 in the ileum; its absence (pernicious anemia) causes megaloblastic anemia and neurological deficits.",
+        section: "Stomach"
+      },
+      
+      // SECTION C: SMALL INTESTINE (Questions 41-60)
+      {
+        question: "What is the total length of the small intestine in adults?",
+        options: ["1-2 meters", "3-6 meters (average 6m)", "8-10 meters", "12-15 meters"],
+        correct: 1,
+        reason: "The small intestine averages 6 meters (range 3-6m), with the jejunum comprising 2/5 and ileum 3/5 of the length.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which feature distinguishes jejunum from ileum histologically?",
+        options: ["Presence of villi", "Plicae circulares (valvulae conniventes) height", "Goblet cell density", "Presence of Peyer's patches"],
+        correct: 1,
+        reason: "Jejunal plicae circulares are tall, numerous, and closely packed; ileal folds are lower, sparse, and disappear distally. Both have villi and goblet cells.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the primary function of Brunner's glands?",
+        options: ["Secrete digestive enzymes", "Secrete alkaline mucus", "Absorb nutrients", "Produce hormones"],
+        correct: 1,
+        reason: "Brunner's glands in the duodenal submucosa secrete bicarbonate-rich mucus to neutralize acidic chyme and protect the mucosa.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which cell type is found in intestinal crypts (of Lieberkühn) and secretes antimicrobial peptides?",
+        options: ["Goblet cells", "Paneth cells", "Enteroendocrine cells", "Stem cells"],
+        correct: 1,
+        reason: "Paneth cells at crypt bases contain eosinophilic granules with lysozyme, defensins, and growth factors; they regulate microbiome and stem cell niche.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the surface area amplification factor from villi and microvilli?",
+        options: ["10-fold", "100-fold", "600-fold", "1000-fold"],
+        correct: 2,
+        reason: "Plicae circulares (3x), villi (10x), and microvilli (20x) combine to increase surface area 600-fold for maximal absorption.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which vitamin requires intrinsic factor for absorption?",
+        options: ["Folate", "Vitamin B12", "Vitamin C", "Vitamin K"],
+        correct: 1,
+        reason: "B12 binds intrinsic factor in the ileum; specific receptors (cubilin-amnionless complex) mediate uptake in terminal ileal enterocytes.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the primary mechanism of carbohydrate absorption?",
+        options: ["Simple diffusion", "Secondary active transport with sodium (SGLT1)", "Facilitated diffusion (GLUT2) only", "Endocytosis"],
+        correct: 1,
+        reason: "Sodium-glucose linked transporter 1 (SGLT1) uses the Na+ gradient to actively transport glucose/galactose; fructose uses GLUT5 facilitated diffusion.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which condition shows 'villous atrophy with crypt hyperplasia' on histology?",
+        options: ["Crohn's disease", "Celiac disease", "Tropical sprue", "Both B and C"],
+        correct: 3,
+        reason: "Both celiac disease (gluten-sensitive) and tropical sprue (infectious) demonstrate villous blunting, crypt lengthening, and intraepithelial lymphocytosis.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the characteristic radiographic finding in Crohn's disease?",
+        options: ["Continuous colonic involvement", "Skip lesions and 'cobblestoning'", "Lead pipe appearance", "Thumbprinting"],
+        correct: 1,
+        reason: "Discontinuous (skip) lesions, deep linear ulcers creating cobblestone mucosa, strictures, and fistulas are hallmarks of transmural Crohn's disease.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which immunoglobulin is primarily secreted across intestinal epithelium?",
+        options: ["IgM", "IgG", "IgA", "IgE"],
+        correct: 2,
+        reason: "Dimeric IgA is transported via polymeric immunoglobulin receptor (pIgR) across enterocytes into gut lumen, providing mucosal immunity.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the primary bile acid receptor on enterocytes?",
+        options: ["FXR (farnesoid X receptor)", "PPAR-γ", "Vitamin D receptor", "Glucocorticoid receptor"],
+        correct: 0,
+        reason: "FXR regulates bile acid homeostasis; ileal bile acid reabsorption occurs via apical sodium-dependent bile acid transporter (ASBT).",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which neuroendocrine tumor arises from enterochromaffin cells and produces serotonin?",
+        options: ["Gastrinoma", "Insulinoma", "Carcinoid tumor", "VIPoma"],
+        correct: 2,
+        reason: "Small intestinal carcinoids (most common location) secrete serotonin and tachykinins; hepatic metastases cause carcinoid syndrome.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the 'string sign' in small bowel radiography?",
+        options: ["Normal jejunal fold pattern", "Severe luminal narrowing from spasm/fibrosis", "Intussusception target sign", "Pneumatosis intestinalis"],
+        correct: 1,
+        reason: "The string sign (Kantor's string sign) shows extreme stenosis with thread-like barium passage, classic for Crohn's disease or scarring.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which cell type produces cholecystokinin (CCK)?",
+        options: ["I cells (duodenum/jejunum)", "G cells (stomach)", "S cells (duodenum)", "K cells (duodenum/jejunum)"],
+        correct: 0,
+        reason: "I cells sense luminal fats/amino acids and release CCK, stimulating gallbladder contraction and pancreatic enzyme secretion.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the function of the ileocecal valve?",
+        options: ["Prevent gastric reflux", "Regulate ileal emptying and prevent colonic reflux", "Control pancreatic secretion", "Secrete digestive enzymes"],
+        correct: 1,
+        reason: "The ileocecal valve is a physiological sphincter with lip-like projections that permit controlled ileal emptying while preventing bacterial backflow.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which condition is associated with 'night blindness' and small bowel pathology?",
+        options: ["Crohn's disease", "Celiac disease", "Whipple disease", "Abetalipoproteinemia"],
+        correct: 3,
+        reason: "Abetalipoproteinemia (microsomal triglyceride transfer protein deficiency) causes fat malabsorption, vitamin A/E deficiency, acanthocytosis, and retinitis pigmentosa.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the epithelial turnover time for small intestinal enterocytes?",
+        options: ["1-2 days", "3-5 days", "2-3 weeks", "1 month"],
+        correct: 1,
+        reason: "Rapid turnover (3-5 days) allows constant renewal from crypt stem cells; this explains mucosal recovery after injury.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which radiographic technique provides the best small bowel mucosal detail?",
+        options: ["Small bowel follow-through (SBFT)", "Enteroclysis (small bowel enema)", "CT enterography", "MR enterography"],
+        correct: 1,
+        reason: "Enteroclysis involves nasoduodenal tube infusion of barium/methylcellulose, achieving optimal distension and coating for mucosal lesions.",
+        section: "Small Intestine"
+      },
+      {
+        question: "What is the primary defect in lactose intolerance?",
+        options: ["Absence of lactose in diet", "Brush border lactase deficiency", "Lactose malabsorption in colon", "Lactose allergy"],
+        correct: 1,
+        reason: "Lactase non-persistence (genetic or secondary) prevents hydrolysis of lactose to glucose/galactose, causing osmotic diarrhea and fermentation.",
+        section: "Small Intestine"
+      },
+      {
+        question: "Which feature distinguishes ulcerative colitis from Crohn's disease pathologically?",
+        options: ["Crypt abscesses", "Transmural inflammation", "Granulomas", "Both B and C"],
+        correct: 3,
+        reason: "Crohn's shows transmural inflammation and non-caseating granulomas; UC is mucosal/submucosal with crypt abscesses but no granulomas.",
+        section: "Small Intestine"
+      },
+      
+      // SECTION D: LARGE INTESTINE (Questions 61-80)
+      {
+        question: "What is the primary function of the large intestine?",
+        options: ["Protein digestion", "Water and electrolyte absorption", "Bile acid synthesis", "Enzyme secretion"],
+        correct: 1,
+        reason: "The colon absorbs 1.5L of water and electrolytes daily, converting liquid chyme to semisolid feces (150mL).",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which structural feature creates the haustral appearance of the colon?",
+        options: ["Plicae circulares", "Taeniae coli contraction", "Villous projections", "Peyer's patches"],
+        correct: 1,
+        reason: "The three longitudinal taeniae coli are shorter than the colon length, causing sacculations (haustra); they disappear during complete contraction.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What type of epithelium lines the large intestine?",
+        options: ["Stratified squamous", "Simple columnar with abundant goblet cells", "Simple columnar without goblet cells", "Pseudostratified ciliated"],
+        correct: 1,
+        reason: "The colon has straight tubular glands (crypts) lined by columnar absorptive cells and numerous goblet cells for mucus lubrication—no villi.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which is the most common location for colorectal cancer?",
+        options: ["Cecum", "Ascending colon", "Sigmoid colon/rectosigmoid", "Transverse colon"],
+        correct: 2,
+        reason: "60% of colorectal cancers occur in the rectosigmoid; screening sigmoidoscopy exploits this distribution.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the 'adenoma-carcinoma sequence'?",
+        options: ["Direct malignant transformation of normal epithelium", "APC mutation → adenoma → accumulation of mutations → carcinoma", "Inflammation → dysplasia → cancer", "Hyperplastic polyp → cancer"],
+        correct: 1,
+        reason: "Sequential genetic alterations (APC loss, K-ras mutation, p53 loss, etc.) drive progression from tubular adenoma to invasive cancer over 10-15 years.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which radiographic finding suggests appendicitis?",
+        options: ["Fecalith visualization", "Ileus with sentinel loop", "Absence of bowel gas in right lower quadrant", "All of the above"],
+        correct: 3,
+        reason: "Appendicolith (calcified fecalith), localized ileus, and absence of gas in RLQ are supportive findings; CT is now preferred for diagnosis.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the epithelial change in ulcerative colitis with dysplasia?",
+        options: ["Villous adenomatous epithelium", "Crypt architectural distortion with nuclear stratification and hyperchromasia", "Squamous metaplasia", "Neuroendocrine hyperplasia"],
+        correct: 1,
+        reason: "Dysplasia shows crypt branching/shortening, nuclear pleomorphism, loss of mucin, and stratification—indicating colitis-associated cancer risk.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which colonic motility pattern occurs 3-4 times daily?",
+        options: ["Haustral churning", "Mass movements", "Segmentation", "Tonic contraction"],
+        correct: 1,
+        reason: "Mass movements are powerful, sustained contractions propelling content over long distances, triggered by gastrocolic reflex after meals.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the primary blood supply to the ascending colon?",
+        options: ["Inferior mesenteric artery", "Superior mesenteric artery (ileocolic and right colic branches)", "Celiac trunk", "Internal iliac artery"],
+        correct: 1,
+        reason: "The SMA supplies midgut derivatives (cecum to proximal transverse colon); IMA supplies distal transverse to rectum.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which condition shows 'lead pipe' colon on radiography?",
+        options: ["Crohn's disease", "Ulcerative colitis (chronic)", "Ischemic colitis", "Diverticulitis"],
+        correct: 1,
+        reason: "Chronic UC causes haustral loss, shortening, and rigidity from muscularis mucosae hypertrophy and fibrosis—resembling a lead pipe.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the histology of diverticula?",
+        options: ["Full-thickness outpouching", "Herniation of mucosa/submucosa through muscularis propria", "Serous cysts", "True duplication cysts"],
+        correct: 1,
+        reason: "Colonic diverticula are 'false' diverticula—mucosa and submucosa herniate through weakened points where vasa recta penetrate circular muscle.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which bacterial product is responsible for hepatic encephalopathy in colonic dysbiosis?",
+        options: ["Short-chain fatty acids", "Ammonia (from urease-producing bacteria)", "Vitamin K", "Bile acids"],
+        correct: 1,
+        reason: "Gut bacteria convert urea to ammonia; impaired hepatic detoxification allows neurotoxin accumulation.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the primary screening method for colorectal cancer?",
+        options: ["Barium enema", "Colonoscopy", "CT colonography", "Fecal occult blood testing"],
+        correct: 1,
+        reason: "Colonoscopy allows direct visualization, biopsy, and polypectomy; it is the gold standard and reduces mortality through polyp removal.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which cell type is increased in collagenous colitis?",
+        options: ["Eosinophils", "Intraepithelial lymphocytes", "Subepithelial collagen band thickness", "Neutrophils"],
+        correct: 2,
+        reason: "Collagenous colitis (a microscopic colitis) shows thickened subepithelial collagen table (>10 μm) with increased intraepithelial lymphocytes; surface epithelium is preserved.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the function of epiploic appendages?",
+        options: ["Absorb water", "Fat storage and protection", "Secrete mucus", "Produce antibodies"],
+        correct: 1,
+        reason: "These small, fat-filled pouches of visceral peritoneum along the colon provide cushioning and may have metabolic/immune functions.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which radiographic finding indicates toxic megacolon?",
+        options: ["Colonic diameter >6 cm with loss of haustra and mucosal islands", "Normal colonic caliber with spasm", "Diverticulosis with inflammation", "Annular stricturing lesion"],
+        correct: 0,
+        reason: "Toxic megacolon (complication of UC/Crohn's/infection) shows transverse colon >6cm (or cecum >9cm), with mucosal islands and risk of perforation.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the epithelial transition at the pectinate (dentate) line?",
+        options: ["Simple columnar to stratified squamous non-keratinized", "Simple columnar to stratified squamous keratinized", "Stratified squamous to simple cuboidal", "No transition occurs"],
+        correct: 0,
+        reason: "The anal canal above the pectinate line has columnar epithelium (endoderm); below is stratified squamous non-keratinized (ectoderm), then keratinized skin at verge.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which lymphatic drainage pattern explains rectal cancer metastasis to liver?",
+        options: ["Inferior mesenteric → portal system → liver", "Internal iliac → systemic → liver", "Superficial inguinal → portal", "Retroperitoneal → caval system"],
+        correct: 0,
+        reason: "Upper rectum drains via IM vein to portal vein; lower rectum has dual drainage (portal and systemic via internal iliac), allowing lung metastases without liver involvement.",
+        section: "Large Intestine"
+      },
+      {
+        question: "What is the primary innervation of the internal anal sphincter?",
+        options: ["Somatic (pudendal nerve)", "Autonomic sympathetic", "Autonomic parasympathetic (pelvic splanchnic)", "Intrinsic myenteric plexus"],
+        correct: 1,
+        reason: "The internal sphincter (smooth muscle) has sympathetic tone (maintains continence); relaxation is reflexive with rectal distension.",
+        section: "Large Intestine"
+      },
+      {
+        question: "Which condition is associated with 'currant jelly' stool?",
+        options: ["Upper GI bleeding", "Intussusception", "Ischemic colitis", "Hemorrhoids"],
+        correct: 1,
+        reason: "Intussusception (ileocolic telescoping) causes mucosal ischemia, bleeding, and mucus mixing with stool, creating the classic 'currant jelly' appearance.",
+        section: "Large Intestine"
+      },
+      
+      // SECTION E: ACCESSORY ORGANS, HISTOLOGY & RADIOGRAPHY (Questions 81-100)
+      {
+        question: "Which liver cell type forms bile canaliculi?",
+        options: ["Kupffer cells", "Hepatocytes", "Stellate (Ito) cells", "Biliary epithelial cells"],
+        correct: 1,
+        reason: "Hepatocyte membranes form the walls of bile canaliculi; bile flows between hepatocytes to canals of Hering, then interlobular ducts.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the functional unit of the liver?",
+        options: ["Hepatic lobule (classic lobule)", "Portal lobule", "Hepatic acinus", "All are used"],
+        correct: 3,
+        reason: "Classic lobule (hexagonal, central vein-centered), portal lobule (bile secretion-focused), and acinus (perfusion/oxygenation zones) are all functional concepts.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which bile component is essential for micelle formation?",
+        options: ["Bilirubin", "Bile salts (conjugated)", "Cholesterol", "Phospholipids alone"],
+        correct: 1,
+        reason: "Conjugated bile salts are amphipathic detergents that emulsify fats and form mixed micelles with fatty acids, monoglycerides, and phospholipids.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the characteristic epithelium of bile ducts?",
+        options: ["Simple squamous", "Simple cuboidal (small ducts) to columnar (large ducts)", "Stratified columnar", "Transitional"],
+        correct: 1,
+        reason: "Bile duct epithelium varies from cuboidal in small ducts to columnar in extrahepatic ducts; all are non-mucus secreting.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which radiographic finding indicates pneumobilia?",
+        options: ["Dilated bile ducts", "Air in biliary tree (branching lucencies in liver)", "Gallbladder wall calcification", "Biliary strictures"],
+        correct: 1,
+        reason: "Pneumobilia indicates abnormal biliary-enteric communication (surgery, fistula, or incompetent sphincter); air rises to non-dependent left lobe ducts.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the primary exocrine secretion of the pancreas?",
+        options: ["Insulin", "Bicarbonate-rich fluid and digestive enzymes", "Glucagon", "Mucus"],
+        correct: 1,
+        reason: "Acinar cells secrete enzymes (amylase, lipase, proteases); duct cells secrete bicarbonate; together 1.5-2L/day of alkaline fluid.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which pancreatic cell type secretes bicarbonate?",
+        options: ["Acinar cells", "Centroacinar and ductal cells", "Alpha cells", "Beta cells"],
+        correct: 1,
+        reason: "Duct epithelial cells (including centroacinar cells) contain carbonic anhydrase and CFTR channels for bicarbonate secretion.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the epithelial type of pancreatic ducts?",
+        options: ["Simple squamous", "Simple columnar", "Stratified cuboidal", "Pseudostratified"],
+        correct: 1,
+        reason: "Pancreatic ducts are lined by simple columnar epithelium with some mucus-secreting cells in larger ducts.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which pancreatic enzyme is activated by enterokinase (enteropeptidase)?",
+        options: ["Pancreatic amylase", "Trypsinogen → trypsin", "Pancreatic lipase", "Carboxypeptidase"],
+        correct: 1,
+        reason: "Enterokinase on duodenal brush border activates trypsinogen; trypsin then activates all other pancreatic zymogens.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the classic triad of acute pancreatitis?",
+        options: ["Fever, jaundice, weight loss", "Severe epigastric pain, nausea/vomiting, elevated amylase/lipase", "Steatorrhea, diabetes, calcifications", "Pseudocyst, abscess, necrosis"],
+        correct: 1,
+        reason: "Acute pancreatitis presents with severe constant epigastric pain radiating to back, GI symptoms, and diagnostic enzyme elevation (lipase more specific).",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which layer of the GI tract contains blood vessels, lymphatics, and Meissner's plexus?",
+        options: ["Mucosa", "Submucosa", "Muscularis externa", "Adventitia"],
+        correct: 1,
+        reason: "The submucosa is dense connective tissue housing vessels, lymphatics, and the submucosal (Meissner's) plexus regulating secretion and blood flow.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the function of the muscularis mucosae?",
+        options: ["Peristalsis", "Local mucosal movement and folding", "Sphincter control", "Vascular contraction"],
+        correct: 1,
+        reason: "This thin smooth muscle layer creates mucosal folds for contact/absorption and aids local expulsion of glandular secretions.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which contrast agent is contraindicated in suspected GI perforation?",
+        options: ["Water-soluble iodinated contrast", "Barium sulfate", "Gadolinium", "Carbon dioxide"],
+        correct: 1,
+        reason: "Barium extravasation causes severe granulomatous peritonitis and adhesions; water-soluble agents are absorbed/excreted if leakage occurs.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the primary advantage of double-contrast barium studies?",
+        options: ["Lower radiation dose", "Better mucosal detail and lesion detection", "Faster examination", "Better for motility assessment"],
+        correct: 1,
+        reason: "Air distension + thin barium coating reveals fine mucosal patterns, early cancers, and small ulcers better than single-contrast.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which position is best for detecting hiatal hernia during UGI?",
+        options: ["Supine", "Prone", "Left lateral decubitus", "Upright with Valsalva"],
+        correct: 3,
+        reason: "Upright positioning with Valsalva maneuver increases intra-abdominal pressure, promoting herniation of stomach through diaphragmatic hiatus.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the 'coffee bean sign' on abdominal radiograph?",
+        options: ["Gallstone ileus", "Sigmoid volvulus", "Intussusception", "Cecal volvulus"],
+        correct: 1,
+        reason: "The dilated, twisted sigmoid colon with apposed walls creates the coffee bean appearance, with the 'crease' pointing to the left lower quadrant.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which cell junction provides the epithelial barrier function?",
+        options: ["Gap junctions", "Tight junctions (zonula occludens)", "Desmosomes", "Hemidesmosomes"],
+        correct: 1,
+        reason: "Tight junctions seal the apical intercellular space, preventing paracellular passage of luminal contents; their disruption causes 'leaky gut.'",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the primary stem cell location in intestinal epithelium?",
+        options: ["Villus tip", "Crypt base (position +4 to +5)", "Brunner's glands", "Peyer's patches"],
+        correct: 1,
+        reason: "Lgr5+ intestinal stem cells at crypt base (above Paneth cells) generate all epithelial lineages; they divide every 24 hours.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "Which immunohistochemical marker is specific for neuroendocrine tumors?",
+        options: ["CEA (carcinoembryonic antigen)", "Chromogranin and synaptophysin", "CD45 (leukocyte common antigen)", "Desmin"],
+        correct: 1,
+        reason: "Chromogranin (secretory granule protein) and synaptophysin (synaptic vesicle protein) confirm neuroendocrine differentiation.",
+        section: "Accessory Organs & Histology"
+      },
+      {
+        question: "What is the most common cause of small bowel obstruction in adults without prior surgery?",
+        options: ["Adhesions", "Hernias", "Crohn's disease", "Gallstone ileus"],
+        correct: 1,
+        reason: "In patients without prior abdominal surgery, external hernias (inguinal, femoral, umbilical) are the leading cause; adhesions predominate post-surgically.",
+        section: "Accessory Organs & Histology"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answers = Array(quizData.length).fill(null);
+    let timeLeft = 40 * 60; // 120 minutes for 100 questions
+    let timerInterval;
+
+    // DOM Elements
+    const questionContainer = document.querySelector('.question-container');
+    const timerElement = document.querySelector('.timer');
+    const questionText = document.querySelector('.question-text');
+    const optionsContainer = document.querySelector('.options');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const centerBtn = document.querySelector('.center-btn');
+    const questionPopup = document.getElementById('question-popup');
+    const popupGrid = document.querySelector('.popup-grid');
+    const resultsPopup = document.getElementById('results-popup');
+    const detailsPage = document.getElementById('details-page');
+    const detailsContent = document.querySelector('.details-content');
+    const themeToggle = document.getElementById('theme-toggle');
+    const profileUpload = document.getElementById('profile-upload');
+    const body = document.body;
+    const sectionIndicator = document.getElementById('section-indicator');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Timer
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `Time: ${minutes}m:${seconds.toString().padStart(2, '0')}s`;
+      if (timeLeft > 0) {
+        timeLeft--;
+      } else {
+        clearInterval(timerInterval);
+        submitQuiz();
+      }
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    // Update Progress Bar
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / quizData.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    // Render Question
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      sectionIndicator.textContent = `${q.section} (Q${currentQuestion + 1})`;
+      questionText.textContent = `Question ${currentQuestion + 1}: ${q.question}`;
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const div = document.createElement('div');
+        div.classList.add('option');
+        if (answers[currentQuestion] === index) div.classList.add('selected');
+        
+        const letter = String.fromCharCode(65 + index);
+        div.innerHTML = `<p><span class="option-letter">${letter})</span> ${option}</p>`;
+        
+        div.addEventListener('click', () => {
+          document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+          div.classList.add('selected');
+          answers[currentQuestion] = index;
+          updatePopup();
+        });
+        optionsContainer.appendChild(div);
+      });
+      
+      prevBtn.disabled = currentQuestion === 0;
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Submit' : 'Next';
+      updateProgress();
+    }
+
+    // Render Question Selection Pop-up
+    function renderPopup() {
+      popupGrid.innerHTML = '';
+      quizData.forEach((_, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = index + 1;
+        if (answers[index] !== null) btn.classList.add('answered');
+        if (index === currentQuestion) btn.classList.add('current');
+        btn.addEventListener('click', () => {
+          currentQuestion = index;
+          renderQuestion();
+          questionPopup.style.display = 'none';
+        });
+        popupGrid.appendChild(btn);
+      });
+    }
+
+    function updatePopup() {
+      renderPopup();
+    }
+
+    // Submit Quiz
+    function submitQuiz() {
+      clearInterval(timerInterval);
+      const score = answers.reduce((sum, answer, i) => answer === quizData[i].correct ? sum + 1 : sum, 0);
+      
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      resultsPopup.style.display = 'block';
+      
+      document.getElementById('score-text').textContent = `${score}/${quizData.length}`;
+      
+            const percentage = (score / quizData.length) * 100;
+      let performanceText = '';
+      if (percentage >= 90) performanceText = 'Outstanding! Medical school ready!';
+      else if (percentage >= 80) performanceText = 'Excellent! Great understanding of GI system.';
+      else if (percentage >= 70) performanceText = 'Good work! Solid foundation.';
+      else if (percentage >= 60) performanceText = 'Passing. Review histology & radiography.';
+      else performanceText = 'Keep studying! Focus on anatomy & physiology.';
+      
+      document.getElementById('performance-text').textContent = performanceText;
+    }
+
+    // Render Details Page
+    function renderDetails() {
+      detailsContent.innerHTML = '';
+      let currentSection = '';
+      
+      quizData.forEach((q, i) => {
+        if (q.section !== currentSection) {
+          currentSection = q.section;
+          const sectionHeader = document.createElement('h2');
+          sectionHeader.textContent = currentSection;
+          sectionHeader.style.color = 'var(--accent)';
+          sectionHeader.style.fontSize = '18px';
+          sectionHeader.style.marginTop = '30px';
+          sectionHeader.style.marginBottom = '15px';
+          detailsContent.appendChild(sectionHeader);
+        }
+        
+        const div = document.createElement('div');
+        div.style.marginBottom = '25px';
+        div.style.padding = '15px';
+        div.style.background = 'var(--background)';
+        div.style.borderRadius = '10px';
+        div.style.boxShadow = 'inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out)';
+        
+        const isCorrect = answers[i] === q.correct;
+        const userAnswer = answers[i] !== null ? q.options[answers[i]] : 'Not answered';
+        const correctLetter = String.fromCharCode(65 + q.correct);
+        const userLetter = answers[i] !== null ? String.fromCharCode(65 + answers[i]) : '-';
+        
+        div.innerHTML = `
+          <h3>Q${i + 1}: ${q.question}</h3>
+          <p>Your Answer: <span class="${isCorrect ? 'correct' : 'incorrect'}">${userLetter}) ${userAnswer} ${isCorrect ? '✓' : '✗'}</span></p>
+          <p>Correct Answer: <span class="correct">${correctLetter}) ${q.options[q.correct]} ✓</span></p>
+          <div class="explanation">
+            <strong>Explanation:</strong> ${q.reason}
+          </div>
+        `;
+        detailsContent.appendChild(div);
+      });
+    }
+
+    // Event Listeners
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        submitQuiz();
+      }
+    });
+
+    centerBtn.addEventListener('click', () => {
+      renderPopup();
+      questionPopup.style.display = 'block';
+    });
+
+    questionPopup.querySelector('.close-btn').addEventListener('click', () => {
+      questionPopup.style.display = 'none';
+    });
+
+    resultsPopup.querySelector('.close-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.continue-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.details-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      detailsPage.style.display = 'block';
+      renderDetails();
+    });
+
+    detailsPage.querySelector('.back-btn').addEventListener('click', () => {
+      detailsPage.style.display = 'none';
+      resultsPopup.style.display = 'block';
+    });
+
+    // Theme Toggle
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload
+    profileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          console.log('Profile image uploaded:', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Footer Navigation
+    const navItems = document.querySelectorAll('.nav-bar .nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Back button
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to exit the quiz? Your progress will be lost.')) {
+        location.reload();
+      }
+    });
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>
