@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cranial Nerves V & VII Quiz - 70 Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text: #fff;
+      --accent: #1db954;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text: #333;
+      --accent: #1db954;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Top Fixed Container */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    /* Question Container */
+    .question-container {
+      margin: 60px 10px 60px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+
+    .timer {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      background: var(--background);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option.selected {
+      border: 2px solid var(--accent);
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+    }
+
+    .option.correct {
+      border: 2px solid #27ae60;
+      background: rgba(39, 174, 96, 0.1);
+    }
+
+    .option.incorrect {
+      border: 2px solid #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+    }
+
+    .option p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin: 0;
+    }
+
+    body.light .option p {
+      color: #666;
+    }
+
+    .option-letter {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 5px;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin: 10px 10px;
+    }
+
+    .prev-btn, .next-btn {
+      background: var(--background);
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: var(--text);
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .prev-btn:hover, .next-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .prev-btn {
+      border-radius: 20px 0 0 20px;
+    }
+
+    .next-btn {
+      border-radius: 0 20px 20px 0;
+    }
+
+    .prev-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .center-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .center-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Pop-up for Question Selection */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 340px;
+      width: 90%;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .popup-grid button {
+      background: var(--background);
+      border: none;
+      padding: 8px 4px;
+      border-radius: 8px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 11px;
+      transition: all 0.2s ease;
+    }
+
+    .popup-grid button:hover {
+      transform: scale(1.1);
+    }
+
+    .popup-grid button.answered {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .popup-grid button.current {
+      border: 2px solid var(--accent);
+    }
+
+    /* Results Pop-up */
+    .results-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .results-popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .score-circle::before {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--background);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .score-text {
+      position: relative;
+      z-index: 1;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .results-popup h2 {
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .results-popup h3 {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 20px;
+    }
+
+    body.light .results-popup h3 {
+      color: #666;
+    }
+
+    .results-popup button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin: 5px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Details Page */
+    .details-page {
+      display: none;
+      margin: 90px 10px 90px 10px;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      max-height: 520px;
+      overflow-y: auto;
+    }
+
+    .details-page h3 {
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+
+    .details-page h3:first-child {
+      margin-top: 0;
+    }
+
+    .details-page p {
+      font-size: 14px;
+      color: #b3b3b3;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    body.light .details-page p {
+      color: #666;
+    }
+
+    .details-page .correct {
+      color: #27ae60;
+      font-weight: bold;
+    }
+
+    .details-page .incorrect {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .details-page .explanation {
+      background: var(--background);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .details-page button {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--background);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--shadow-in);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* Section indicator */
+    .section-indicator {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: var(--shadow-in);
+      border-radius: 3px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Container -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn" id="back-btn">←</button>
+      <div class="header">Cranial Nerves V & VII</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+      </div>
+    </div>
+
+    <!-- Question Container -->
+    <div class="question-container">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="section-indicator" id="section-indicator">Section 1</div>
+      <div class="timer">Time: 35m:00s</div>
+      <div class="question-text">Question 1</div>
+      <div class="options">
+        <div class="option" data-index="0"><p><span class="option-letter">A)</span> Option 1</p></div>
+        <div class="option" data-index="1"><p><span class="option-letter">B)</span> Option 2</p></div>
+        <div class="option" data-index="2"><p><span class="option-letter">C)</span> Option 3</p></div>
+        <div class="option" data-index="3"><p><span class="option-letter">D)</span> Option 4</p></div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="prev-btn neumorphic">Prev</button>
+      <button class="center-btn">📋</button>
+      <button class="next-btn neumorphic">Next</button>
+    </div>
+
+    <!-- Question Selection Pop-up -->
+    <div class="popup" id="question-popup">
+      <h3 style="text-align: center; margin-bottom: 15px; color: var(--text);">Select Question</h3>
+      <div class="popup-grid"></div>
+      <button class="neumorphic-btn close-btn" style="position: absolute; top: 10px; right: 10px;">X</button>
+    </div>
+
+    <!-- Results Pop-up -->
+    <div class="results-popup" id="results-popup">
+      <button class="close-btn">X</button>
+      <div class="score-circle">
+        <span class="score-text" id="score-text">0/70</span>
+      </div>
+      <h2>Quiz Complete!</h2>
+      <h3 id="performance-text">Keep studying!</h3>
+      <button class="continue-btn">Continue</button>
+      <button class="details-btn">Show Details</button>
+    </div>
+
+    <!-- Details Page -->
+    <div class="details-page" id="details-page">
+      <button class="neumorphic-btn back-btn" style="margin-bottom: 20px;">← Back</button>
+      <div class="details-content"></div>
+    </div>
+  </div>
+
+    
+
+  <script>
+    // Complete Quiz Data - 70 Cranial Nerves V & VII Questions
+    const quizData = [
+      // SECTION 1: CRANIAL NERVE 5 (TRIGEMINAL) - BASIC ANATOMY (Questions 1-10)
+      {
+        question: "Which cranial nerve is the largest in size?",
+        options: ["Facial nerve (CN VII)", "Trigeminal nerve (CN V)", "Glossopharyngeal nerve (CN IX)", "Vagus nerve (CN X)"],
+        correct: 1,
+        reason: "CN V is the largest cranial nerve, serving as the principal sensory nerve of the head and containing motor fibers for mastication.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "The trigeminal nerve emerges from which part of the brainstem?",
+        options: ["Medulla oblongata", "Pons", "Midbrain", "Cerebellum"],
+        correct: 1,
+        reason: "CN V emerges from the lateral pons, specifically from the ventrolateral surface.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "Which branch of the trigeminal nerve is purely sensory?",
+        options: ["Ophthalmic (V1)", "Maxillary (V2)", "Mandibular (V3)", "Both A and B"],
+        correct: 3,
+        reason: "V1 (ophthalmic) and V2 (maxillary) are purely sensory; V3 is mixed (sensory + motor).",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "The mandibular division (V3) of the trigeminal nerve exits the skull through which foramen?",
+        options: ["Superior orbital fissure", "Foramen rotundum", "Foramen ovale", "Stylomastoid foramen"],
+        correct: 2,
+        reason: "V3 exits via foramen ovale; V1 uses superior orbital fissure, V2 uses foramen rotundum.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "Which muscles are innervated by the motor root of CN V?",
+        options: ["Muscles of facial expression", "Muscles of mastication", "Intrinsic tongue muscles", "Pharyngeal muscles"],
+        correct: 1,
+        reason: "Motor root innervates masseter, temporalis, medial and lateral pterygoids, plus mylohyoid and anterior digastric.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "The trigeminal ganglion (Gasserian ganglion) contains cell bodies of which type of neurons?",
+        options: ["Motor neurons", "First-order sensory neurons", "Second-order sensory neurons", "Autonomic neurons"],
+        correct: 1,
+        reason: "This ganglion houses pseudounipolar sensory neuron cell bodies for all three divisions.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "Which branch of CN V carries general sensation from the cornea?",
+        options: ["V1 (Ophthalmic)", "V2 (Maxillary)", "V3 (Mandibular)", "Chorda tympani"],
+        correct: 0,
+        reason: "The nasociliary branch of V1 (specifically the long ciliary and nasociliary nerves) carries corneal sensation.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "The maxillary nerve (V2) exits the skull through which opening?",
+        options: ["Foramen ovale", "Foramen rotundum", "Foramen spinosum", "Hiatus of the canal of Schlemm"],
+        correct: 1,
+        reason: "V2 exits the middle cranial fossa via the foramen rotundum to enter the pterygopalatine fossa.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "Which nerve provides sensation to the upper teeth and maxillary sinus?",
+        options: ["Infraorbital nerve", "Greater palatine nerve", "Superior alveolar nerves", "Zygomatic nerve"],
+        correct: 2,
+        reason: "Posterior, middle, and anterior superior alveolar nerves (branches of V2) innervate upper teeth and maxillary sinus.",
+        section: "CN V - Basic Anatomy"
+      },
+      {
+        question: "The motor root of the trigeminal nerve is located relative to the sensory root in which position?",
+        options: ["Superior and medial", "Inferior and medial", "Superior and lateral", "Inferior and lateral"],
+        correct: 1,
+        reason: "The smaller motor root lies inferior and medial to the large sensory root at the pons.",
+        section: "CN V - Basic Anatomy"
+      },
+      
+      // SECTION 2: LINGUAL NERVE AND TONGUE SENSATION (Questions 11-20)
+      {
+        question: "Which nerve provides general sensation (touch, pain, temperature) to the anterior two-thirds of the tongue?",
+        options: ["Hypoglossal nerve (CN XII)", "Glossopharyngeal nerve (CN IX)", "Lingual nerve (branch of CN V3)", "Chorda tympani (CN VII)"],
+        correct: 2,
+        reason: "The lingual nerve, a branch of the mandibular division (V3), carries general sensation from the anterior 2/3 of the tongue.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "The lingual nerve is a branch of which division of the trigeminal nerve?",
+        options: ["Ophthalmic (V1)", "Maxillary (V2)", "Mandibular (V3)", "None of the above"],
+        correct: 2,
+        reason: "The lingual nerve is one of the two main sensory branches of V3, the other being the inferior alveolar nerve.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "Which structure does the lingual nerve pass between during its course?",
+        options: ["Lateral and medial pterygoid muscles", "Medial pterygoid and the mandible", "Hyoglossus and mylohyoid muscles", "Genioglossus and hyoglossus muscles"],
+        correct: 1,
+        reason: "The lingual nerve descends between the medial pterygoid muscle and the medial surface of the mandibular ramus.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "The lingual nerve is joined by which other nerve in the infratemporal fossa?",
+        options: ["Hypoglossal nerve", "Chorda tympani", "Glossopharyngeal nerve", "Vagus nerve"],
+        correct: 1,
+        reason: "The chorda tympani (from CN VII) joins the lingual nerve posterior to the mandibular third molar region.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "Damage to the lingual nerve would result in loss of which sensation on the affected side?",
+        options: ["Taste from the entire tongue", "General sensation from the anterior 2/3 of the tongue", "Motor function of the tongue", "Salivation from all salivary glands"],
+        correct: 1,
+        reason: "The lingual nerve carries general sensation (not taste) from the anterior 2/3; taste travels via chorda tympani.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "Which nerve carries the cell bodies for general sensation from the tongue?",
+        options: ["Geniculate ganglion", "Trigeminal ganglion", "Nodose ganglion", "Otic ganglion"],
+        correct: 1,
+        reason: "Cell bodies for lingual nerve fibers reside in the trigeminal (Gasserian) ganglion.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "The lingual nerve provides general sensation to which part of the tongue?",
+        options: ["Posterior 1/3 only", "Anterior 2/3 only", "Entire tongue", "Posterior 1/3 and anterior 2/3"],
+        correct: 1,
+        reason: "The lingual nerve innervates the anterior 2/3; posterior 1/3 receives general sensation from CN IX.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "During wisdom tooth extraction, which nerve is most at risk of injury?",
+        options: ["Inferior alveolar nerve", "Lingual nerve", "Buccal nerve", "Both A and B"],
+        correct: 3,
+        reason: "Both the inferior alveolar nerve (within the mandibular canal) and lingual nerve (medial to the mandible) are at risk.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "The lingual nerve is located relative to the inferior alveolar nerve in which position?",
+        options: ["Lateral and anterior", "Medial and anterior", "Superior and posterior", "Inferior and posterior"],
+        correct: 1,
+        reason: "The lingual nerve lies medial and anterior to the inferior alveolar nerve in the infratemporal fossa.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      {
+        question: "Which muscle does the lingual nerve pass deep to before entering the tongue?",
+        options: ["Mylohyoid", "Hyoglossus", "Genioglossus", "Styloglossus"],
+        correct: 1,
+        reason: "The lingual nerve passes deep to the hyoglossus muscle before distributing to the tongue.",
+        section: "Lingual Nerve & Tongue Sensation"
+      },
+      
+      // SECTION 3: CRANIAL NERVE 7 (FACIAL) - BASIC ANATOMY (Questions 21-30)
+      {
+        question: "The facial nerve (CN VII) emerges from the brainstem at which location?",
+        options: ["Midbrain", "Pons-medullary junction", "Upper medulla", "Cervical spinal cord"],
+        correct: 1,
+        reason: "CN VII emerges at the cerebellopontine angle, lateral to the pons at the pontomedullary junction.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "Which ganglion contains the cell bodies for taste fibers of the facial nerve?",
+        options: ["Trigeminal ganglion", "Geniculate ganglion", "Pterygopalatine ganglion", "Submandibular ganglion"],
+        correct: 1,
+        reason: "The geniculate ganglion houses pseudounipolar cell bodies for taste (special visceral afferent) and parasympathetic fibers.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "The facial nerve enters the internal acoustic meatus accompanied by which other structure?",
+        options: ["Trigeminal nerve", "Vestibulocochlear nerve (CN VIII)", "Glossopharyngeal nerve", "Internal carotid artery"],
+        correct: 1,
+        reason: "CN VII and CN VIII travel together through the internal acoustic meatus into the facial canal.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "The facial nerve exits the skull through which foramen?",
+        options: ["Foramen ovale", "Foramen spinosum", "Stylomastoid foramen", "Jugular foramen"],
+        correct: 2,
+        reason: "After traversing the facial canal, CN VII exits the skull base via the stylomastoid foramen.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "Which branch of CN VII carries taste from the anterior two-thirds of the tongue?",
+        options: ["Greater petrosal nerve", "Chorda tympani", "Nerve to stapedius", "Posterior auricular nerve"],
+        correct: 1,
+        reason: "The chorda tympani is the specific branch responsible for taste from the anterior 2/3 of the tongue.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "The facial canal (Fallopian canal) is located within which bone?",
+        options: ["Sphenoid bone", "Temporal bone", "Occipital bone", "Ethmoid bone"],
+        correct: 1,
+        reason: "The facial canal is a bony canal within the petrous portion of the temporal bone.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "Which nerve arises from CN VII within the facial canal and innervates the stapedius muscle?",
+        options: ["Chorda tympani", "Nerve to stapedius", "Greater petrosal nerve", "Lesser petrosal nerve"],
+        correct: 1,
+        reason: "The nerve to stapedius arises in the facial canal and innervates the stapedius muscle of the middle ear.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "The greater petrosal nerve arises from CN VII at which location?",
+        options: ["Geniculate ganglion", "Facial canal", "Stylomastoid foramen", "Parotid gland"],
+        correct: 0,
+        reason: "The greater petrosal nerve arises at the geniculate ganglion and carries preganglionic parasympathetic fibers.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "Which of the following is NOT a motor function of the facial nerve?",
+        options: ["Closing the eyes", "Smiling", "Chewing", "Raising eyebrows"],
+        correct: 2,
+        reason: "Chewing is controlled by CN V (muscles of mastication); CN VII controls muscles of facial expression.",
+        section: "CN VII - Basic Anatomy"
+      },
+      {
+        question: "The facial nerve divides into how many major terminal branches within the parotid gland?",
+        options: ["2", "3", "5", "7"],
+        correct: 2,
+        reason: "The five terminal branches are: temporal, zygomatic, buccal, mandibular, and cervical.",
+        section: "CN VII - Basic Anatomy"
+      },
+      
+      // SECTION 4: CHORDA TYMPANI AND TASTE FUNCTION (Questions 31-40)
+      {
+        question: "The chorda tympani nerve 'hitchhikes' on which nerve to reach the tongue?",
+        options: ["Hypoglossal nerve", "Lingual nerve (CN V3)", "Glossopharyngeal nerve", "Buccal nerve"],
+        correct: 1,
+        reason: "The chorda tympani joins the lingual nerve in the infratemporal fossa and travels with it to the tongue.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "Which two types of fibers are carried by the chorda tympani nerve?",
+        options: ["Motor and sensory", "Taste and parasympathetic", "Sympathetic and parasympathetic", "General sensation and taste"],
+        correct: 1,
+        reason: "Chorda tympani carries special sensory (taste) from anterior 2/3 of tongue and preganglionic parasympathetic fibers to submandibular ganglion.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "The chorda tympani passes across which structure in the middle ear?",
+        options: ["Malleus", "Incus", "Stapes", "Tympanic membrane"],
+        correct: 1,
+        reason: "The chorda tympani passes between the handle of the malleus and the long process of the incus.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "Damage to the chorda tympani nerve would result in which deficit?",
+        options: ["Loss of facial expression on one side", "Loss of taste from anterior 2/3 of tongue and reduced salivation", "Loss of hearing", "Loss of general sensation from entire tongue"],
+        correct: 1,
+        reason: "Chorda tympani carries taste fibers and parasympathetic fibers for submandibular/sublingual salivation.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "The cell bodies for taste fibers traveling in the chorda tympani are located in which ganglion?",
+        options: ["Trigeminal ganglion", "Geniculate ganglion", "Submandibular ganglion", "Otic ganglion"],
+        correct: 1,
+        reason: "Pseudounipolar cell bodies for taste are in the geniculate ganglion; submandibular ganglion is for parasympathetic synapse.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "Which gland receives parasympathetic innervation via the chorda tympani?",
+        options: ["Parotid gland", "Submandibular and sublingual glands", "Lacrimal gland", "Thyroid gland"],
+        correct: 1,
+        reason: "Preganglionic fibers in chorda tympani synapse in submandibular ganglion, then innervate these glands.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "The chorda tympani exits the skull through which foramen?",
+        options: ["Foramen ovale", "Petrotympanic fissure", "Stylomastoid foramen", "Foramen spinosum"],
+        correct: 1,
+        reason: "The chorda tympani exits the tympanic cavity through the petrotympanic fissure to join the lingual nerve.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "Taste from the anterior two-thirds of the tongue is carried by which nerve to the brainstem?",
+        options: ["Trigeminal nerve", "Facial nerve (via chorda tympani)", "Glossopharyngeal nerve", "Vagus nerve"],
+        correct: 1,
+        reason: "Although chorda tympani travels with lingual nerve, the taste fibers are CN VII fibers that eventually enter the solitary tract.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "Which nucleus in the brainstem receives taste information from the chorda tympani?",
+        options: ["Spinal trigeminal nucleus", "Nucleus solitarius (solitary tract nucleus)", "Superior salivatory nucleus", "Facial motor nucleus"],
+        correct: 1,
+        reason: "All taste fibers (CN VII, IX, X) synapse in the rostral portion of the nucleus solitarius in the medulla.",
+        section: "Chorda Tympani & Taste"
+      },
+      {
+        question: "A lesion of CN VII proximal to the chorda tympani would affect taste from which area?",
+        options: ["Entire tongue", "Anterior 2/3 of tongue only", "Posterior 1/3 of tongue only", "Soft palate only"],
+        correct: 1,
+        reason: "Proximal facial nerve lesions affect chorda tympani, causing loss of taste from anterior 2/3; posterior 1/3 uses CN IX.",
+        section: "Chorda Tympani & Taste"
+      },
+      
+      // SECTION 5: COMPARATIVE ANATOMY AND CLINICAL CORRELATIONS (Questions 41-50)
+      {
+        question: "Which statement correctly describes the innervation of the anterior two-thirds of the tongue?",
+        options: ["General sensation and taste both by CN V3", "General sensation by CN V3, taste by CN VII", "General sensation by CN VII, taste by CN V3", "Both by CN VII"],
+        correct: 1,
+        reason: "This is the classic 'dual innervation'—lingual nerve (CN V3) for touch, chorda tympani (CN VII) for taste.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "A patient has loss of general sensation but preserved taste on the anterior tongue. Which nerve is likely damaged?",
+        options: ["Facial nerve", "Lingual nerve (CN V3)", "Chorda tympani", "Glossopharyngeal nerve"],
+        correct: 1,
+        reason: "Lingual nerve damage spares taste (chorda tympani) but eliminates general sensation from anterior 2/3.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "A patient has loss of taste but preserved general sensation on the anterior tongue. Which structure is damaged?",
+        options: ["Trigeminal ganglion", "Chorda tympani", "Lingual nerve", "Hypoglossal nerve"],
+        correct: 1,
+        reason: "Isolated chorda tympani damage affects taste but spares general sensation (lingual nerve intact).",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "Bell's palsy is characterized by all EXCEPT:",
+        options: ["Ipsilateral facial paralysis", "Loss of taste from anterior 2/3 of tongue", "Hyperacusis", "Loss of general sensation from face"],
+        correct: 3,
+        reason: "Bell's palsy affects CN VII (motor and taste), not CN V; general facial sensation remains intact.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "The 'chorda tympani syndrome' (gustatory sweating) occurs due to aberrant regeneration of which nerve fibers?",
+        options: ["Trigeminal sensory fibers", "Facial parasympathetic fibers", "Glossopharyngeal taste fibers", "Vagus motor fibers"],
+        correct: 1,
+        reason: "After parotid surgery, regenerating parasympathetic fibers may innervate sweat glands instead of salivary glands.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "Which nerve is tested when a patient is asked to clench their teeth?",
+        options: ["Facial nerve", "Trigeminal nerve (motor root)", "Glossopharyngeal nerve", "Accessory nerve"],
+        correct: 1,
+        reason: "Clenching tests the masseter and temporalis muscles, innervated by the motor root of CN V.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "The corneal reflex tests which division of the trigeminal nerve?",
+        options: ["V1 (Ophthalmic)", "V2 (Maxillary)", "V3 (Mandibular)", "All of the above"],
+        correct: 0,
+        reason: "The afferent limb of the corneal reflex is the nasociliary branch of V1; efferent is CN VII.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "Which condition is characterized by severe, lancinating facial pain triggered by light touch?",
+        options: ["Bell's palsy", "Trigeminal neuralgia", "Ramsay Hunt syndrome", "Acoustic neuroma"],
+        correct: 1,
+        reason: "Trigeminal neuralgia (tic douloureux) causes paroxysmal, electric shock-like pain in CN V distribution.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "Ramsay Hunt syndrome involves which cranial nerve and what additional features compared to Bell's palsy?",
+        options: ["CN V with loss of corneal reflex", "CN VII with herpetic vesicles in ear", "CN IX with loss of gag reflex", "CN X with vocal cord paralysis"],
+        correct: 1,
+        reason: "Herpes zoster infection of the geniculate ganglion causes facial palsy plus auricular vesicles and often hearing loss.",
+        section: "Clinical Correlations"
+      },
+      {
+        question: "A lesion at the geniculate ganglion would affect all EXCEPT:",
+        options: ["Taste from anterior 2/3 of tongue", "Lacrimation", "Salivation from parotid gland", "Facial expression"],
+        correct: 2,
+        reason: "Parotid salivation is controlled by CN IX (glossopharyngeal), not CN VII.",
+        section: "Clinical Correlations"
+      },
+      
+      // SECTION 6: ADVANCED CLINICAL AND APPLIED ANATOMY (Questions 51-60)
+      {
+        question: "Which nerve block would anesthetize the lingual nerve for tongue surgery?",
+        options: ["Inferior alveolar nerve block", "Mandibular nerve block", "Maxillary nerve block", "Greater palatine nerve block"],
+        correct: 1,
+        reason: "Blocking V3 at the foramen ovale would anesthetize the lingual nerve; inferior alveolar block spares the lingual nerve.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "During inferior alveolar nerve block, the needle passes near which artery?",
+        options: ["Maxillary artery", "Lingual artery", "Facial artery", "Superficial temporal artery"],
+        correct: 0,
+        reason: "The maxillary artery runs anterior to the mandibular ramus, near the site of needle insertion.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "The otic ganglion receives preganglionic parasympathetic fibers from which nerve?",
+        options: ["Facial nerve", "Glossopharyngeal nerve", "Vagus nerve", "Trigeminal nerve"],
+        correct: 1,
+        reason: "The lesser petrosal nerve (from CN IX) carries preganglionic fibers to the otic ganglion for parotid secretion.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "Which nerve carries the afferent limb of the gag reflex?",
+        options: ["Facial nerve", "Glossopharyngeal nerve", "Vagus nerve", "Trigeminal nerve"],
+        correct: 1,
+        reason: "CN IX carries sensation from the posterior tongue and oropharynx (afferent); CN X mediates the motor response.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "A patient has dry eye (reduced lacrimation) and loss of taste from anterior tongue. The lesion is likely at:",
+        options: ["Geniculate ganglion", "Stylomastoid foramen", "Parotid gland", "Internal acoustic meatus"],
+        correct: 0,
+        reason: "Proximal lesions at the geniculate ganglion affect the greater petrosal nerve (lacrimation) and chorda tympani (taste).",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "The 'crocodile tear syndrome' (gustatory lacrimation) results from aberrant regeneration of which fibers?",
+        options: ["Trigeminal sensory fibers", "Facial nerve parasympathetic fibers", "Sympathetic fibers", "Glossopharyngeal taste fibers"],
+        correct: 1,
+        reason: "After facial nerve injury, regenerating salivatory fibers may innervate the lacrimal gland, causing tearing while eating.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "Which muscle is innervated by both CN V3 and CN VII?",
+        options: ["Mylohyoid", "Digastric (anterior belly)", "Digastric (posterior belly)", "Stylohyoid"],
+        correct: 1,
+        reason: "Anterior belly by CN V3, posterior belly by CN VII; mylohyoid is CN V3 only; stylohyoid is CN VII only.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "The tensor tympani muscle is innervated by which nerve?",
+        options: ["Facial nerve", "Trigeminal nerve (mandibular division)", "Glossopharyngeal nerve", "Vagus nerve"],
+        correct: 1,
+        reason: "Tensor tympani (innervated by CN V3) and stapedius (innervated by CN VII) dampen loud sounds.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "Which nucleus gives rise to preganglionic parasympathetic fibers that eventually reach the submandibular ganglion?",
+        options: ["Inferior salivatory nucleus", "Superior salivatory nucleus", "Dorsal motor nucleus of vagus", "Edinger-Westphal nucleus"],
+        correct: 1,
+        reason: "The superior salivatory nucleus in the pons sends fibers via CN VII (chorda tympani) to the submandibular ganglion.",
+        section: "Advanced Clinical Anatomy"
+      },
+      {
+        question: "A lesion of CN VII at the stylomastoid foramen would spare which function?",
+        options: ["Facial expression", "Taste from anterior 2/3 of tongue", "Salivation from submandibular gland", "Both B and C"],
+        correct: 3,
+        reason: "Distal lesions spare chorda tympani (taste and salivation) and greater petrosal nerve; only facial expression is affected.",
+        section: "Advanced Clinical Anatomy"
+      },
+      
+      // SECTION 7: INTEGRATED CASE-BASED QUESTIONS (Questions 61-70)
+      {
+        question: "A 45-year-old man develops sudden right-sided facial paralysis and cannot taste sugar on the right anterior tongue. He also has decreased tearing. The lesion is most likely at:",
+        options: ["Stylomastoid foramen", "Geniculate ganglion", "Internal acoustic meatus", "Between chorda tympani and stapedius nerve"],
+        correct: 1,
+        reason: "Geniculate ganglion lesions affect facial expression, taste (chorda tympani), and lacrimation (greater petrosal nerve).",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "A patient has numbness of the lower lip and chin after mandibular fracture. Which nerve is injured?",
+        options: ["Lingual nerve", "Inferior alveolar nerve", "Buccal nerve", "Mental nerve"],
+        correct: 1,
+        reason: "The inferior alveolar nerve (branch of V3) is often injured in mandibular fractures, causing lower lip/chin numbness.",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "A 60-year-old woman has episodic, severe right-sided facial pain triggered by chewing. The diagnosis is:",
+        options: ["Trigeminal neuralgia", "Bell's palsy", "Temporomandibular joint dysfunction", "Sinusitis"],
+        correct: 0,
+        reason: "Classic trigeminal neuralgia causes paroxysmal, unilateral facial pain triggered by light touch or chewing.",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "During parotidectomy, the surgeon must identify and preserve which nerve?",
+        options: ["Trigeminal nerve", "Facial nerve", "Glossopharyngeal nerve", "Hypoglossal nerve"],
+        correct: 1,
+        reason: "The facial nerve passes through the parotid gland; injury causes facial paralysis (Frey's syndrome may develop later).",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "A patient has loss of taste from the anterior tongue and decreased salivation, but normal facial expression. The lesion is likely in the:",
+        options: ["Facial nerve proximal to geniculate ganglion", "Chorda tympani only", "Facial nerve at stylomastoid foramen", "Trigeminal ganglion"],
+        correct: 1,
+        reason: "Isolated chorda tympani injury affects taste and salivation but spares facial motor function.",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "The 'trigeminal nerve' is so named because it has:",
+        options: ["Three sensory divisions", "Three motor branches", "Three ganglia", "Three brainstem nuclei"],
+        correct: 0,
+        reason: "'Trigeminal' refers to the three main divisions: ophthalmic (V1), maxillary (V2), and mandibular (V3).",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "Which nucleus in the brainstem is shared by CN V, VII, and IX for sensory processing?",
+        options: ["Nucleus ambiguus", "Spinal trigeminal nucleus", "Solitary nucleus", "Superior olivary nucleus"],
+        correct: 1,
+        reason: "The spinal trigeminal nucleus receives pain and temperature input from CN V, VII, IX, and X.",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "A patient has facial paralysis, hyperacusis, and loss of taste from anterior tongue. The lesion is between:",
+        options: ["Geniculate ganglion and chorda tympani", "Chorda tympani and nerve to stapedius", "Nerve to stapedius and stylomastoid foramen", "Internal acoustic meatus and geniculate ganglion"],
+        correct: 1,
+        reason: "This location spares greater petrosal nerve (lacrimation intact) but affects stapedius (hyperacusis), chorda tympani (taste), and facial motor function.",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "The 'lingual nerve' is most likely to be injured during:",
+        options: ["Maxillary sinus surgery", "Removal of mandibular third molar", "Tonsillectomy", "Thyroidectomy"],
+        correct: 1,
+        reason: "The lingual nerve lies in close proximity to the medial aspect of the mandibular third molar, making it vulnerable during extraction.",
+        section: "Case-Based Questions"
+      },
+      {
+        question: "Which statement is TRUE regarding the innervation of the tongue?",
+        options: ["CN VII innervates both taste and general sensation from the entire tongue", "CN IX innervates taste and general sensation from the posterior 1/3 of the tongue", "CN V3 innervates taste from the anterior 2/3 of the tongue", "CN X innervates the entire tongue"],
+        correct: 1,
+        reason: "CN IX (glossopharyngeal) provides both taste and general sensation to the posterior 1/3, unlike the anterior 2/3 which has dual innervation (CN V3 for touch, CN VII for taste).",
+        section: "Case-Based Questions"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answers = Array(quizData.length).fill(null);
+    let timeLeft = 35 * 60; // 35 minutes for 70 questions
+    let timerInterval;
+
+    // DOM Elements
+    const questionContainer = document.querySelector('.question-container');
+    const timerElement = document.querySelector('.timer');
+    const questionText = document.querySelector('.question-text');
+    const optionsContainer = document.querySelector('.options');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const centerBtn = document.querySelector('.center-btn');
+    const questionPopup = document.getElementById('question-popup');
+    const popupGrid = document.querySelector('.popup-grid');
+    const resultsPopup = document.getElementById('results-popup');
+    const detailsPage = document.getElementById('details-page');
+    const detailsContent = document.querySelector('.details-content');
+    const themeToggle = document.getElementById('theme-toggle');
+    const profileUpload = document.getElementById('profile-upload');
+    const body = document.body;
+    const sectionIndicator = document.getElementById('section-indicator');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Timer
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `Time: ${minutes}m:${seconds.toString().padStart(2, '0')}s`;
+      if (timeLeft > 0) {
+        timeLeft--;
+      } else {
+        clearInterval(timerInterval);
+        submitQuiz();
+      }
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    // Update Progress Bar
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / quizData.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    // Render Question
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      sectionIndicator.textContent = `${q.section} (Q${currentQuestion + 1})`;
+      questionText.textContent = `Question ${currentQuestion + 1}: ${q.question}`;
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const div = document.createElement('div');
+        div.classList.add('option');
+        if (answers[currentQuestion] === index) div.classList.add('selected');
+        
+        const letter = String.fromCharCode(65 + index);
+        div.innerHTML = `<p><span class="option-letter">${letter})</span> ${option}</p>`;
+        
+        div.addEventListener('click', () => {
+          document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+          div.classList.add('selected');
+          answers[currentQuestion] = index;
+          updatePopup();
+        });
+        optionsContainer.appendChild(div);
+      });
+      
+      prevBtn.disabled = currentQuestion === 0;
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Submit' : 'Next';
+      updateProgress();
+    }
+
+    // Render Question Selection Pop-up
+    function renderPopup() {
+      popupGrid.innerHTML = '';
+      quizData.forEach((_, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = index + 1;
+        if (answers[index] !== null) btn.classList.add('answered');
+        if (index === currentQuestion) btn.classList.add('current');
+        btn.addEventListener('click', () => {
+          currentQuestion = index;
+          renderQuestion();
+          questionPopup.style.display = 'none';
+        });
+        popupGrid.appendChild(btn);
+      });
+    }
+
+    function updatePopup() {
+      renderPopup();
+    }
+
+    // Submit Quiz
+    function submitQuiz() {
+      clearInterval(timerInterval);
+      const score = answers.reduce((sum, answer, i) => answer === quizData[i].correct ? sum + 1 : sum, 0);
+      
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      resultsPopup.style.display = 'block';
+      
+      document.getElementById('score-text').textContent = `${score}/${quizData.length}`;
+      
+      const percentage = (score / quizData.length) * 100;
+      let performanceText = '';
+      if (percentage >= 90) performanceText = 'Outstanding! Neuroanatomy mastery!';
+      else if (percentage >= 80) performanceText = 'Excellent! Great understanding of cranial nerves.';
+      else if (percentage >= 70) performanceText = 'Good work! Solid clinical knowledge.';
+      else if (percentage >= 60) performanceText = 'Passing. Review nerve pathways & clinical correlations.';
+      else performanceText = 'Keep studying! Focus on CN V & VII anatomy.';
+      
+      document.getElementById('performance-text').textContent = performanceText;
+    }
+
+    // Render Details Page
+    function renderDetails() {
+      detailsContent.innerHTML = '';
+      let currentSection = '';
+      
+      quizData.forEach((q, i) => {
+        if (q.section !== currentSection) {
+          currentSection = q.section;
+          const sectionHeader = document.createElement('h2');
+          sectionHeader.textContent = currentSection;
+          sectionHeader.style.color = 'var(--accent)';
+          sectionHeader.style.fontSize = '18px';
+          sectionHeader.style.marginTop = '30px';
+          sectionHeader.style.marginBottom = '15px';
+          detailsContent.appendChild(sectionHeader);
+        }
+        
+        const div = document.createElement('div');
+        div.style.marginBottom = '25px';
+        div.style.padding = '15px';
+        div.style.background = 'var(--background)';
+        div.style.borderRadius = '10px';
+        div.style.boxShadow = 'inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out)';
+        
+        const isCorrect = answers[i] === q.correct;
+        const userAnswer = answers[i] !== null ? q.options[answers[i]] : 'Not answered';
+        const correctLetter = String.fromCharCode(65 + q.correct);
+        const userLetter = answers[i] !== null ? String.fromCharCode(65 + answers[i]) : '-';
+        
+        div.innerHTML = `
+          <h3>Q${i + 1}: ${q.question}</h3>
+          <p>Your Answer: <span class="${isCorrect ? 'correct' : 'incorrect'}">${userLetter}) ${userAnswer} ${isCorrect ? '✓' : '✗'}</span></p>
+          <p>Correct Answer: <span class="correct">${correctLetter}) ${q.options[q.correct]} ✓</span></p>
+          <div class="explanation">
+            <strong>Explanation:</strong> ${q.reason}
+          </div>
+        `;
+        detailsContent.appendChild(div);
+      });
+    }
+
+    // Event Listeners
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        submitQuiz();
+      }
+    });
+
+    centerBtn.addEventListener('click', () => {
+      renderPopup();
+      questionPopup.style.display = 'block';
+    });
+
+    questionPopup.querySelector('.close-btn').addEventListener('click', () => {
+      questionPopup.style.display = 'none';
+    });
+
+    resultsPopup.querySelector('.close-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.continue-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'block';
+      document.querySelector('.nav-buttons').style.display = 'flex';
+      document.querySelector('.section-indicator').style.display = 'block';
+    });
+
+    resultsPopup.querySelector('.details-btn').addEventListener('click', () => {
+      resultsPopup.style.display = 'none';
+      questionContainer.style.display = 'none';
+      document.querySelector('.nav-buttons').style.display = 'none';
+      document.querySelector('.section-indicator').style.display = 'none';
+      detailsPage.style.display = 'block';
+      renderDetails();
+    });
+
+    detailsPage.querySelector('.back-btn').addEventListener('click', () => {
+      detailsPage.style.display = 'none';
+      resultsPopup.style.display = 'block';
+    });
+
+    // Theme Toggle
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload
+    profileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          console.log('Profile image uploaded:', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Footer Navigation
+    const navItems = document.querySelectorAll('.nav-bar .nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Back button
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to exit the quiz? Your progress will be lost.')) {
+        location.reload();
+      }
+    });
+
+    // Initialize
+    renderQuestion();
+  </script>
+</body>
+</html>
